@@ -22,7 +22,7 @@ if(len(sys.argv) >= 4):
 
 
     if(saveToFile == "--yes" or saveToFile == "--y"):
-         file_writter = input("Insert the name of the file:")
+         file_writter = input("Insert the name of the file: ")
          r_file.writeToFile(ciphed, file_writter)
     elif (saveToFile == "--no" or saveToFile == "--n"):
         print(ciphed)
