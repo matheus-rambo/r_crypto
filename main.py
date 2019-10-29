@@ -16,15 +16,14 @@ if(len(sys.argv) >= 4):
         fernet = r_crypto.generate_key(input("Insert you key password: "), input("Insert the salt key: "))
         ciphed = r_crypto.decrypt(fernet, content)
     else:
-        print("Invalid cryptography option.\nYou should use --encrypt, --e or --decrypt, --d.")
+        print("Invalid cryptography option!\nYou should use --encrypt, --e or --decrypt, --d.")
         sys.exit(1)
         
     if(save_to_file == "--yes" or save_to_file == "--y"):
          file_writter = input("Insert the name of the file: ")
          r_file.write_to_file(ciphed, file_writter)
     elif (save_to_file == "--no" or save_to_file == "--n"):
-        print("\nYour data decrypted is: \n")
-        print(ciphed.decode("utf-8"))
+        print("\nYour data decrypted is:\n{}".format(ciphed.decode("utf-8")))
     else:
         print("Invalid save option!\nYou should use --yes, --y or --no, --n.")
 
