@@ -9,20 +9,20 @@ if(len(sys.argv) >= 4):
     file = r_file.open_file(filename)
     content = r_file.read_file_lines(file)
     ciphed = ""
-    if(option == "--encrypt" or option == "--e"):
+    if(option in ( "--encrypt", "--e" ) ):
         fernet = r_crypto.generate_custom_key(input("Insert you key password: "))
         ciphed = r_crypto.encrypt(fernet, content)
-    elif (option == "--decrypt" or option == "--d") :
+    elif (option in ( "--decrypt", "--d" ) ) :
         fernet = r_crypto.generate_key(input("Insert you key password: "), input("Insert the salt key: "))
         ciphed = r_crypto.decrypt(fernet, content)
     else:
         print("Invalid cryptography option!\nYou should use --encrypt, --e or --decrypt, --d.")
         sys.exit(1)
         
-    if(save_to_file == "--yes" or save_to_file == "--y"):
+    if(save_to_file in ( "--yes", "--y" ) ):
          file_writter = input("Insert the name of the file: ")
          r_file.write_to_file(ciphed, file_writter)
-    elif (save_to_file == "--no" or save_to_file == "--n"):
+    elif (save_to_file in ( "--no", "--n" ) ):
         print("\nYour data decrypted is:\n{}".format(ciphed.decode("utf-8")))
     else:
         print("Invalid save option!\nYou should use --yes, --y or --no, --n.")
