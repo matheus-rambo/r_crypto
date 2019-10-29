@@ -9,6 +9,7 @@ def generateCustomKey(password:str):
     custom_key = ""
     for integer in range(20):
         custom_key = custom_key + str(random.randint(1, 1000))
+    custom_key = convertToHex(password) + custom_key
     print("Warning!!!\nYou must store the salt in a trusted location!\nSalt Key is: ", custom_key)
     kdf = PBKDF2HMAC(
      algorithm=hashes.SHA256(),
