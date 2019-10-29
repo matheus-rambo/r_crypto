@@ -5,11 +5,11 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 import random
 
-def generateCustomKey(password:str):
+def generate_custom_key(password:str):
     custom_key = ""
     for integer in range(20):
-        custom_key = custom_key + str(random.randint(1, 1000))
-    custom_key = convertToHex(password) + custom_key
+        custom_key = custom_key + convert_to_hex(str(random.randint(1000, 10000)))
+    custom_key = convert_to_hex(password) + custom_key
     print("Warning!!!\nYou must store the salt in a trusted location!\nSalt Key is: ", custom_key)
     kdf = PBKDF2HMAC(
      algorithm=hashes.SHA256(),
@@ -21,7 +21,7 @@ def generateCustomKey(password:str):
     key = base64.urlsafe_b64encode(kdf.derive(password.encode("utf-8")))
     return Fernet(key)
 
-def generateKey(password:str, decoded_salt:str):
+def generate_key(password:str, decoded_salt:str):
     kdf = PBKDF2HMAC(
      algorithm=hashes.SHA256(),
      length=32,
@@ -38,6 +38,6 @@ def encrypt(fernet:Fernet, content:str):
 def decrypt(fernet:Fernet, content:str):
     return (fernet.decrypt(content.encode()))
 
-def convertToHex(key:str):
+def convert_to_hex(key:str):
     return key.encode('utf-8').hex()
 
