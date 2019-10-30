@@ -16,7 +16,7 @@ if( sys_args_length >= 4):
         ciphed = r_crypto.encrypt(fernet, content)
         print("Content encrypted!\n")
     elif (option in ( "--decrypt", "--d" ) ) :
-        fernet = r_crypto.generate_key(input("Insert you key password: "), input("Insert the salt key: "))
+        fernet = r_crypto.generate_key(input("Insert you key password: "), input("Insert the Secret Key: "))
         ciphed = r_crypto.decrypt(fernet, content)
         print("Content decrypted!\n")
     else:

@@ -15,7 +15,7 @@ def generate_custom_key(password:str):
     for integer in range(20):
         custom_key = custom_key + convert_to_hex(str(random.randint(1000, 10000)))
     custom_key = convert_to_hex(password) + custom_key + convert_to_hex(str(time.time()))
-    print("Warning!!!\nYou must store the salt in a trusted location!\nSalt Key is: {}".format(custom_key))
+    print("Warning!!!\nYou must store the Secret Key in a trusted location!\nSecret Key is: {}".format(custom_key))
     kdf = PBKDF2HMAC(
      algorithm=hashes.SHA256(),
      length=32,
