@@ -2,7 +2,9 @@ import r_crypto as r_crypto
 import r_file as r_file
 import sys
 
-if(len(sys.argv) >= 4):
+sys_args_length = len(sys.argv)
+
+if( sys_args_length >= 4):
     filename = sys.argv[1]
     option = sys.argv[2]
     save_to_file = sys.argv[3]
@@ -12,9 +14,11 @@ if(len(sys.argv) >= 4):
     if(option in ( "--encrypt", "--e" ) ):
         fernet = r_crypto.generate_custom_key(input("Insert you key password: "))
         ciphed = r_crypto.encrypt(fernet, content)
+        print("Content encrypted!\n")
     elif (option in ( "--decrypt", "--d" ) ) :
         fernet = r_crypto.generate_key(input("Insert you key password: "), input("Insert the salt key: "))
         ciphed = r_crypto.decrypt(fernet, content)
+        print("Content decrypted!\n")
     else:
         print("Invalid cryptography option!\nYou should use --encrypt, --e or --decrypt, --d.")
         sys.exit(1)
