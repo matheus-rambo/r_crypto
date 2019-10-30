@@ -1,11 +1,18 @@
 ## A symmetric Cryptography to encrypt/decrypt files/text.
 
-**Make sure that you hava Python >= 3.7 installed!**
+**Make sure that you have Python >= 3.7 and pip installed!**
 
 ### Undestanding Cryptography
 
  If you want to know more about Symmetric Cryptography, there is a good link of python implementation of **symmetric**: [Symmetric Cryptography](https://docs.python-guide.org/scenarios/crypto/), and this is a link for basic understanding of **symmetric** and **asymmetric** ***encryption/decryption***: [Symmetric vs Asymmetric](https://www.ssl2buy.com/wiki/symmetric-vs-asymmetric-encryption-what-are-differences)
  
+# Installing r_crypto
+``git clone https://github.com/punishercoder/r_crypto.git``
+
+``cd r_crypto``
+
+``pip install -r requirements.txt``
+
 
 # Version 1.0
  - Encrypt and Decrypt files 
