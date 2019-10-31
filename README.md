@@ -78,11 +78,11 @@ Print to console:``python main.py <your-file-name>.rencrypted --d --n``
  
 *If you want to decrypt a file, use:*
 
-``python r_decrypt-file.py <your-file-name> <your-key> <your-secret-key>``
+``python r_decrypt-file.py <your-file-name>.rdecrypt <your-key> <your-secret-key>``
 
-``python r_decrypt-file.py <your-file-name> <your-key>`` *This will ask tou to input the secret key.*
+``python r_decrypt-file.py <your-file-name>.rdecrypt <your-key>`` *This will ask tou to input the secret key.*
 
-``python r_decrypt-file.py <your-file-name>`` *This will ask tou to input the key and the secret key.*
+``python r_decrypt-file.py <your-file-name>.rdecrypt`` *This will ask tou to input the key and the secret key.*
 
 ``python r_decrypt-file.py`` *This will ask tou to input the file, key and the secret key.*
 
