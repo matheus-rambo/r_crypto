@@ -1,4 +1,4 @@
-## A symmetric Cryptography to encrypt/decrypt files/text.
+## A simple project to encrypt/decrypt files/text in a terminal console.
 
 **Make sure that you have Python >= 3.7 and pip installed!**
 
