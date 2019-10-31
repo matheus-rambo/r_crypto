@@ -15,6 +15,7 @@ def write_to_file(content:str, filename:str, isEncrypt:bool):
             if user_extension != r_decrypt_extension:
                 print("We are changing the extension of your file.\nTo use the standard rcrypt decrypted files: {}".format(r_decrypt_extension))    
     filename = filename + r_encrypt_extension
+    print("The content is on the file: {}".format(filename))
     file = open(filename, "ab+")
     file.write(content.decode("utf-8").encode("utf-8"))
     file.close()
