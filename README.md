@@ -31,10 +31,10 @@
  **Encrypting** files:
  ``python main.py <your-file-name> --e --<save-option>``
  
- It will prompt a input to you use choose your **own key**.
- Then, it will generate the **salt key** used to create the ***Secret Key*** for encryption.
- **Attention** You must store the key that you choosed, and the salt key generate, if you lost some, you will not be able to decrypt anymore.
-  
+ It will prompt a input to you use choose your **own key**. Then, with your **key**, we will create the ***Secret key**.
+ 
+ **Attention!** You must store the **key** that you choosed, and the ***Secret Key** that was generated in a safe place, if you lost some of these keys, you will not be able to decrypt anymore.
+ 
  Save to a file: ``python main.py <your-file-name> --e --y``
  
  ***Note*** *This will ask you to define the filename for the file encrypted.*
