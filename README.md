@@ -21,6 +21,8 @@
 # Version 1.1.
  - Setting extension for encrypted files.
  - Setting extension for decrypted files.
+ - Script to read data from file and encrypt it.
+ - Script to read data from console and encrypt it.
 
 # What you can do
 
