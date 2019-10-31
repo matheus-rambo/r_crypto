@@ -1,3 +1,5 @@
 Acessos.txt
 __pycache__/
 acessos.encrypted
+*.rencrypted
+*.rdecrypted
