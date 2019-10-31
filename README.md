@@ -18,7 +18,7 @@
  - Encrypt and Decrypt files.
  - Save files encrypted and decrypted.
 
-# Version 1.1.
+# Version 1.1
  - Setting extension for encrypted files.
  - Setting extension for decrypted files.
  - Script to read data from file and encrypt it.
@@ -41,6 +41,23 @@
  
  Print to console:``python main.py <your-file-name> --e --n``
  
+*If you want to encrypt a file, use:* 
+
+``python r_encrypt-file.py <your-file-name> <your-key>``
+
+``python r_encrypt-file.py <your-file-name>`` *This will ask you to input the key name.*
+
+``python r_encrypt-file.py`` *This will ask you to input the file and the key.*
+
+*If you want to encrypt a text from terminal, use:*
+
+``python r_encrypt-text.py <your-text> <your-key>``
+
+``python r_encrypt-text.py <your-text>`` *This will ask you to input the key name.*
+
+``python r_encrypt-text.py`` *This will ask you to input the text and the key.*
+
+
 ### Decrypt
  
   **Decrypting** files:
@@ -49,11 +66,11 @@
   It will prompt you to you input your key that you choosed when you encrypted, after, it will ask you to input the *Secret Key* that was generated*. 
   ***Note*** If the **key** or the **secret key** is not identical, the *decrypt* operation will ***fail***!
 
-Save to a file: ``python main.py <file>.rencrypted --d --y``
+Save to a file: ``python main.py <your-file-name>.rencrypted --d --y``
 
 ***Note*** *This will ask you to define the filename for the file decrypted.*
 
-Print to console:``python main.py <file>.rencrypted --d --n``
+Print to console:``python main.py <your-file-name>.rencrypted --d --n``
  
  
 # Author
