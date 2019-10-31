@@ -31,9 +31,9 @@
  **Encrypting** files:
  ``python main.py <your-file-name> --e --<save-option>``
  
- It will prompt a input to you use choose your **own key**. Then, with your **key**, we will create the ***Secret key**.
+ It will ask you to input your **own key**. Then, with your **key**, we will create the ***Secret key***. We will show you the *Secret Key that was generated*.
  
- **Attention!** You must store the **key** that you choosed, and the ***Secret Key** that was generated in a safe place, if you lost some of these keys, you will not be able to decrypt anymore.
+ **Attention!** You must store the **key** that you choosed, and the ***Secret Key*** that was generated in a ***safe place***, if you lost some of these keys, you will not be able to decrypt anymore!
  
  Save to a file: ``python main.py <your-file-name> --e --y``
  
