@@ -25,7 +25,9 @@
  - Setting extension for decrypted files.
  - Script to read data from file and encrypt it.
  - Script to read data from console and encrypt it.
-
+ - Script to read encrypted data from file and decrypt it.
+ - Script to read encrypted data from console and decrypt it.
+ 
 # What you can do
 
 #### Encrypt
@@ -74,7 +76,26 @@ Save to a file: ``python main.py <your-file-name>.rencrypted --d --y``
 
 Print to console:``python main.py <your-file-name>.rencrypted --d --n``
  
- 
+*If you want to decrypt a file, use:*
+
+``python r_decrypt-file.py <your-file-name> <your-key> <your-secret-key>``
+
+``python r_decrypt-file.py <your-file-name> <your-key>`` *This will ask tou to input the secret key.*
+
+``python r_decrypt-file.py <your-file-name>`` *This will ask tou to input the key and the secret key.*
+
+``python r_decrypt-file.py`` *This will ask tou to input the file, key and the secret key.*
+
+ *If you want to decrypt a text from terminal, use:*
+
+``python r_decrypt-text.py <your-text> <your-key> <your-secret-key>``
+
+``python r_decrypt-text.py <your-text> <your-key>`` *This will ask tou to input the secret key.*
+
+``python r_decrypt-text.py <your-text>`` *This will ask tou to input the key and the secret key.*
+
+``python r_decrypt-text.py`` *This will ask tou to input the text, key and the secret key.*
+
 # Author
 
 **Matheus Rambo** (*punishercoder*)
