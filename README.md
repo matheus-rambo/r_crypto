@@ -28,7 +28,7 @@
  - Script to read encrypted data from file and decrypt it.
  - Script to read encrypted data from console and decrypt it.
  
-# What you can do
+# Usage of r_crypto
 
 #### Encrypt
 
