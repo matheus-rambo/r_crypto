@@ -29,8 +29,11 @@
  - Script to read encrypted data from console and decrypt it.
  
  # Version 1.2
- - main.py was deleted.
-
+ - main.py and InvalidFileExtensionException.py were deleted.
+ - Saving information of encryption on file. The user that encrypted, data and the original extension of the file before encryption and more.
+  - When a file is decrypted, it backs to its original file extension.
+  - Removed *.rdecrypted* from files that were decrypted by rcrypt.
+ 
 # What you can do
 
 #### Encrypt
