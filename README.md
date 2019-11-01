@@ -17,6 +17,13 @@
 
 # Release notes
 
+ - Version 1.2
+    - main.py and InvalidFileExtensionException.py were deleted.
+    - Saving information of encryption on file. The user that encrypted, data and the original extension of the file before encryption and more.
+    - When a file is decrypted, it backs to its original file extension.
+    - Removed the *.rdecrypted* extension from files that were decrypted by rcrypt.
+    - Fixed: https://github.com/punishercoder/r_crypto/issues/4
+
  - Version 1.1
     - Setting extension for encrypted files.
     - Setting extension for decrypted files.
@@ -32,20 +39,9 @@
 # Usage of r_crypto
 
 #### Encrypt
-
- **Encrypting** files:
- ``python main.py <your-file-name> --e --<save-option>``
  
- It will ask you to input your **own key**. Then, with your **key**, we will create the ***Secret key***. We will show you the *Secret Key that was generated*.
- 
- **Attention!** You must store the **key** that you choosed, and the ***Secret Key*** that was generated in a ***safe place***, if you lost some of these keys, you will not be able to decrypt anymore!
- 
- Save to a file: ``python main.py <your-file-name> --e --y``
- 
- ***Note*** *This will ask you to define the filename for the file encrypted.*
- 
- Print to console:``python main.py <your-file-name> --e --n``
- 
+**Attention!** You must store the **key** that you choosed, and the ***Secret Key*** that was generated in a ***safe place***, if you lost some of these keys, you will not be able to decrypt anymore!
+  
 *If you want to encrypt a file, use:* 
 
 ``python r_encrypt-file.py <your-file-name> <your-key>``
@@ -64,19 +60,9 @@
 
 
 ### Decrypt
- 
-  **Decrypting** files:
-  ``python main.py <your-file-name>.rencrypted --d --<save-option>``
-  
-  It will prompt you to you input your key that you choosed when you encrypted, after, it will ask you to input the *Secret Key* that was generated*. 
-  ***Note*** If the **key** or the **secret key** is not identical, the *decrypt* operation will **fail**!
+   
+***Note*** If the **key** or the **secret key** is not identical, the *decrypt* operation will ***fail***!
 
-Save to a file: ``python main.py <your-file-name>.rencrypted --d --y``
-
-***Note*** *This will ask you to define the filename for the file decrypted.*
-
-Print to console:``python main.py <your-file-name>.rencrypted --d --n``
- 
 *If you want to decrypt a file, use:*
 
 ``python r_decrypt-file.py <your-file-name>.rencrypted <your-key> <your-secret-key>``
