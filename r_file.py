@@ -3,6 +3,13 @@ from InvalidFileExtensionException import InvalidFileExtensionException
 r_encrypt_extension = ".rencrypted"
 r_decrypt_extension = ".rdecrypted"
 
+def get_file_extension(file:str): 
+    if "." in file:
+        index = file.rindex(".")
+        return file[index:]
+    else:
+        return ""
+
 def write_to_file(content:str, filename:str, isEncrypt:bool):
     if '.' in filename:
         index = filename.index('.')
