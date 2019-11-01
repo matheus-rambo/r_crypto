@@ -1,10 +1,10 @@
-## A simple terminal tool to encrypt/decrypt files/text.
+# A simple terminal tool to encrypt/decrypt files/text.
 
 ***Note*** This project uses *symmetric cryptography*.
 
 **Make sure that you have Python >= 3.7 and pip installed!**
 
-### Undestanding Cryptography
+# Undestanding Cryptography
 
  If you want to know more about Symmetric Cryptography, there is a good link of python implementation of **symmetric**: [Symmetric Cryptography](https://docs.python-guide.org/scenarios/crypto/), and this is a link for basic understanding of **symmetric** and **asymmetric** ***encryption/decryption***: [Symmetric vs Asymmetric](https://www.ssl2buy.com/wiki/symmetric-vs-asymmetric-encryption-what-are-differences)
  
@@ -38,7 +38,7 @@
 
 # Usage of r_crypto
 
-#### Encrypt
+## Encrypt
  
 **Attention!** You must store the **key** that you choosed, and the ***Secret Key*** that was generated in a ***safe place***, if you lost some of these keys, you will not be able to decrypt anymore!
   
@@ -59,7 +59,7 @@
 ``python r_encrypt-text.py`` *This will ask you to input the text and the key.*
 
 
-### Decrypt
+## Decrypt
    
 ***Note*** If the **key** or the **secret key** is not identical, the *decrypt* operation will ***fail***!
 
