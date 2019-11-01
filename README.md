@@ -28,6 +28,9 @@
  - Script to read encrypted data from file and decrypt it.
  - Script to read encrypted data from console and decrypt it.
  
+ # Version 1.2
+ - main.py was deleted.
+
 # What you can do
 
 #### Encrypt
