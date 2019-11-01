@@ -85,5 +85,5 @@
 
 # Author
 
-**Matheus Rambo** (*punishercoder*)
+**Matheus Rambo** [punishercoder](https://github.com/punishercoder)
 
