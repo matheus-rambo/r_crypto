@@ -15,12 +15,13 @@
 
 ``pip install -r requirements.txt``
 
+# Release notes
 
-# Version 1.0
+## Version 1.0
  - Encrypt and Decrypt files.
  - Save files encrypted and decrypted.
 
-# Version 1.1
+## Version 1.1
  - Setting extension for encrypted files.
  - Setting extension for decrypted files.
  - Script to read data from file and encrypt it.
