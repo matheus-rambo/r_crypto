@@ -17,26 +17,25 @@
 
 # Release notes
 
-## Version 1.0
- - Encrypt and Decrypt files.
- - Save files encrypted and decrypted.
+ - Version 1.2
+    - main.py and InvalidFileExtensionException.py were deleted.
+    - Saving information of encryption on file. The user that encrypted, data and the original extension of the file before encryption and more.
+    - When a file is decrypted, it backs to its original file extension.
+    - Removed the *.rdecrypted* extension from files that were decrypted by rcrypt.
+    - Fixed: https://github.com/punishercoder/r_crypto/issues/4
 
-## Version 1.1
- - Setting extension for encrypted files.
- - Setting extension for decrypted files.
- - Script to read data from file and encrypt it.
- - Script to read data from console and encrypt it.
- - Script to read encrypted data from file and decrypt it.
- - Script to read encrypted data from console and decrypt it.
- 
- # Version 1.2
- - main.py and InvalidFileExtensionException.py were deleted.
- - Saving information of encryption on file. The user that encrypted, data and the original extension of the file before encryption and more.
-  - When a file is decrypted, it backs to its original file extension.
-  - Removed the *.rdecrypted* extension from files that were decrypted by rcrypt.
-  - Fixed: https://github.com/punishercoder/r_crypto/issues/4
- 
- 
+ - Version 1.1
+    - Setting extension for encrypted files.
+    - Setting extension for decrypted files.
+    - Script to read data from file and encrypt it.
+    - Script to read data from console and encrypt it.
+    - Script to read encrypted data from file and decrypt it.
+    - Script to read encrypted data from console and decrypt it.
+
+- Version 1.0
+    - Encrypt and Decrypt files.
+    - Save files encrypted and decrypted.
+
 # Usage of r_crypto
 
 #### Encrypt
