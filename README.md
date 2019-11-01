@@ -17,6 +17,11 @@
 
 # Release notes
 
+ - Version 1.2.1
+     - *Fixed*: https://github.com/punishercoder/r_crypto/issues/11
+     - *Fixed*: https://github.com/punishercoder/r_crypto/issues/10
+     - *Fixed*: https://github.com/punishercoder/r_crypto/issues/9
+
  - Version 1.2
     - main.py and InvalidFileExtensionException.py were deleted.
     - Saving information of encryption on file. The user that encrypted, data and the original extension of the file before encryption and more.
