@@ -99,5 +99,5 @@ Print to console:``python main.py <your-file-name>.rencrypted --d --n``
 
 # Author
 
-**Matheus Rambo** (*punishercoder*)
+**Matheus Rambo** [punishercoder](https://github.com/punishercoder)
 
