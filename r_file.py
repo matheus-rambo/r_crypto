@@ -42,10 +42,15 @@ def write_to_file(content:str, filename:str, extension: str, isEncrypt:bool):
         if isEncrypt:
             filename = filename + r_encrypt_extension
         else:
-            filename = filename + extension
+            # Thats a case when user encrypt a text, and then he decrypts it, and choose to save.
+            # so, we will define the extension as .txt
+            filename = filename + ".txt"
     print("The content is on the file: {}".format(filename))
     file = open(filename, "ab+")
-    file.write(content.encode("utf-8"))
+    if type(content) is str:
+        file.write(content.encode("utf-8"))
+    else:
+        file.write(content)
     file.close()
 
 def open_file(filename:str):
