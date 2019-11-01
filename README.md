@@ -32,8 +32,6 @@
 
 #### Encrypt
  
-It will ask you to input your **own key**. Then, with your **key**, we will create the ***Secret key***. We will show you the *Secret Key that was generated*.
- 
 **Attention!** You must store the **key** that you choosed, and the ***Secret Key*** that was generated in a ***safe place***, if you lost some of these keys, you will not be able to decrypt anymore!
   
 *If you want to encrypt a file, use:* 
@@ -55,8 +53,6 @@ It will ask you to input your **own key**. Then, with your **key**, we will crea
 
 ### Decrypt
    
-It will prompt you to you input your key that you choosed when you encrypted, after, it will ask you to input the *Secret Key* that was generated*. 
-
 ***Note*** If the **key** or the **secret key** is not identical, the *decrypt* operation will ***fail***!
 
 *If you want to decrypt a file, use:*
