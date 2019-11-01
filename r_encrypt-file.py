@@ -7,6 +7,7 @@ sys_args_length = len(sys.argv)
 def doCryptographyAction(filename:str, key:str):
     file = r_file.open_file(filename)
     content = r_file.read_file_lines(file)
+    file.close()
     fernet = r_crypto.generate_custom_key(key)
     ciphed = r_crypto.encrypt(fernet, content)
     print("Content encrypted!\n")
