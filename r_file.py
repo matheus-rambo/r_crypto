@@ -1,7 +1,10 @@
-from InvalidFileExtensionException import InvalidFileExtensionException
+from RCrypto import InvalidFileExtensionException
+from getpass import getuser
+from datetime import datetime
+from RCrypto import Info
 
+current_version = "v1.2"
 r_encrypt_extension = ".rencrypted"
-r_decrypt_extension = ".rdecrypted"
 
 def get_file_extension(file:str): 
     if "." in file:
@@ -10,27 +13,39 @@ def get_file_extension(file:str):
     else:
         return ""
 
-def write_to_file(content:str, filename:str, isEncrypt:bool):
-    if '.' in filename:
-        index = filename.index('.')
-        user_extension = filename[index:]
-        filename = filename[:index]
-        if isEncrypt == True:
+def set_info_to_a_file(content:str, filename:str):
+    current_user = getuser()
+    file_extension = get_file_extension(filename)
+    current_time = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
+    additional_info = "#RCRYPTO Information#;{};{};{};{}".format(current_user, current_time, file_extension, current_version)
+    return content + additional_info
+
+def get_file_information(content:str):
+    info = Info()
+    if "#RCRYPTO Information#" in content:
+        info_index = content.rindex("#RCRYPTO Information#")
+        info.content = content[:info_index]
+        info.set_information(content[info_index:])
+    else:
+        info.content = content
+    return info
+
+def write_to_file(content:str, filename:str, extension: str, isEncrypt:bool):
+    if '.' in extension:
+        if isEncrypt:
             filename = filename + r_encrypt_extension
-            if user_extension != r_encrypt_extension:
-                print("We are changing the extension of your file.\nTo use the standard rcrypt encrypted files: {}".format(r_encrypt_extension))
+            if extension != r_encrypt_extension:
+                print("We are changing the extension that you defined to support our encrypted extensions. From: {} to: {}".format(extension, r_encrypt_extension))
         else:
-            filename = filename + r_decrypt_extension
-            if user_extension != r_decrypt_extension:
-                print("We are changing the extension of your file.\nTo use the standard rcrypt decrypted files: {}".format(r_decrypt_extension))    
-    else: 
-         if isEncrypt == True:
+            filename = filename + extension
+    else:
+        if isEncrypt:
             filename = filename + r_encrypt_extension
-         else:
-            filename = filename + r_decrypt_extension
+        else:
+            filename = filename + extension
     print("The content is on the file: {}".format(filename))
     file = open(filename, "ab+")
-    file.write(content.decode("utf-8").encode("utf-8"))
+    file.write(content.encode("utf-8"))
     file.close()
 
 def open_file(filename:str):

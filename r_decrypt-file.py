@@ -1,6 +1,7 @@
 from r_crypto import generate_key, decrypt
 import r_file as r_file
 import sys
+from RCrypto import Info
 
 sys_args_length = len(sys.argv)
 
@@ -10,13 +11,14 @@ def doCryptographyAction(file_name:str, key:str, secret_key: str):
     file.close()
     fernet = generate_key(key, secret_key)
     ciphed = decrypt(fernet, content)
-    print("Content decrypted!\n")
-    if input("Save to a file? yes or no ") in ("yes", "y"):
-         file_writter = input("Insert the name of the file: ")
-         r_file.write_to_file(ciphed, file_writter, False)
-    else:
-        print(ciphed.decode('utf-8'))    
+    info = r_file.get_file_information(ciphed.decode('utf-8'))
 
+    if input("\nSave to a file? yes or no ") in ("yes", "y"):
+         file_writter = input("Insert the name of the file: ")
+         r_file.write_to_file(info.content, file_writter, info.get_original_file_extension(), False)
+         info.print_info()
+    else:
+        info.print_all()
 
 if sys_args_length == 4:
     file_name = sys.argv[1]
