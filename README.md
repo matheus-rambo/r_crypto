@@ -17,18 +17,18 @@
 
 # Release notes
 
-## Version 1.0
- - Encrypt and Decrypt files.
- - Save files encrypted and decrypted.
+ - Version 1.1
+    - Setting extension for encrypted files.
+    - Setting extension for decrypted files.
+    - Script to read data from file and encrypt it.
+    - Script to read data from console and encrypt it.
+    - Script to read encrypted data from file and decrypt it.
+    - Script to read encrypted data from console and decrypt it.
 
-## Version 1.1
- - Setting extension for encrypted files.
- - Setting extension for decrypted files.
- - Script to read data from file and encrypt it.
- - Script to read data from console and encrypt it.
- - Script to read encrypted data from file and decrypt it.
- - Script to read encrypted data from console and decrypt it.
- 
+- Version 1.0
+    - Encrypt and Decrypt files.
+    - Save files encrypted and decrypted.
+
 # Usage of r_crypto
 
 #### Encrypt
