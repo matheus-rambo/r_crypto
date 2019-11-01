@@ -33,6 +33,8 @@
  - Saving information of encryption on file. The user that encrypted, data and the original extension of the file before encryption and more.
   - When a file is decrypted, it backs to its original file extension.
   - Removed the *.rdecrypted* extension from files that were decrypted by rcrypt.
+  - Fixed: https://github.com/punishercoder/r_crypto/issues/4
+ 
  
 # Usage of r_crypto
 
