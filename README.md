@@ -34,7 +34,7 @@
   - When a file is decrypted, it backs to its original file extension.
   - Removed *.rdecrypted* from files that were decrypted by rcrypt.
  
-# What you can do
+# Usage of r_crypto
 
 #### Encrypt
  
