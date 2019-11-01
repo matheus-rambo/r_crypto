@@ -1,4 +1,4 @@
-## A simple project to encrypt/decrypt files/text in a terminal console.
+## A simple terminal tool to encrypt/decrypt files/text in a terminal console.
 
 ***Note*** This project uses *symmetric cryptography*.
 
