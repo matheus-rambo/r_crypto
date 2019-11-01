@@ -1,4 +1,4 @@
-## A simple terminal tool to encrypt/decrypt files/text in a terminal console.
+## A simple terminal tool to encrypt/decrypt files/text.
 
 ***Note*** This project uses *symmetric cryptography*.
 
@@ -15,12 +15,13 @@
 
 ``pip install -r requirements.txt``
 
+# Release notes
 
-# Version 1.0
+## Version 1.0
  - Encrypt and Decrypt files.
  - Save files encrypted and decrypted.
 
-# Version 1.1
+## Version 1.1
  - Setting extension for encrypted files.
  - Setting extension for decrypted files.
  - Script to read data from file and encrypt it.
