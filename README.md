@@ -68,7 +68,7 @@
   ``python main.py <your-file-name>.rencrypted --d --<save-option>``
   
   It will prompt you to you input your key that you choosed when you encrypted, after, it will ask you to input the *Secret Key* that was generated*. 
-  ***Note*** If the **key** or the **secret key** is not identical, the *decrypt* operation will ***fail***!
+  ***Note*** If the **key** or the **secret key** is not identical, the *decrypt* operation will **fail**!
 
 Save to a file: ``python main.py <your-file-name>.rencrypted --d --y``
 
@@ -80,21 +80,21 @@ Print to console:``python main.py <your-file-name>.rencrypted --d --n``
 
 ``python r_decrypt-file.py <your-file-name>.rencrypted <your-key> <your-secret-key>``
 
-``python r_decrypt-file.py <your-file-name>.rencrypted <your-key>`` *This will ask tou to input the secret key.*
+``python r_decrypt-file.py <your-file-name>.rencrypted <your-key>`` *This will ask you to input the secret key.*
 
-``python r_decrypt-file.py <your-file-name>.rencrypted`` *This will ask tou to input the key and the secret key.*
+``python r_decrypt-file.py <your-file-name>.rencrypted`` *This will ask you to input the key and the secret key.*
 
-``python r_decrypt-file.py`` *This will ask tou to input the file, key and the secret key.*
+``python r_decrypt-file.py`` *This will ask you to input the file, key and the secret key.*
 
  *If you want to decrypt a text from terminal, use:*
 
 ``python r_decrypt-text.py <your-text> <your-key> <your-secret-key>``
 
-``python r_decrypt-text.py <your-text> <your-key>`` *This will ask tou to input the secret key.*
+``python r_decrypt-text.py <your-text> <your-key>`` *This will ask you to input the secret key.*
 
-``python r_decrypt-text.py <your-text>`` *This will ask tou to input the key and the secret key.*
+``python r_decrypt-text.py <your-text>`` *This will ask you to input the key and the secret key.*
 
-``python r_decrypt-text.py`` *This will ask tou to input the text, key and the secret key.*
+``python r_decrypt-text.py`` *This will ask you to input the text, key and the secret key.*
 
 # Author
 
