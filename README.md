@@ -43,53 +43,8 @@
 
 # Docs
  - ***Version 1.0***: [v1.0](https://github.com/punishercoder/r_crypto/wiki/Documentation-r_crypto-release-v1.0)
-
-# Usage of r_crypto
-
-## Encrypt
- 
-**Attention!** You must store the **key** that you choosed, and the ***Secret Key*** that was generated in a ***safe place***, if you lost some of these keys, you will not be able to decrypt anymore!
-  
-*If you want to encrypt a file, use:* 
-
-``python r_encrypt-file.py <your-file-name> <your-key>``
-
-``python r_encrypt-file.py <your-file-name>`` *This will ask you to input the key name.*
-
-``python r_encrypt-file.py`` *This will ask you to input the file and the key.*
-
-*If you want to encrypt a text from terminal, use:*
-
-``python r_encrypt-text.py <your-text> <your-key>``
-
-``python r_encrypt-text.py <your-text>`` *This will ask you to input the key name.*
-
-``python r_encrypt-text.py`` *This will ask you to input the text and the key.*
-
-
-## Decrypt
-   
-***Note*** If the **key** or the **secret key** is not identical, the *decrypt* operation will ***fail***!
-
-*If you want to decrypt a file, use:*
-
-``python r_decrypt-file.py <your-file-name>.rencrypted <your-key> <your-secret-key>``
-
-``python r_decrypt-file.py <your-file-name>.rencrypted <your-key>`` *This will ask you to input the secret key.*
-
-``python r_decrypt-file.py <your-file-name>.rencrypted`` *This will ask you to input the key and the secret key.*
-
-``python r_decrypt-file.py`` *This will ask you to input the file, key and the secret key.*
-
- *If you want to decrypt a text from terminal, use:*
-
-``python r_decrypt-text.py <your-text> <your-key> <your-secret-key>``
-
-``python r_decrypt-text.py <your-text> <your-key>`` *This will ask you to input the secret key.*
-
-``python r_decrypt-text.py <your-text>`` *This will ask you to input the key and the secret key.*
-
-``python r_decrypt-text.py`` *This will ask you to input the text, key and the secret key.*
+ - ***Version 1.1***: [v1.1](https://github.com/punishercoder/r_crypto/wiki/Documentation-r_crypto-release-v1.1)
+ - ***Version 1.2***: [v1.2](https://github.com/punishercoder/r_crypto/wiki/Documentation-r_crypto-release-v1.2)
 
 # Author
 
