@@ -20,6 +20,9 @@
  - ***Version 1.3***
     - *Enhancement*: https://github.com/punishercoder/r_crypto/issues/8 
     
+ - ***Version 1.2.2***
+    - *Fixed*: https://github.com/punishercoder/r_crypto/issues/13
+
  - ***Version 1.2.1***
      - *Fixed*: https://github.com/punishercoder/r_crypto/issues/11
      - *Fixed*: https://github.com/punishercoder/r_crypto/issues/10
@@ -43,6 +46,11 @@
 - ***Version 1.0***
     - Encrypt and Decrypt files.
     - Save files encrypted and decrypted.
+
+# Releases 
+ - [*v1.2.2*](https://github.com/punishercoder/r_crypto/releases/tag/v1.2.2) **Stable version**
+ - [*v1.1*](https://github.com/punishercoder/r_crypto/releases/tag/v1.1) 
+ - [*v1.0*](https://github.com/punishercoder/r_crypto/releases/tag/v1.0)
 
 # Docs
  - ***Version 1.0***: [v1.0](https://github.com/punishercoder/r_crypto/wiki/Documentation-r_crypto-release-v1.0)
