@@ -18,7 +18,7 @@
 
 ``pip install -r requirements.txt``
 
-# With Docker 
+## With Docker 
  - *Cloning the project*
 
 ``git clone https://github.com/punishercoder/r_crypto.git``
