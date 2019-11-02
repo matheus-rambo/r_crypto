@@ -29,7 +29,7 @@ class Info():
             pass
 
     def print_all(self):
-        print(self.content)
+        print("\n{}".format(self.content))
         self.print_info()
 
 class UserFile():

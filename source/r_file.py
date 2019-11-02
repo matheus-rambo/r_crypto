@@ -2,7 +2,7 @@ from .RCrypto import InvalidFileExtensionException, Info
 from getpass import getuser
 from datetime import datetime
 
-current_version = "v1.2"
+current_version = "v1.3"
 r_encrypt_extension = ".rencrypted"
 
 def get_file_extension(file:str): 
@@ -65,3 +65,8 @@ def open_rcrypted_file(filename:str):
 
 def read_file_lines(file):
     return file.read()
+   
+
+
+
+
