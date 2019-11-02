@@ -18,7 +18,8 @@
 # Release notes
 
  - ***Version 1.3***
-    - *Enhancement*: https://github.com/punishercoder/r_crypto/issues/8 
+    - *Enhancement*: https://github.com/punishercoder/r_crypto/issues/8
+    - *Enhancement*: https://github.com/punishercoder/r_crypto/issues/14 
     
  - ***Version 1.2.2***
     - *Fixed*: https://github.com/punishercoder/r_crypto/issues/13
