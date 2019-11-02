@@ -1,7 +1,7 @@
-import r_crypto as r_crypto
-import r_file as r_file
+import source.r_crypto as r_crypto
+import source.r_file as r_file
 import sys
-from RCrypto import UserFile
+from source.RCrypto import UserFile
 
 sys_args_length = len(sys.argv)
 

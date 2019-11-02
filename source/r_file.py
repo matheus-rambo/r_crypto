@@ -1,7 +1,6 @@
-from RCrypto import InvalidFileExtensionException
+from .RCrypto import InvalidFileExtensionException, Info
 from getpass import getuser
 from datetime import datetime
-from RCrypto import Info
 
 current_version = "v1.2"
 r_encrypt_extension = ".rencrypted"

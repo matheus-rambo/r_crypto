@@ -7,6 +7,8 @@ class Info():
         self._rcrypt_version = None
     
     def get_original_file_extension(self):
+        if self._original_file_extension is None:
+            return ".txt"
         return self._original_file_extension
         
     def set_information(self, info_content:str):
