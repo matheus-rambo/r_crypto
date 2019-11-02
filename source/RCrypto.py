@@ -49,4 +49,10 @@ class UserFile():
 
 class InvalidFileExtensionException(Exception):
     def __init__(self, message: str):
-        self.message = message
+        # Calls superclass constructor
+        super(InvalidFileExtensionException, self).__init__(message)
+
+class InvalidKeyException(Exception):
+    def __init__(self):
+        self.message = "\n\nWe could not decrypt your content! Are you using the correct key and the correct Secret Key?"
+        super(InvalidKeyException, self).__init__(self.message)
