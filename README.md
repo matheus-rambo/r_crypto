@@ -19,7 +19,13 @@
 
  - ***Version 1.3***
     - *Enhancement*: https://github.com/punishercoder/r_crypto/issues/8
-    - *Enhancement*: https://github.com/punishercoder/r_crypto/issues/14 
+    - *Enhancement*: https://github.com/punishercoder/r_crypto/issues/14
+    - The file r_encrypt-text.py was renamed to encrypt-text.py.
+    - The file r_encrypt-file.py was renamed to encrypt-file.py.
+    - The file r_decrypt-text.py was renamed to decrypt-text.py.
+    - The file r_decrypt-file.py was renamed to decrypt-file.py.
+    - The files r_file.py, r_crypto.py and RCrypto.py were moved to source folder.
+
     
  - ***Version 1.2.2***
     - *Fixed*: https://github.com/punishercoder/r_crypto/issues/13
