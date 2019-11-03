@@ -45,7 +45,7 @@
     - The file r_decrypt-file.py was renamed to decrypt-file.py.
     - The files r_file.py, r_crypto.py and RCrypto.py were moved to source folder.
     - Custom messages when user is using wrong keys to decrypt conntent.
-    - Dockerfile to build images.
+    - Dockerfile to build images ( Images can be created with *release tags* and the *master* branch ).
 
     
  - ***Version 1.2.2***
