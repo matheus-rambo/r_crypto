@@ -31,8 +31,9 @@
 
  - Pulling docker image from docker hub
 
- ***This is not available yet***.
+ ``docker pull rambosaiyan3/r_crypto``
 
+ ``docker run -it r_crypto:latest``
 
 # Release notes
 
