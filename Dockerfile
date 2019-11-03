@@ -7,7 +7,7 @@ RUN apk upgrade --update && \
     wget https://github.com/punishercoder/r_crypto/archive/${VERSION}.zip && \
     unzip ${VERSION}.zip && \
     rm ${VERSION}.zip && \
-    mv r_crypto-${VERSION} r_crypto && \
+    mv r_crypto-* r_crypto && \
     mv r_crypto /home && \
     cd /home/r_crypto && \
     pip3 install --upgrade pip pip && \
