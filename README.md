@@ -91,5 +91,5 @@
 # Author
 
 - **Matheus Rambo**
-  - [GitHub](https://github.com/punishercoder)
-  - [Protonmail](matheusrambo@protonmail.ch)
+  - [*GitHub*](https://github.com/punishercoder)
+  - *e-mail* matheusrambo@protonmail.ch
