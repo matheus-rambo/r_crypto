@@ -41,7 +41,11 @@ def encrypt(fernet:Fernet, content:str):
     return fernet.encrypt(content.encode(utf_8_unicode))
 
 def decrypt(fernet:Fernet, content:str):
-    return (fernet.decrypt(content.encode(utf_8_unicode)))
+    try:
+        return (fernet.decrypt(content.encode(utf_8_unicode)))
+    except Exception:
+        from .RCrypto import InvalidKeyException
+        raise InvalidKeyException()
 
 def convert_to_hex(key:str):
     return key.encode(utf_8_unicode).hex()

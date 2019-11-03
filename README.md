@@ -2,21 +2,52 @@
 
 ***Note*** This project uses *symmetric cryptography*.
 
-**Make sure that you have Python >= 3.7 and pip installed!**
 
 # Undestanding Cryptography
 
  If you want to know more about Symmetric Cryptography, there is a good link of python implementation of **symmetric**: [Symmetric Cryptography](https://docs.python-guide.org/scenarios/crypto/), and this is a link for basic understanding of **symmetric** and **asymmetric** ***encryption/decryption***: [Symmetric vs Asymmetric](https://www.ssl2buy.com/wiki/symmetric-vs-asymmetric-encryption-what-are-differences)
  
-# Installing r_crypto
+# Installing r_crypto 
+
+## Without Docker
+**Make sure that you have Python >= 3.7 and pip3 installed!**
+
 ``git clone https://github.com/punishercoder/r_crypto.git``
 
 ``cd r_crypto``
 
 ``pip install -r requirements.txt``
 
+## With Docker 
+ - *Cloning the project*
+
+``git clone https://github.com/punishercoder/r_crypto.git``
+
+``cd r_crypto``
+
+``docker build -t r_crypto:1.3 .``
+
+``docker run -it -rm r_crypto:1.3``
+
+ - Pulling docker image from docker hub
+
+ ***This is not available yet***.
+
+
 # Release notes
 
+ - ***Version 1.3***
+    - *Enhancement*: https://github.com/punishercoder/r_crypto/issues/8
+    - *Enhancement*: https://github.com/punishercoder/r_crypto/issues/14
+    - The file r_encrypt-text.py was renamed to encrypt-text.py.
+    - The file r_encrypt-file.py was renamed to encrypt-file.py.
+    - The file r_decrypt-text.py was renamed to decrypt-text.py.
+    - The file r_decrypt-file.py was renamed to decrypt-file.py.
+    - The files r_file.py, r_crypto.py and RCrypto.py were moved to source folder.
+    - Custom messages when user is using wrong keys to decrypt conntent.
+    - Dockerfile to build images ( Images can be created with *release tags* and the *master* branch ).
+
+    
  - ***Version 1.2.2***
     - *Fixed*: https://github.com/punishercoder/r_crypto/issues/13
 

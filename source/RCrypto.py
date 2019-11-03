@@ -7,6 +7,8 @@ class Info():
         self._rcrypt_version = None
     
     def get_original_file_extension(self):
+        if self._original_file_extension is None:
+            return ".txt"
         return self._original_file_extension
         
     def set_information(self, info_content:str):
@@ -27,7 +29,7 @@ class Info():
             pass
 
     def print_all(self):
-        print(self.content)
+        print("\n{}".format(self.content))
         self.print_info()
 
 class UserFile():
@@ -47,4 +49,10 @@ class UserFile():
 
 class InvalidFileExtensionException(Exception):
     def __init__(self, message: str):
-        self.message = message
+        # Calls superclass constructor
+        super(InvalidFileExtensionException, self).__init__(message)
+
+class InvalidKeyException(Exception):
+    def __init__(self):
+        self.message = "\n\nWe could not decrypt your content! Are you using the correct key and the correct Secret Key?"
+        super(InvalidKeyException, self).__init__(self.message)
