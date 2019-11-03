@@ -89,6 +89,10 @@
  - ***Version 1.3***: [v1.3](https://github.com/punishercoder/r_crypto/wiki/Documentation-r_crypto-release-v1.3)
 
 
+# Join us
+ - [Slack](https://join.slack.com/t/ramboindustries/shared_invite/enQtODE5MjY0OTgyNzQwLTcyZTBhZTRmNzM2MThhOTAyODNlODg3NTkxNmU0NThjZjUzMDQwYzVkNWYyNDgwMWNmN2UzYTM0Mjk3YzBiNjg)
+
+
 # Author
 
 - **Matheus Rambo**
