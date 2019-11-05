@@ -1,4 +1,4 @@
-# A simple terminal tool to encrypt/decrypt files/text.
+# A simple terminal tool to encrypt/decrypt files/text and hide messages with Steganography.
 
 ***Note*** This project uses *symmetric cryptography*.
 
@@ -7,6 +7,10 @@
 
  If you want to know more about Symmetric Cryptography, there is a good link of python implementation of **symmetric**: [Symmetric Cryptography](https://docs.python-guide.org/scenarios/crypto/), and this is a link for basic understanding of **symmetric** and **asymmetric** ***encryption/decryption***: [Symmetric vs Asymmetric](https://www.ssl2buy.com/wiki/symmetric-vs-asymmetric-encryption-what-are-differences)
  
+# Unsertanding c
+https://www.techopedia.com/definition/4131/steganography
+
+
 # Installing r_crypto 
 
 ## Without Docker
