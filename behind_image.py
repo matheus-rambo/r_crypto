@@ -7,7 +7,7 @@ args_length = len(sys.argv)
 def stenography(original_file_path:str, secret_message:str):
     extension = get_file_extension(original_file_path)
     if is_an_image(extension):
-        if extension == ".jpeg":
+        if extension in (".jpeg", ".jpg"):
             from stegano import exifHeader
             exifHeader.hide(original_file_path, input("Choose a name for the hidden file: ") + extension , secret_message)
         else:

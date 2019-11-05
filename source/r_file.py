@@ -20,7 +20,7 @@ def set_info_to_a_file(content:str, filename:str):
     return content + additional_info
 
 def is_an_image(extension:str):
-    return extension in (".jpeg", ".png")
+    return extension in (".jpeg", ".png", ".jpg")
 
 def get_file_information(content:str):
     info = Info()
