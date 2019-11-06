@@ -1,4 +1,4 @@
-# A simple *cryptography/Steganography* terminal tool.
+# A simple *Cryptography/Steganography* terminal tool.
 
 ***Note*** This project uses *symmetric cryptography*.
 
