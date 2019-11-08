@@ -11,6 +11,12 @@
 https://www.techopedia.com/definition/4131/steganography
 
 
+# Projects that helped and are helping me to build this:
+- Cryptography module: https://github.com/pyca/cryptography
+
+- Steganography module: https://github.com/cedricbonhomme/Stegano
+
+ 
 # Installing r_crypto 
 
 ## Without Docker
