@@ -9,24 +9,25 @@ sys_args_length = len(sys.argv)
 
 def doCryptographyAction(files:[], key:str):
     fernet = r_crypto.generate_custom_key(key)
-    for filename in files:
-        file = r_file.open_file(filename)
+    for file_name in files:
+        file = r_file.open_file(file_name)
         content = r_file.read_file_lines(file)
         file.close()
-        print("Init encryption for {}".format(filename))
+        print("\nInit encryption for {}".format(file_name))
         if input("\nSave to a file? [Yes, No]: ") in ("yes", "y", "Yes", "YES"):
-            content = r_file.set_info_to_a_file(content, filename)
+            content = r_file.set_info_to_a_file(content, file_name)
             ciphed = r_crypto.encrypt(fernet, content)
-            new_file = UserFile(filename)
+            new_file = UserFile(file_name)
             r_file.write_to_file(ciphed, new_file.file_name, new_file.extension, True)
         else:
             ciphed = r_crypto.encrypt(fernet, content)
             print(ciphed.decode('utf-8'))
         
-        if input("\n\nDo you want to remove the original file: {}? [Yes, No]: ".format(filename)) in ("yes", "y", "Yes", "YES"):
+        if input("\n\nDo you want to remove the original file: {}? [Yes, No]: ".format(file_name)) in ("yes", "y", "Yes", "YES"):
             from os import remove
-            remove(filename)
-    
+            remove(file_name)
+    print("\nDone!")
+
 if sys_args_length == 1:
     files = []
     files.append(input("Insert your file: "))
