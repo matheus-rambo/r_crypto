@@ -7,34 +7,32 @@ from getpass import getpass
 
 sys_args_length = len(sys.argv)
 
-def doCryptographyAction(filename:str, key:str):
-    file = r_file.open_file(filename)
-    content = r_file.read_file_lines(file)
-    file.close()
+def doCryptographyAction(files:[], key:str):
     fernet = r_crypto.generate_custom_key(key)
-
-    if input("\nSave to a file? [yes, no]: ") in ("yes", "y", "Yes", "YES"):
-        content = r_file.set_info_to_a_file(content, filename)
-        ciphed = r_crypto.encrypt(fernet, content)
-        file_writter = input("Insert the name of the file: ")
-        new_file = UserFile(file_writter)
-        r_file.write_to_file(ciphed, new_file.file_name, new_file.extension, True)
-    else:
-        ciphed = r_crypto.encrypt(fernet, content)
-        print(ciphed.decode('utf-8'))
-
-    if input("\n\nDo you want to remove the original file: {}? [yes, no]: ".format(filename)) in ("yes", "y", "Yes", "YES"):
+    for file_name in files:
+        file = r_file.open_file(file_name)
+        content = r_file.read_file_lines(file)
+        file.close()
+        print("\nInit encryption for {}".format(file_name))
+        if input("\nSave to a file? [Yes, No]: ") in ("yes", "y", "Yes", "YES"):
+            content = r_file.set_info_to_a_file(content, file_name)
+            ciphed = r_crypto.encrypt(fernet, content)
+            new_file = UserFile(file_name)
+            r_file.write_to_file(ciphed, new_file.file_name, new_file.extension, True)
+        else:
+            ciphed = r_crypto.encrypt(fernet, content)
+            print(ciphed.decode('utf-8'))
+        
+        if input("\n\nDo you want to remove the original file: {}? [Yes, No]: ".format(file_name)) in ("yes", "y", "Yes", "YES"):
             from os import remove
-            remove(filename)
+            remove(file_name)
+    print("\nDone!")
 
-
-if sys_args_length == 3:
-    doCryptographyAction(sys.argv[1], sys.argv[2])
-elif sys_args_length == 2:
-    doCryptographyAction(sys.argv[1], getpass("Insert your key: "))
+if sys_args_length == 1:
+    files = []
+    files.append(input("Insert your file: "))
+    doCryptographyAction(files, getpass("Insert your key: "))
 else:
-    doCryptographyAction(input("Insert your file: "), getpass("Insert your key: "))
-
-
-    
+    files = sys.argv[1:]
+    doCryptographyAction(files, getpass("Insert your key: "))
 
