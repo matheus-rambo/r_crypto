@@ -43,6 +43,11 @@
 
 # Release notes
 
+ - ***Version 1.4***
+    - *Enhancement*: https://github.com/punishercoder/r_crypto/issues/24
+    - User can not choose the name of the files anymore.    
+    - *Fixed security issue when allowing user to pass his keys as command line arguments*.
+
  - ***Version 1.3***
     - *Enhancement*: https://github.com/punishercoder/r_crypto/issues/8
     - *Enhancement*: https://github.com/punishercoder/r_crypto/issues/14
