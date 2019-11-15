@@ -19,6 +19,9 @@ def set_info_to_a_file(content:str, filename:str):
     additional_info = "#RCRYPTO Information#;{};{};{};{}".format(current_user, current_time, file_extension, current_version)
     return content + additional_info
 
+def is_an_image(extension:str):
+    return extension in (".jpeg", ".png", ".jpg")
+
 def get_file_information(content:str):
     info = Info()
     if "#RCRYPTO Information#" in content:

@@ -1,4 +1,4 @@
-# A simple terminal tool to encrypt/decrypt files/text.
+# A simple *Cryptography/Steganography* terminal tool.
 
 ***Note*** This project uses *symmetric cryptography*.
 
@@ -7,6 +7,10 @@
 
  If you want to know more about Symmetric Cryptography, there is a good link of python implementation of **symmetric**: [Symmetric Cryptography](https://docs.python-guide.org/scenarios/crypto/), and this is a link for basic understanding of **symmetric** and **asymmetric** ***encryption/decryption***: [Symmetric vs Asymmetric](https://www.ssl2buy.com/wiki/symmetric-vs-asymmetric-encryption-what-are-differences)
  
+# Undestanding Steganography
+https://www.techopedia.com/definition/4131/steganography
+
+
 # Projects that helped and are helping me to build this:
 - Cryptography module: https://github.com/pyca/cryptography
 
@@ -42,6 +46,13 @@
  ``docker run -it r_crypto:latest``
 
 # Release notes
+
+- ***Version 1.4***
+   - Implemented support for *Steganography*, at this moment we can hide and text or file text inside an image.
+   - We can hide and reveal a message inside an image.
+   - *Enhancement*: https://github.com/punishercoder/r_crypto/issues/24
+   - User can not choose the name of the files anymore.    
+   - *Fixed security issue when allowing user to pass his keys as command line arguments*.
 
  - ***Version 1.3***
     - *Enhancement*: https://github.com/punishercoder/r_crypto/issues/8
@@ -83,6 +94,7 @@
     - Save files encrypted and decrypted.
 
 # Releases 
+ - [*v1.4-steganography*](https://github.com/punishercoder/r_crypto/releases/tag/v1.4-steganography)
  - [*v1.3*](https://github.com/punishercoder/r_crypto/releases/tag/v1.3) **Stable version**
  - [*v1.2.2*](https://github.com/punishercoder/r_crypto/releases/tag/v1.2.2) 
  - [*v1.1*](https://github.com/punishercoder/r_crypto/releases/tag/v1.1) 

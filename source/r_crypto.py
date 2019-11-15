@@ -40,6 +40,9 @@ def generate_key(password:str, decoded_salt:str):
 def encrypt(fernet:Fernet, content:str):
     return fernet.encrypt(content.encode(utf_8_unicode))
 
+def encrypt_bytes(fernet: Fernet, content):
+    return fernet.encrypt(content)
+
 def decrypt(fernet:Fernet, content:str):
     try:
         return (fernet.decrypt(content.encode(utf_8_unicode)))
