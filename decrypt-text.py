@@ -18,16 +18,7 @@ def doCryptographyAction(content:str, key:str, secret_key: str):
         print("\nYour content")
         print(ciphed.decode('utf-8'))    
 
-if sys_args_length == 4:
-    content = sys.argv[1]
-    key = sys.argv[2]
-    secret_key = sys.argv[3]
-    doCryptographyAction(content, key, secret_key)
-elif sys_args_length == 3:
-    content = sys.argv[1]
-    key = sys.argv[2]
-    doCryptographyAction(content, key, getpass("Insert your secret key: "))
-elif sys_args_length == 2:
+if sys_args_length >= 2:
     content = sys.argv[1]
     doCryptographyAction(content, getpass("Insert your key: "), getpass("Insert your secret key: "))
 else:

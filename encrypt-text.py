@@ -17,9 +17,7 @@ def doCryptographyAction(content:str, key:str):
     else:
         print(ciphed.decode('utf-8'))
 
-if sys_args_length == 3:
-    doCryptographyAction(sys.argv[1], sys.argv[2])
-elif sys_args_length == 2:
+if sys_args_length >= 2:
     doCryptographyAction(sys.argv[1], getpass("Insert your key: "))
 else:
     doCryptographyAction(input("Insert your text: "), getpass("Insert your key: "))
