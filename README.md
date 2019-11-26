@@ -49,7 +49,7 @@ https://www.techopedia.com/definition/4131/steganography
 # Release notes
 
 - ***Version 1.4***
-   - Implemented support for *Steganography*, at this moment we can hide and text or file text inside an image.
+   - Implemented support for *Steganography*, at this moment we can hide a text or file text inside an image.
    - We can hide and reveal a message inside an image.
    - *Enhancement*: https://github.com/punishercoder/r_crypto/issues/24
    - User can not choose the name of the files anymore.    
@@ -108,10 +108,6 @@ https://www.techopedia.com/definition/4131/steganography
  - ***Version 1.2***: [v1.2](https://github.com/punishercoder/r_crypto/wiki/Documentation-r_crypto-release-v1.2)
  - ***Version 1.3***: [v1.3](https://github.com/punishercoder/r_crypto/wiki/Documentation-r_crypto-release-v1.3)
  - ***Version 1.4***: [v1.4](https://github.com/punishercoder/r_crypto/wiki/Documentation-r_crypto-release-v1.4)
-
-
-# Join us
- - [Slack](https://join.slack.com/t/ramboindustries/shared_invite/enQtODE5MjY0OTgyNzQwLTcyZTBhZTRmNzM2MThhOTAyODNlODg3NTkxNmU0NThjZjUzMDQwYzVkNWYyNDgwMWNmN2UzYTM0Mjk3YzBiNjg)
 
 
 # Author
