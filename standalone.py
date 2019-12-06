@@ -36,7 +36,7 @@ class Standalone():
         opt = input("Do you want to use a secret key already computed? Remeber, the secret key must be generated with the key! [Yes,No] ")
         
         if opt.lower() in ("yes", "y"):
-             self.secret_key = input("Insert your secret key") 
+             self.secret_key = input("Insert your secret key: ") 
         else:
             self.secret_key = r_crypto.generate_secret_key(self.key)
 
