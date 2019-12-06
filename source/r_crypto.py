@@ -10,11 +10,15 @@ import time
 
 utf_8_unicode = 'utf-8' 
 
-def generate_custom_key(password:str):
+def generate_secret_key(password:str):
     custom_key = convert_to_hex(str(time.time()))
     for integer in range(20):
-        custom_key = custom_key + convert_to_hex(str(random.randint(1000, 10000)))
+       custom_key = custom_key + convert_to_hex(str(random.randint(1000, 10000)))
     custom_key = convert_to_hex(password) + custom_key + convert_to_hex(str(time.time()))
+    return custom_key
+
+def generate_custom_key(password:str):
+    custom_key = generate_secret_key(password)
     print("Warning!!!\nYou must store the Secret Key in a trusted location!\nSecret Key is: {}".format(custom_key))
     kdf = PBKDF2HMAC(
      algorithm=hashes.SHA256(),
@@ -25,6 +29,17 @@ def generate_custom_key(password:str):
     )
     key = base64.urlsafe_b64encode(kdf.derive(password.encode(utf_8_unicode)))
     return Fernet(key)
+
+def generate_fernet_from_key_and_secret_key(key:str, secret_key:str):
+    kdf = PBKDF2HMAC(
+     algorithm=hashes.SHA256(),
+     length=32,
+     salt=bytes(secret_key.encode(utf_8_unicode)),
+     iterations=100000,
+     backend=default_backend()
+    )
+    fernet_key = base64.urlsafe_b64encode(kdf.derive(key.encode(utf_8_unicode)))
+    return Fernet(fernet_key)
 
 def generate_key(password:str, decoded_salt:str):
     kdf = PBKDF2HMAC(
@@ -52,4 +67,5 @@ def decrypt(fernet:Fernet, content:str):
 
 def convert_to_hex(key:str):
     return key.encode(utf_8_unicode).hex()
+
 
