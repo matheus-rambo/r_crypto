@@ -79,7 +79,7 @@ def main():
                     break
 
         elif option == "2":
-            print("Press Ctrl + C(Keyboard Interrupt) to stop encrypt")
+            print("Press Ctrl + C(Keyboard Interrupt) to stop decrypt")
             
             while True:
             
