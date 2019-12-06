@@ -33,7 +33,7 @@ class Standalone():
     # Will update the keys
     def update_keys(self):
         self.key = input("Insert your key: ")
-        opt = input("Do you want to use a secret key already computed? Remeber, the secret key must be generated with the key! [Yes,No] ")
+        opt = input("Do you want to use a secret key already computed? Remeber, the secret key must be generated with the key that you inputted above! [Yes,No] ")
         
         if opt.lower() in ("yes", "y"):
              self.secret_key = input("Insert your secret key: ") 
