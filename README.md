@@ -48,6 +48,9 @@ https://www.techopedia.com/definition/4131/steganography
 
 # Release notes
 
+- ***Version 1.4.1***
+   - Implemented standalone file that can do almost every operation of *r_crypt*.
+
 - ***Version 1.4***
    - Implemented support for *Steganography*, at this moment we can hide a text or file text inside an image.
    - We can hide and reveal a message inside an image.
