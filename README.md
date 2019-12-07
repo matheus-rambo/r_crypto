@@ -29,7 +29,7 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
    - Implemented support for *Steganography*, at this moment we can hide a text or file text inside an image.
    - We can hide and reveal a message inside an image.
    - *Enhancement*: https://github.com/matheus-rambo/r_crypto/issues/24
-   - User can not choose the name of the files anymore.    
+   - User can not choose the name of the files anymore when encrypt/decrypt a file.    
    - *Fixed security issue when allowing user to pass his keys as command line arguments*.
 
  - ***Version 1.3***
