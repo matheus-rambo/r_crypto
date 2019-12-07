@@ -4,7 +4,7 @@ ARG VERSION=master
 
 RUN apk upgrade --update && \ 
     apk add --no-cache python3 python3-dev gcc g++ libffi-dev openssl-dev jpeg-dev && \ 
-    wget https://github.com/punishercoder/r_crypto/archive/${VERSION}.zip && \
+    wget https://github.com/matheus-rambo/r_crypto/archive/${VERSION}.zip && \
     unzip ${VERSION}.zip && \
     rm ${VERSION}.zip && \
     mv r_crypto-* r_crypto && \
