@@ -3,3 +3,4 @@ __pycache__/
 acessos.encrypted
 *.rencrypted
 *.rdecrypted
+*.rkeys

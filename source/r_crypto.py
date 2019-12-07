@@ -15,8 +15,7 @@ class Keys():
         self.secret_key = self.generate_secret_key() if secret_key is None else secret_key
 
     def __del__(self):
-        # show the actual keys
-        self.show_keys()
+        pass
 
     def generate_secret_key(self):
         hexadecimal_key = self.user_key.encode(self.charset).hex()
@@ -25,12 +24,12 @@ class Keys():
         hexadecimal_key = self.user_key.encode(self.charset).hex() + hexadecimal_key + str(time.time()).encode(self.charset).hex()
         return hexadecimal_key
 
-    def save_to_file(self, file_name:str):
-        pass
-
     def show_keys(self):
         print('Your key is:\t{}'.format(self.user_key))
         print('Your secret key is:\t{}'.format(self.secret_key))
+
+    def get_keys(self):
+        return "Key: {}\nSecret Key: {}".format(self.user_key, self.secret_key)
 
 
 class Cryptor():
@@ -42,7 +41,8 @@ class Cryptor():
 
     # Destructor
     def __del__(self):
-        pass
+        del self._fernet
+        del self.keys
     
     
     def generate_fernet(self):
@@ -59,7 +59,7 @@ class Cryptor():
         return Fernet(fernet_key)    
                 
     def encrypt(self, content:str):
-        return self._fernet.encrypt(content.encode(self.charset))
+        return self._fernet.encrypt(content.encode(self.charset)).decode(self.charset)
     
     def decrypt(self, content:str):
         try:
