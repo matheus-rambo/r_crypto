@@ -9,37 +9,53 @@ import random
 import time
 
 class Keys():
-    def __init__(self, user_key:str, secret_key:str = None):
+    def __init__(self, user_key:str, secret_key:str = None, charset:str = 'utf-8'):
         self.user_key = user_key
-        # When decrypt the user already has the secret key
-        self.secret_key = if secret_key is None self.generate_custom_key() else secret_key
-    
+        self.charset = charset
+        self.secret_key = self.generate_secret_key() if secret_key is None else secret_key
+
+    def __del__(self):
+        # show the actual keys
+        self.show_keys()
+
     def generate_secret_key(self):
-        hexadecimal_key = self.user_key.hex()
+        hexadecimal_key = self.user_key.encode(self.charset).hex()
         for integer in range(20):
-            hexadecimal_key = hexadecimal_key + str(random.randint(1000, 10000)).hex()
-        hexadecimal_key = self.user_key.hex() + hexadecimal_key + str(time.time()).hex()
+            hexadecimal_key = hexadecimal_key + str(random.randint(1000, 10000)).encode(self.charset).hex()
+        hexadecimal_key = self.user_key.encode(self.charset).hex() + hexadecimal_key + str(time.time()).encode(self.charset).hex()
         return hexadecimal_key
 
     def save_to_file(self, file_name:str):
         pass
 
+    def show_keys(self):
+        print('Your key is:\t{}'.format(self.user_key))
+        print('Your secret key is:\t{}'.format(self.secret_key))
+
 
 class Cryptor():
+    # Constructor
     def __init__(self, user_key:str, secret_key:str = None, charset:str = 'utf-8'):
         self.keys = Keys(user_key, secret_key)
         self.charset = charset
         self._fernet = self.generate_fernet()
+
+    # Destructor
+    def __del__(self):
+        pass
+    
     
     def generate_fernet(self):
+        secret_key = self.keys.secret_key
+        key = self.keys.user_key
         kdf = PBKDF2HMAC(
         algorithm=hashes.SHA256(),
         length=32,
-        salt=bytes(self.keys.secret_key.encode(utf_8_unicode)),
+        salt=bytes(secret_key.encode(self.charset)),
         iterations=100000,
         backend=default_backend()
         )
-        fernet_key = base64.urlsafe_b64encode(kdf.derive(keys.user_key.encode(utf_8_unicode)))
+        fernet_key = base64.urlsafe_b64encode(kdf.derive(key.encode(self.charset)))        
         return Fernet(fernet_key)    
                 
     def encrypt(self, content:str):
