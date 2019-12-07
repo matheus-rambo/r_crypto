@@ -2,7 +2,7 @@ from source.r_crypto import Cryptor, Keys
 import argparse
 from source.app_util import convert_string_to_bool, write
 
-parser = argparse.ArgumentParser(description='Encrypt some text.', add_help=True)
+parser = argparse.ArgumentParser(description='Encrypt some text. For security reasons, you can not pass your text and your keys as command line arguments', add_help=True)
 
 parser.add_argument('--destiny-file', '--df', type=str, help='File that the text encrypted will be stored.', dest='destiny_file')
 parser.add_argument('--show', '--s', type=str, default='n', help='Show the characters that you typed.', dest='show_user_input')
