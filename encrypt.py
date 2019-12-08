@@ -40,6 +40,7 @@ keys_destiny_file = args.keys_destiny_file
 # if the users wants to encrypt a file
 is_file = convert_string_to_bool(args.is_file)
 
+# Size of buffer for reading characters of a text file
 buffer_size = args.buffer_size
 
 def main():
@@ -68,6 +69,7 @@ def main():
             message = read_file_content(file_name, buffer_size)
             
         else:
+            # user want to encrypt a text message
             message = input('Insert your message: \t')
     
     else:
