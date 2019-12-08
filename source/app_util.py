@@ -17,4 +17,19 @@ def write(file_name:str, content:str, extension:str):
     with open(file_name, 'wt') as file:
         file.write(content)
 
+
+# rt means Read Text
+def read_file_content(file_name:str, buffer_size:int):
+    content = ""
+    data = -1
+    position = 0
+    with open(file_name, 'rt') as file:
+        while data != "":
+            data = file.read(buffer_size) 
+            position = position + buffer_size
+            file.seek(position)
+            content = content + data
+    return content
+    
+ 
     
