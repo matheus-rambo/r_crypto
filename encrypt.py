@@ -14,18 +14,18 @@ required.add_argument('-is-file', type=str, help='If you want to encrypt a file,
 
 
 # optional arguments
-optional.add_argument('--destiny-file', type=str, help='File that the text encrypted will be stored.', dest='destiny_file')
+optional.add_argument('--save-content', type=str, help='If you want to save the encrypted content to a file, otherwise it will be prompted at console.', dest='save_content')
 optional.add_argument('--show', type=str, default='n', help='Show the characters that you typed.', dest='show_user_input')
 optional.add_argument('--secret-key-computed', type=str, default='n', help='If you have an secret key that was generated with your key, you can use it here.', dest='is_secret_key_computed' )
-optional.add_argument('--keys-destiny-file', type=str, help='If you want to save the keys at a file. Otherwise, the keys will be prompted.', dest='keys_destiny_file')
+optional.add_argument('--save-keys', type=str, help='If you want to save the keys at a file. Otherwise, the keys will be prompted.', dest='save_keys')
 optional.add_argument('--buffer-size', type=int, default=2048, help='Size of the buffer when reading data of a file', dest='buffer_size')
 
 
 # we get the command line arguments
 args = parser.parse_args() 
 
-# the file of destiny to store the encrypted text
-destiny_file = args.destiny_file
+# if user wants to save the encrypted content
+save_content = args.save_content
 
 # if user want to see his inputs
 show_user_input = convert_string_to_bool(args.show_user_input)
@@ -35,7 +35,7 @@ show_user_input = convert_string_to_bool(args.show_user_input)
 is_secret_key_computed = convert_string_to_bool(args.is_secret_key_computed)
 
 # if the user want to save the keys at a file
-keys_destiny_file = args.keys_destiny_file
+save_keys = args.save_keys
 
 # if the users wants to encrypt a file
 is_file = convert_string_to_bool(args.is_file)
@@ -51,9 +51,9 @@ def main():
     # secret key generated
     secret_key = None
     
-    # message that will be encrypted
-    message = None
-    
+    # messages that will be encrypt
+    messages = []
+        
     if show_user_input:
         
         key = input('Insert your key:\t')
@@ -63,14 +63,18 @@ def main():
         # if the user wants to encrypt a file 
         if is_file:
             # we read the file name and then read its content
-            file_name = input('Insert the path of the file: \t')        
+            print('For two or more files, type: file1 file2 file3 . . .')
+            files_string = input('Insert the path of the files: \t')        
             
-            # reads the content of the file
-            message = read_file_content(file_name, buffer_size)
+            files = files_string.split(' ')
+            
+            for file_name in files:
+                # reads the content of a file
+                messages.append(read_file_content(file_name, buffer_size))
             
         else:
             # user want to encrypt a text message
-            message = input('Insert your message: \t')
+            messages.append(input('Insert your message: \t'))
     
     else:
         from getpass import getpass
@@ -80,10 +84,17 @@ def main():
             secret_key = getpass('Insert your secret key:\t')
             
         if is_file:
-            file_name = getpass('Insert the path of the file: \t')        
-            message = read_file_content(file_name, buffer_size)
+            # we read the file name and then read its content
+            print('For two or more files, type: file1 file2 file3 . . .')
+            files_string = input('Insert the path of the files: \t')        
+
+            # splits multiple files            
+            files = files_string.split(' ')
+            
+            for file_name in files:
+                messages.append(read_file_content(file_name, buffer_size))
         else:
-            message = getpass('Insert your message: \t')
+            messages.append(getpass('Insert your message: \t'))
 
         
     # cryptor object    
@@ -92,25 +103,47 @@ def main():
     # keys object
     keys = cryptor.keys
     
-    # encrypted message
-    encrypted_message = cryptor.encrypt(message)
-    
-    # user wants to save his encrypted content in a file
-    if destiny_file is not None:
-        write(destiny_file, encrypted_message, '.rencrypted')
-    
-    else:
-        # just prompt
-        print('Your encrypted text:\t{}'.format(encrypted_message))
+    for message in messages:
         
-    
-    if  keys_destiny_file is not None:
+        # encrypted message
+        encrypted_message = cryptor.encrypt(message)
+        
+        # user wants to save his encrypted content in a file
+        if save_content:
+            destiny_file = None
+        
+            if show_user_input:
+                destiny_file = input('Insert the name of encrypted file: \t')
+            else:
+                from getpass import getpass
+                destiny_file = getpass('Insert the name of encrypted file: \t')
+        
+            write(destiny_file, encrypted_message, '.rencrypted')
+        
+        else:
+            # just prompt
+            print('Your encrypted text:\t{}'.format(encrypted_message))
+            
+        
+        
+    if  save_keys is not None:
         # save the keys to a file
-        write(keys_destiny_file, keys.get_keys(), '.rkeys')
+        keys_destiny_file = None
         
+        if show_user_input:
+            keys_destiny_file = input('Insert the name of keys file: \t')
+        else:
+            from getpass import getpass
+            keys_destiny_file = getpass('Insert the name of keys file: \t')        
+        
+        write(keys_destiny_file, keys.get_keys(), '.rkeys')
+            
     else:
         # show the keys at the console
         keys.show_keys()
+
+
+
         
     
 if __name__ == "__main__":
