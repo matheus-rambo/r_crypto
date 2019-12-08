@@ -22,14 +22,21 @@ class Keys():
         for integer in range(20):
             hexadecimal_key = hexadecimal_key + str(random.randint(1000, 10000)).encode(self.charset).hex()
         hexadecimal_key = self.user_key.encode(self.charset).hex() + hexadecimal_key + str(time.time()).encode(self.charset).hex()
+        print('\nSecret key was generated.')
         return hexadecimal_key
 
     def show_keys(self):
-        print('Your key is:\t{}'.format(self.user_key))
+        print('\nYour key is:\t{}'.format(self.user_key))
         print('Your secret key is:\t{}'.format(self.secret_key))
 
     def get_keys(self):
-        return "Key: {}\nSecret Key: {}".format(self.user_key, self.secret_key)
+        from json import dumps
+        json = {
+            "key": self.user_key,
+            "secret_key": self.secret_key
+        }
+        return dumps(json)        
+        
 
 
 class Cryptor():

@@ -4,3 +4,4 @@ acessos.encrypted
 *.rencrypted
 *.rdecrypted
 *.rkeys
+source/*.pyc
