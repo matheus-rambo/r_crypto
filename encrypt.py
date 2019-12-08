@@ -14,11 +14,11 @@ required.add_argument('-is-file', type=str, help='If you want to encrypt a file,
 
 
 # optional arguments
-optional.add_argument('--destiny-file', '--df', type=str, help='File that the text encrypted will be stored.', dest='destiny_file')
-optional.add_argument('--show', '--s', type=str, default='n', help='Show the characters that you typed.', dest='show_user_input')
-optional.add_argument('--secret-key-computed', '--skc', type=str, default='n', help='If you have an secret key that was generated with your key, you can use it here.', dest='is_secret_key_computed' )
-optional.add_argument('--keys-destiny-file', '--kdf', type=str, help='If you want to save the keys at a file. Otherwise, the keys will be prompted.', dest='keys_destiny_file')
-optional.add_argument('--buffer-size', '--bs', type=int, default=2048, help='Size of the buffer when reading data of a file', dest='buffer_size')
+optional.add_argument('--destiny-file', type=str, help='File that the text encrypted will be stored.', dest='destiny_file')
+optional.add_argument('--show', type=str, default='n', help='Show the characters that you typed.', dest='show_user_input')
+optional.add_argument('--secret-key-computed', type=str, default='n', help='If you have an secret key that was generated with your key, you can use it here.', dest='is_secret_key_computed' )
+optional.add_argument('--keys-destiny-file', type=str, help='If you want to save the keys at a file. Otherwise, the keys will be prompted.', dest='keys_destiny_file')
+optional.add_argument('--buffer-size', type=int, default=2048, help='Size of the buffer when reading data of a file', dest='buffer_size')
 
 
 # we get the command line arguments
