@@ -1,7 +1,7 @@
-from source.classes import Cryptor, Keys
 import argparse
-from source.app_util import write, read_file_content
 from getpass import getpass
+from source.classes import Cryptor, Keys
+from source.app_util import write, read_file_content
 
 
 parser = argparse.ArgumentParser(description='Encrypt/Decrypt text and text files with this script. With this tool, you can encrypt/decrypt files, and texts, then save them, load file of keys and creates keys file.')
@@ -13,7 +13,7 @@ optional = parser.add_argument_group('optional arguments')
 
 # required arguments
 required.add_argument('-is-file', type=int, choices=[1,0], help='If you want to work over a file, otherwise a text will be used', required=True, dest='is_file')
-required.add_argument('-is-encryption', type=int, choices=[1,0], help='If you want to encrypt a file, otherwise we will decrypt', required=True, dest='is_encryption')
+required.add_argument('-is-encryption', type=int, choices=[1,0], help='If you want to work with encryption, otherwise we will decrypt', required=True, dest='is_encryption')
 
 
 # optional arguments
