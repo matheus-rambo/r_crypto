@@ -130,7 +130,7 @@ def main():
             # we read the file name and then read its content
             print('\nFor two or more files, type: file1 file2 file3 . . .')
             files_string = getpass('Insert the path of the files: \t')        
- 
+
             # splits multiple files            
             files = files_string.split(' ')
             
@@ -143,7 +143,7 @@ def main():
                 name = "message"
             else:
                 name = "encrypted message"    
-                 
+                
             messages.append(getpass('Insert the {}: \t'.format(name)))
 
     if is_encryption:
@@ -168,14 +168,9 @@ def main():
 
     for message in messages:
         
-        content = None
-
-        if is_encryption:
-            content = cryptor.encrypt(message)
-        else:
-            content = cryptor.decrypt(message)
-
-
+        # encrypted message
+        encrypted_message = cryptor.encrypt(message)
+        
         # user wants to save his encrypted content in a file
         if save_content:
             print('\n\tInit save content to a file process . . .')
