@@ -1,4 +1,4 @@
-from source.r_crypto import Cryptor, Keys
+from source.classes import Cryptor, Keys
 import argparse
 from source.app_util import write, read_file_content
 from getpass import getpass
@@ -16,7 +16,6 @@ required.add_argument('-is-file', type=int, choices=[1,0], help='If you want to 
 required.add_argument('-is-encryption', type=int, choices=[1,0], help='If you want to encrypt a file, otherwise we will decrypt', required=True, dest='is_encryption')
 
 
-
 # optional arguments
 optional.add_argument('--save-content', type=int, choices=[1, 0], default=0,  help='If you want to save the encrypted content to a file, otherwise it will be prompted at console.', dest='save_content')
 optional.add_argument('--show', type=int, choices=[1, 0], default=0, help='Show the characters that you typed.', dest='show_user_input')
@@ -26,9 +25,16 @@ optional.add_argument('--buffer-size', type=int, default=2048, help='Size of the
 optional.add_argument('--read-keys-file', type=int, choices=[1, 0], default=0, help='If you have a keys file, you can read it.', dest='read_keys_file')
 
 
-
 # we get the command line arguments
 args = parser.parse_args() 
+
+
+# if the users wants to encrypt a file
+is_file = args.is_file
+
+# if user wants to encrypt
+is_encryption = args.is_encryption
+
 
 # if user wants to save the encrypted content
 save_content = args.save_content
@@ -42,12 +48,6 @@ is_secret_key_computed = args.is_secret_key_computed
 
 # if the user want to save the keys at a file
 save_keys = args.save_keys
-
-# if the users wants to encrypt a file
-is_file = args.is_file
-
-# if user wants to encrypt
-is_encryption = args.is_encryption
 
 # Size of buffer for reading characters of a text file
 buffer_size = args.buffer_size

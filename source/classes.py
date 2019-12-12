@@ -38,6 +38,10 @@ class Keys():
         return dumps(json)        
         
 
+class InvalidKeyException(Exception):
+    def __init__(self):
+        self.message = "\n\nWe could not decrypt your content! Are you using the correct key and the correct Secret Key?"
+        super(InvalidKeyException, self).__init__(self.message)
 
 class Cryptor():
     # Constructor
@@ -72,7 +76,6 @@ class Cryptor():
         try:
             return self._fernet.decrypt(content.decode(self.charset))
         except Exception:
-            from .RCrypto import InvalidKeyException
             raise InvalidKeyException()
     
 
