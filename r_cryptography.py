@@ -55,170 +55,136 @@ buffer_size = args.buffer_size
 # if the user wants to read the keys from a file
 read_keys_file = args.read_keys_file
 
+
+def read_data_from_console(message: str):
+    if show_user_input:
+        return input(message)
+    else:
+        return getpass(message) 
+    
+
+def keys_stage():
+    print('\n\tInit keys stage . . . ')
+    key = None
+    secret_key = None
+    if read_keys_file:
+        keys_file = read_data_from_console('Insert the name of yours keys file:\t')
+        keys_content = read_file_content(keys_file, buffer_size)
+        from json import loads
+        key = loads(keys_content)['key']
+        secret_key = loads(keys_content)['secret_key']
+        print('\nKeys were loaded') 
+    else:
+        key = read_data_from_console('Insert your key:\t')
+        if is_secret_key_computed:
+            secret_key = read_data_from_console('Insert your secret key:\t')
+    
+    print('\n\tKeys stage was finished!')
+    return {
+        'key': key,
+        'secret_key': secret_key
+    }
+
+def read_user_content_stage():
+    print('\n\tInit read user content stage . . .\n')
+    content_to_work = []
+    if is_file:
+        print('For two or more files, type: file1 file2 file3 . . .')
+        files_string = read_data_from_console('Insert the path of the file(s):\t')
+        files = files_string.split(' ')
+        for file_name in files:
+            print('Reading content of the file: {}'.format(file_name))
+            content_to_work.append(read_file_content(file_name, buffer_size))
+
+    else:
+        if is_encryption:
+            content_to_work.append(read_data_from_console('Insert the message:\t'))
+        else:
+            content_to_work.append(read_data_from_console('Insert the encrypted message:\t'))
+
+    print('\n\tRead user content stage was finished!')
+    return content_to_work
+
+
+def encrypt_stage(content: list, cryptor: Cryptor):
+    encrypted_content = []
+    print('\n\tInit encryption stage . . .\n')
+    for index in range(0, len(content)):
+        print('Encrypting content: {}'.format(index + 1))
+        encrypted_content.append(cryptor.encrypt(content[index]))
+
+    print('\n\tEncryption stage was finished!')
+    return encrypted_content
+
+def decrypt_stage(content: list, cryptor: Cryptor):
+    decrypted_content = []
+    print('\n\tInit decryption stage . . .\n')
+    for index in range(0, len(content)):
+        print('Decrypting content: {}'.format(index + 1))
+        decrypted_content.append(cryptor.decrypt(content[index]))
+
+    print('\n\tDecryption stage was finished!')
+    return encrypted_content
+
+def save_content_stage(contents: list):
+    extension = '.rencryptd' if is_encryption else '.rdecrypted'
+    message = 'encrypted' if is_encryption else 'decrypted'
+    print('\n\tInit save content stage . . .\n')
+
+    for content in contents:
+        file_name = read_data_from_console('Insert the name of {} file:\t'.format(message))
+        write(file_name, content, extension)
+        print('File created: {}'.format(file_name + extension))
+
+    print('\n\tSave content stage was finished!')
+
+def print_content_stage(contents:list):
+    print('\n\tInit print content stage . . .\n')
+    message = 'Your encrypted content:\t{}\n' if is_encryption else 'Your decrypted content:\t{}\n'
+    for content in contents:
+        print(message.format(content))
+    print('\tPrint content stage finished!')    
+
+
+def save_keys_stage(keys:Keys):
+    print('\n\tInit save keys stage . . .\n')
+    keys_file = read_data_from_console('Insert the name of keys file:\t')
+    write(keys_file, keys.get_keys(), '.rkeys')
+    print('File created: {}'.format(keys_file + '.rkeys'))
+    print('\nSave keys stage was finished!')
+
+def print_keys_stage(keys: Keys):
+    print('\n\tInit print keys stage . . .\n')
+    keys.show_keys()
+    print('\nPrint keys stage was finished!')
+
+
+
+
 def main():      
 
 
-    # user key
-    key = None  
-    
-    # secret key generated
-    secret_key = None
-    
-    # messages that will be encrypt
-    messages = []
-        
-    print('\n\tInit keys process . . .')     
-        
-    if show_user_input:
-        
-        # if user wants to read his keys from a file
-        if read_keys_file:
-            keys_file = input("Input your keys file:\t")
-            keys_content = read_file_content(keys_file, buffer_size)
-            from json import loads
-            key = loads(keys_content)['key']
-            secret_key = loads(keys_content)['secret_key']
-            print('\nKeys were loaded')     
-        
-        else:
-            key = input('Insert your key:\t')
-            if is_secret_key_computed:
-                secret_key = input('Insert your secret key:\t')
-        
-        print('\n\tInit read content process . . .')
-        
-        # if the user wants to encrypt a file 
-        if is_file:
-            # we read the file name and then read its content
-            print('\nFor two or more files, type: file1 file2 file3 . . .')
-            files_string = input('Insert the path of the files: \t')        
-            
-            files = files_string.split(' ')
-            
-            for file_name in files:
-                # reads the content of a file
-                messages.append(read_file_content(file_name, buffer_size))
-            
-        else:
-            # user wants to encrypt a text message
-            name = None
-            if is_encryption:
-                name = "message"
-            else:
-                name = "encrypted message"    
-
-            messages.append(input('Insert the {}: \t'.format(name)))
-    
-    else:
-
-        # if user wants to read his keys from a file
-        if read_keys_file:
-            keys_file = getpass("Input your keys file:\t")
-            keys_content = read_file_content(keys_file, buffer_size)
-            from json import loads
-            key = loads(keys_content)['key']
-            secret_key = loads(keys_content)['secret_key']
-            print('\nKeys were loaded')     
-        
-        else:
-            key = getpass('Insert your key:\t')
-            if is_secret_key_computed:
-                secret_key = getpass('Insert your secret key:\t')
-
-            
-        if is_file:
-            # we read the file name and then read its content
-            print('\nFor two or more files, type: file1 file2 file3 . . .')
-            files_string = getpass('Insert the path of the files: \t')        
-
-            # splits multiple files            
-            files = files_string.split(' ')
-            
-            for file_name in files:
-                messages.append(read_file_content(file_name, buffer_size))
-        else:
-            # user wants to encrypt a text message
-            name = None
-            if is_encryption:
-                name = "message"
-            else:
-                name = "encrypted message"    
-                
-            messages.append(getpass('Insert the {}: \t'.format(name)))
-
-    if is_encryption:
-        print('\n\tInit encryption process . . .')
-    else:
-        print('\n\tInit decryption process . . .')
-   
+    keys = keys_stage()
+    content = read_user_content_stage()
 
     # cryptor object    
-    cryptor = Cryptor(key, secret_key)    
+    cryptor = Cryptor(keys['key'], keys['secret_key'])    
     
-    # keys object
-    keys = cryptor.keys
-    
-    file_extension = None
-
-    if save_content and is_encryption:
-        file_extension = '.rencrypted'
-    elif save_content and not is_encryption:
-        file_extension = '.rdecrypted'
-
-
-    for message in messages:
-        
-        # encrypted message
-        encrypted_message = cryptor.encrypt(message)
-        
-        # user wants to save his encrypted content in a file
-        if save_content:
-            print('\n\tInit save content to a file process . . .')
-            destiny_file = None
-        
-            if is_encryption:
-                if show_user_input:
-                    destiny_file = input('Insert the name of encrypted file: \t')
-                else:
-                    destiny_file = getpass('Insert the name of encrypted file: \t')
-
-            else:
-                if show_user_input:
-                    destiny_file = input('Insert the name of decrypted file: \t')
-                else:
-                    destiny_file = getpass('Insert the name of decrypted file: \t')
-
-            
-            write(destiny_file, encrypted_message, file_extension)
-            print("\nFile created: {}".format(destiny_file + file_extension))
-        
-        
-        else:
-
-            if is_encryption:
-                print('Your encrypted text:\t{}'.format(encrypted_message))
-            else:
-                print('Your decrypted text:\t{}'.format(encrypted_message))
-            
-        
-    if save_keys:
-        
-        print('\n\tInit save keys to a file process . . .')
-        
-        # save the keys to a file
-        keys_destiny_file = None
-        
-        if show_user_input:
-            keys_destiny_file = input('Insert the name of keys file: \t')
-        else:
-            keys_destiny_file = getpass('Insert the name of keys file: \t')        
-        
-        write(keys_destiny_file, keys.get_keys(), '.rkeys')
-        print('\nKeys file created: {}'.format(keys_destiny_file + '.rkeys'))
-            
+    if is_encryption:
+        content = encrypt_stage(content, cryptor)
     else:
-        # show the keys at the console
-        keys.show_keys()
+        content = decrypt_stage(content, cryptor)
+
+
+    if save_content:
+        save_content_stage(content)
+    else:
+        print_content_stage(content)
+
+    if save_keys:
+        save_keys_stage(cryptor.keys)
+    else:
+        print_keys_stage(cryptor.keys)
 
     
 if __name__ == "__main__":

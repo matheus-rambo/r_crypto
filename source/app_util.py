@@ -1,10 +1,3 @@
-# verifies a boolean string 
-def convert_string_to_bool(string:str):
-    if string.lower() in ("yes", "y", "true", "t", "1"):
-        return True
-    else:
-        return False
-    
 # writes text content to a file
 # Note that the parameter 'wt' overwrites the content if the file exists    
 # 'wt' means Writes Text, it is the same as just 'w'

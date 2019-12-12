@@ -78,4 +78,3 @@ class Cryptor():
         except Exception:
             raise InvalidKeyException()
     
-
