@@ -46,15 +46,18 @@ class InvalidKeyException(Exception):
 class Cryptor():
     # Constructor
     def __init__(self, user_key:str, secret_key:str = None, charset:str = 'utf-8'):
-        self.keys = Keys(user_key, secret_key)
-        self.charset = charset
-        self._fernet = self.generate_fernet()
+        self.update_keys(user_key, secret_key, charset)
 
     # Destructor
     def __del__(self):
         del self._fernet
         del self.keys
     
+    def update_keys(self, user_key: str, secret_key:str = None, charset:str = 'utf-8'):
+        self.keys = Keys(user_key, secret_key)
+        self.charset = charset
+        self._fernet = self.generate_fernet()
+
     
     def generate_fernet(self):
         secret_key = self.keys.secret_key
@@ -74,7 +77,7 @@ class Cryptor():
     
     def decrypt(self, content:str):
         try:
-            return self._fernet.decrypt(content.decode(self.charset))
+            return self._fernet.decrypt(content.encode(self.charset)).decode(self.charset)
         except Exception:
             raise InvalidKeyException()
     

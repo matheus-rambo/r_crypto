@@ -1,113 +1,77 @@
-#!/usr/bin/python3.7
+from source.classes import Cryptor, Keys, InvalidKeyException
 
-# -*- coding: utf-8 -*-
-
-import source.r_crypto as r_crypto
-from cryptography.fernet import Fernet
-from source.RCrypto import InvalidKeyException
-
-
-class Standalone():
-    def __init__(self):
-        self.key = None
-        self.secret_key = None
-        self.fernet = None
-        self.generate_default_keys()
-
-    # Will generate the default keys to the user
-    def generate_default_keys(self):
-        print("Generating default keys . . . ")
-        self.key = "K3RN31_p2n1C_matheus*%61"
-        self.secret_key = r_crypto.generate_secret_key(self.key)
-        self.fernet = r_crypto.generate_fernet_from_key_and_secret_key(self.key, self.secret_key)
-        print("Done . . .\tDefault keys were generated!")
-
-    # will encrypt and return
-    def encrypt_message(self, message:str):
-        return r_crypto.encrypt(self.fernet, message)
-
-    # will decrypt and return
-    def decrypt_message(self, message: str):
-        return r_crypto.decrypt(self.fernet, message)
-
-    # Will update the keys
-    def update_keys(self):
-        self.key = input("Insert your key: ")
-        opt = input("Do you want to use a secret key already computed? Remeber, the secret key must be generated with the key that you inputted above! [Yes,No] ")
-        
-        if opt.lower() in ("yes", "y"):
-             self.secret_key = input("Insert your secret key: ") 
-        else:
-            self.secret_key = r_crypto.generate_secret_key(self.key)
-
-        self.fernet = r_crypto.generate_fernet_from_key_and_secret_key(self.key, self.secret_key)
-        print("Keys were updated!")
-    
-    def show_keys(self):
-        print("\nYour key is: {}".format(self.key))
-        print("Your secret key is: {}\n".format(self.secret_key))
-        print("Now, you can share this keys with your friends...")
-
+def generate_key(base_key : str = None):
+    if base_key is None:
+        base_key = 'rcryto_tool*(matheus)'
+        import random
+        size = len(base_key)
+        key = ""
+        for x in range(0, 15):
+            key = key + base_key[random.randint(0, size - 1)] 
+        return key
+    return base_key
 
 
 def main():
-    # Create the object to help us work with some defined methods
-    standalone = Standalone()
-
+    print("Welcome . . .\n\tGenerating default keys . . .")
+    key = generate_key()
+    cryptor = Cryptor(key) 
 
     while True:
-        print("\n1 - Encrypt messages")
-        print("2 - Decrypt messages")
-        print("3 - Update key and generate a new secret key")
-        print("4 - Show my keys")
-        print("5 - Exit\n")
+        print('\n1 - Encrypt messages.')
+        print('\n2 - Decrypt messages.')
+        print('\n3 - Update key and secret key.')
+        print('\n4 - Show key and secret key.')
+        print('\n5 - Exit.')
 
-
-        option = input("What do you want to do? ")
+        option = input("\nWhat do you want to do? ")
         if option == "1":
-            print("Press Ctrl + C(Keyboard Interrupt) to stop encrypt")
-            
             while True:
-            
                 try:
-                    message = input("Type:\t")
-                    print(standalone.encrypt_message(message).decode('utf-8'))
+                    message = input("Insert you message: \t")
+                    encrypted = cryptor.encrypt(message)
+                    print('Your encrypted message:\t{}'.format(encrypted))
 
-                # When user want to stop
                 except KeyboardInterrupt:
-                    print("Stop encryption...")
+                    print('\nKeyboard interrupt. Stopping encryption . . .')
                     break
+                
 
         elif option == "2":
-            print("Press Ctrl + C(Keyboard Interrupt) to stop decrypt")
-            
             while True:
-            
                 try:
-                    message = input("Type:\t")
-                    print(standalone.decrypt_message(message).decode('utf-8'))
-
-                # When user want to stop
+                    encrypted = input('Insert your encrypted message:\t')
+                    message = cryptor.decrypt(encrypted)
+                    print('Your message:\t{}'.format(message))
                 except KeyboardInterrupt:
-                    print("Stop decryption...")
+                    print('\nKeyboard interrupt. Stopping decryption . . .')
                     break
                 except InvalidKeyException:
                     print("\nYou are not using the correct keys!\tStopping decryption . . . ")
                     break
 
         elif option == "3":
-            standalone.update_keys()
-        
+            key = input("Insert your key.\nTip: Leave it blank if you want to use a auto generated key:")
+            key = generate_key() if key is None or key.strip() == "" else key
+            secret_key = None
+            if key is not None:
+                secret_key = input("Insert your secret key.\nTip: Leave it blank if you want to use a auto generated key:")
+                secret_key = None if secret_key is None or secret_key.strip() == "" else secret_key
+            cryptor.update_keys(key, secret_key)
+            print('\nKeys were updated!')
+
         elif option == "4":
-            standalone.show_keys()
+            keys = cryptor.keys.get_keys()
+            print(keys)
 
         elif option == "5":
             break
+
         else:
-            print("Sorry, this option is not available.")
+            print('\nInvalid option!')
 
-    print("Bye . . . \tHave a nice day!")
 
-# calls the main method
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
+    print('\n\tDone\n\t\tHave a nice day.')
+    
