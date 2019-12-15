@@ -2,7 +2,7 @@ from source.classes import Cryptor, Keys, InvalidKeyException
 
 def generate_key(base_key : str = None):
     if base_key is None:
-        base_key = 'rcryto_tool*(matheus)'
+        base_key = 'rcryto_tool*(matheus)@py7h0n_15_FUn'
         import random
         size = len(base_key)
         key = ""
@@ -36,7 +36,6 @@ def main():
                     print('\nKeyboard interrupt. Stopping encryption . . .')
                     break
                 
-
         elif option == "2":
             while True:
                 try:
