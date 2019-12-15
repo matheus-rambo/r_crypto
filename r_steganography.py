@@ -13,12 +13,14 @@ required.add_argument('-is-hide', type=int, choices=[1,0], help='If you want hid
 
 optional.add_argument('--buffer-size', type=int, default=2048, help='Buffer size when reading the message from a file', dest='buffer_size')
 optional.add_argument('--show', type=int, choices=[1,0], default=0, help='If you want to see what you are typing.', dest='show')
+optional.add_argument('--charset', type=str, choices=['utf-8'], default='utf-8', dest='charset')
 
 args = parser.parse_args()
 
 is_hide = args.is_hide
 buffer_size = args.buffer_size
 show = args.show
+charset= args.charset
 
 def open_image_file_stage():
     print('\n\tInit get image file stage . . .')
@@ -77,7 +79,7 @@ def reveal_message_stage(image_file_name:str):
     elif extension == '.png':
         from stegano import lsb
         secret_message = lsb.reveal(image_file_name)
-    print('Secret message is:\t{}'.format(secret_message))
+    print('Secret message is:\t{}'.format(secret_message.decode(charset)))
     print('\n\tReveal message stage finished!')
 
 
