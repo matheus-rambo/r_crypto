@@ -22,6 +22,15 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
 
 # Release notes
 
+-***Version 1.5***
+   - Implemented argparse.
+   - Refactor of files, that were too hard to maintain and read.
+   - Deleted 6 files. They are: encrypt-file, encrypt-text, decrypt-file, decrypt-text, behind-image and reveal-image.
+   - Loading keys from a file. 
+   - Created 2 files. r_cryptography and r_steganography.
+   - *Saving keys as a json file*. **Enhancement**: https://github.com/matheus-rambo/r_crypto/issues/30
+   - Refactor of *main-app* file.
+
 - ***Version 1.4.1***
    - Implemented standalone file that can do almost every operation of *r_crypt*.
 
