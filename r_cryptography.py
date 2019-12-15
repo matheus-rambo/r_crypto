@@ -61,7 +61,6 @@ def read_data_from_console(message: str):
         return input(message)
     else:
         return getpass(message) 
-    
 
 def keys_stage():
     print('\n\tInit keys stage . . . ')
@@ -124,10 +123,10 @@ def decrypt_stage(content: list, cryptor: Cryptor):
         decrypted_content.append(cryptor.decrypt(content[index]))
 
     print('\n\tDecryption stage was finished!')
-    return encrypted_content
+    return decrypted_content
 
 def save_content_stage(contents: list):
-    extension = '.rencryptd' if is_encryption else '.rdecrypted'
+    extension = '.rencrypted' if is_encryption else '.rdecrypted'
     message = 'encrypted' if is_encryption else 'decrypted'
     print('\n\tInit save content stage . . .\n')
 
