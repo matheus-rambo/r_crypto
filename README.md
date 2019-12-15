@@ -22,7 +22,7 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
 
 # Release notes
 
--***Version 1.5***
+- ***Version 1.5***
    - Implemented argparse.
    - Refactor of files, that were too hard to maintain and read.
    - Deleted 6 files. They are: encrypt-file, encrypt-text, decrypt-file, decrypt-text, behind-image and reveal-image.
