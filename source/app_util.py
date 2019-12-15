@@ -24,13 +24,13 @@ def read_file_content(file_name:str, buffer_size:int):
             content = content + data
     return content
     
- def read_data_from_console(message: str, show_input: bool = False):
+def read_data_from_console(message: str, show_input: bool = False):
     if show_input:
         return input(message)
     else:
         from getpass import getpass
         return getpass(message)
 
- def get_file_extension(file_name: str):
-    last_index = file_name.rindex['.']
+def get_file_extension(file_name: str):
+    last_index = file_name.rindex('.')
     return file_name[last_index:] 
