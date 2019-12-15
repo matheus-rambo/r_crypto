@@ -13,7 +13,7 @@ required.add_argument('-is-hide', type=int, choices=[1,0], help='If you want hid
 
 optional.add_argument('--buffer-size', type=int, default=2048, help='Buffer size when reading the message from a file', dest='buffer_size')
 optional.add_argument('--show', type=int, choices=[1,0], default=0, help='If you want to see what you are typing.', dest='show')
-optional.add_argument('--charset', type=str, choices=['utf-8'], default='utf-8', dest='charset')
+optional.add_argument('--charset', type=str, choices=['utf-8', 'utf-16'], default='utf-8', dest='charset')
 
 args = parser.parse_args()
 
