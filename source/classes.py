@@ -20,7 +20,7 @@ class Keys():
     def generate_secret_key(self):
         hexadecimal_key = self.user_key.encode(self.charset).hex()
         for integer in range(20):
-            hexadecimal_key = hexadecimal_key + str(random.randint(1000, 10000)).encode(self.charset).hex()
+            hexadecimal_key = hexadecimal_key + str(random.randint(1000, 10000)).encode(self.charset).hex() + str(integer)
         hexadecimal_key = self.user_key.encode(self.charset).hex() + hexadecimal_key + str(time.time()).encode(self.charset).hex()
         print('\nSecret key was generated.')
         return hexadecimal_key
