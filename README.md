@@ -81,9 +81,10 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
     - Save files encrypted and decrypted.
 
 # Releases 
+ - [*v1.5*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5)**Stable version** 
  - [*v1.4*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.4)
  - [*v1.4-steganography*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.4-steganography)
- - [*v1.3*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.3) **Stable version**
+ - [*v1.3*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.3)
  - [*v1.2.2*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.2.2) 
  - [*v1.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.1) 
  - [*v1.0*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.0)
