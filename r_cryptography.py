@@ -23,6 +23,7 @@ optional.add_argument('--secret-key-computed', type=int, choices=[1,0], default=
 optional.add_argument('--save-keys', type=int, choices=[1,0], default=0, help='If you want to save the keys at a file. Otherwise, the keys will be prompted.', dest='save_keys')
 optional.add_argument('--buffer-size', type=int, default=2048, help='Size of the buffer when reading data from a file.', dest='buffer_size')
 optional.add_argument('--read-keys-file', type=int, choices=[1, 0], default=0, help='If you have a keys file, you can read it.', dest='read_keys_file')
+optional.add_argument('--charset', type=str, choices=['utf-8', 'utf-16'], default='utf-8', help='Charset that you want to use.')
 
 
 # we get the command line arguments
@@ -55,6 +56,8 @@ buffer_size = args.buffer_size
 # if the user wants to read the keys from a file
 read_keys_file = args.read_keys_file
 
+# charset
+charset = args.charset
 
 def read_data_from_console(message: str):
     if show_user_input:
@@ -167,7 +170,7 @@ def main():
     content = read_user_content_stage()
 
     # cryptor object    
-    cryptor = Cryptor(keys['key'], keys['secret_key'])    
+    cryptor = Cryptor(keys['key'], keys['secret_key'], charset)    
     
     if is_encryption:
         content = encrypt_stage(content, cryptor)
