@@ -51,9 +51,10 @@ def hide_message_stage(message:str, image_file_name:str):
     
     # we will remove the extension that the user choosed
     if '.' in file_with_message:
-        index = file_with_message.rindex['.']
+        index = file_with_message.rindex('.')
         file_with_message = file_with_message[0:index]
 
+    file_with_message = file_with_message + extension
     if extension in ('.jpeg', '.jpg'):
         from stegano import exifHeader
         exifHeader.hide(image_file_name, file_with_message, message)
