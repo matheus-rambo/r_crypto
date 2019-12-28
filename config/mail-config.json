@@ -1,10 +1,12 @@
 {
     "smtp": {
-        "server": "",
+        "server": "smtp.gmail.com",
         "port": 587
     },
     "mail_config":{
         "e-mail": "",
         "password": ""
-    }
+    },
+    "subject": null,
+    "send_as_file": true
 }
