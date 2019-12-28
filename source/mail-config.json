@@ -1,0 +1,10 @@
+{
+    "smtp": {
+        "server": "",
+        "port": 587
+    },
+    "mail_config":{
+        "e-mail": "",
+        "password": ""
+    }
+}
