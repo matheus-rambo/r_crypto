@@ -22,6 +22,9 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
 
 # Release notes
 
+- ***Version 1.5.1*** 
+   - Fix: https://github.com/matheus-rambo/r_crypto/issues/31
+
 - ***Version 1.5***
    - Implemented argparse.
    - Refactor of files, that were too hard to maintain and read.
