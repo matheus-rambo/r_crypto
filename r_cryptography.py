@@ -2,7 +2,6 @@ import argparse
 from getpass import getpass
 from source.classes import Cryptor, Keys
 from source.app_util import write, read_file_content
-from source.mail import send_message_mail
 
 
 parser = argparse.ArgumentParser(description='Encrypt/Decrypt text and text files with this script. With this tool, you can encrypt/decrypt files, and texts, then save them, load file of keys and creates keys file.')
@@ -167,24 +166,26 @@ def print_keys_stage(keys: Keys):
 
 
 def send_mail_stage(content: [], keys:str):
+    from source.mail import Mail
     print('\n\tInit send e-mail stage . . .\n')
     contacts = read_data_from_console('Type the contacts to send e-mail. Use a comma to separete receivers.\n')
 
+    mail = Mail()
     
     string_content = '\n\n{aux} ATTENTION: BELOW THIS LINE, IT\'S ANOTHER {type} CONTENT {aux}\n\n'.format(aux = 30 * '-', type = 'ENCRYPTED' if is_encryption else 'DECRYPTED').join(content)
 
     if input('Do you want to send one e-mail with the {} content and with the keys?[Yes, No]: '.format('encrypted' if is_encryption else 'decrypted')).lower()[0] == 'y':
         # send just one e-mail
-        subject =  read_data_from_console('\nType the subject of e-mail, leave it empty if you want to use our default.\n')
+        subject =  input('\nType the subject of e-mail, leave it empty if you want to use our default.\n')
         string_content = string_content + '\n\n{aux} KEYS {aux}\n\n'.format(aux = 30 * '-') + keys
-        send_message_mail(contacts, string_content, 'rcrypto-file0x003.txt', subject)
+        mail.send_email(contacts, string_content, 'rcrypto-file0x003.txt', subject)
 
     else:
         # send two e-mails
-        subject =  read_data_from_console('\nType the subject of the e-mail with the {}, leave it empty if you want to use our default.\n'.format('encrypted' if is_encryption else 'decrypted'))
-        send_message_mail(contacts, string_content, '{}.txt'.format('encrypted' if is_encryption else 'decrypted'), subject)
-        subject =  read_data_from_console('\nType the subject of the e-mail with the keys, leave it empty if you want to use our default.\n')
-        send_message_mail(contacts, keys,  'keys.rkeys', subject)
+        subject =  input('\nType the subject of the e-mail with the {}, leave it empty if you want to use our default.\n'.format('encrypted' if is_encryption else 'decrypted'))
+        mail.send_email(contacts, string_content, '{}.txt'.format('encrypted' if is_encryption else 'decrypted'), subject)
+        subject =  input('\nType the subject of the e-mail with the keys, leave it empty if you want to use our default.\n')
+        mail.send_email(contacts, keys,  'keys.rkeys', subject)
 
     print('\n\tSend e-mail stage was finished!')
 
