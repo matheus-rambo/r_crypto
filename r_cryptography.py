@@ -2,6 +2,7 @@ import argparse
 from getpass import getpass
 from source.classes import Cryptor, Keys
 from source.app_util import write, read_file_content
+from source.mail import send_message_mail
 
 
 parser = argparse.ArgumentParser(description='Encrypt/Decrypt text and text files with this script. With this tool, you can encrypt/decrypt files, and texts, then save them, load file of keys and creates keys file.')
@@ -24,6 +25,7 @@ optional.add_argument('--save-keys', type=int, choices=[1,0], default=0, help='I
 optional.add_argument('--buffer-size', type=int, default=2048, help='Size of the buffer when reading data from a file.', dest='buffer_size')
 optional.add_argument('--read-keys-file', type=int, choices=[1, 0], default=0, help='If you have a keys file, you can read it.', dest='read_keys_file')
 optional.add_argument('--charset', type=str, choices=['utf-8', 'utf-16'], default='utf-8', help='Charset that you want to use.')
+optional.add_argument('--send-mail', type=int, choices=[1,0], default=0, help='If you want to send the content over e-mail', dest='send_mail')
 
 
 # we get the command line arguments
@@ -58,6 +60,9 @@ read_keys_file = args.read_keys_file
 
 # charset
 charset = args.charset
+
+# if the user want to send an e-mail
+send_mail = args.send_mail
 
 def read_data_from_console(message: str):
     if show_user_input:
@@ -187,6 +192,15 @@ def main():
         save_keys_stage(cryptor.keys)
     else:
         print_keys_stage(cryptor.keys)
+
+
+    if send_mail:
+        contacts = read_data_from_console('Type the contacts to send e-mail. Use a comma to separete receivers.\n')
+        subject =  read_data_from_console('Type the subject of e-mail, leave it empty if you want to use our default.\n')
+        string_content = ''.join(content)
+        keys_content   = cryptor.keys.get_keys()
+        send_message_mail(contacts, string_content, 'Encrypted content',subject)
+        send_message_mail(contacts, keys_content, 'keys for decryption',subject)
 
     
 if __name__ == "__main__":

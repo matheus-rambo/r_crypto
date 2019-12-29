@@ -46,6 +46,9 @@ class InvalidKeyException(Exception):
 class Cryptor():
     # Constructor
     def __init__(self, user_key:str, secret_key:str = None, charset:str = 'utf-8'):
+        self.keys = None
+        self.charset = charset
+        self._fernet = None
         self.update_keys(user_key, secret_key, charset)
 
     # Destructor
