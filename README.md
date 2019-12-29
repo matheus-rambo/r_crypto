@@ -21,6 +21,12 @@ https://www.techopedia.com/definition/4131/steganography
 Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-Started).
 
 # Release notes
+- ***Version 1.5.2***
+    - *Enhancement*: https://github.com/matheus-rambo/r_crypto/issues/2. Now, the user can send e-mails with his content.
+    - Mail.py file to help with the send of e-mails.
+    - A config file to user configure the e-mail account, and smtp.    
+
+
 - ***Version 1.5.1*** 
    - *Fixed*: https://github.com/matheus-rambo/r_crypto/issues/31
 
