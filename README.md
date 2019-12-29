@@ -21,6 +21,8 @@ https://www.techopedia.com/definition/4131/steganography
 Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-Started).
 
 # Release notes
+- ***Version 1.5.1*** 
+   - *Fixed*: https://github.com/matheus-rambo/r_crypto/issues/31
 
 - ***Version 1.5***
    - Implemented argparse.
@@ -51,7 +53,6 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
     - The files r_file.py, r_crypto.py and RCrypto.py were moved to source folder.
     - Custom messages when user is using wrong keys to decrypt conntent.
     - Dockerfile to build images ( Images can be created with *release tags* and the *master* branch ).
-
     
  - ***Version 1.2.2***
     - *Fixed*: https://github.com/matheus-rambo/r_crypto/issues/13
@@ -81,11 +82,15 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
     - Save files encrypted and decrypted.
 
 # Releases 
- - [*v1.5*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5) **Stable version** 
+ - [*v1.5.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5.1) **Stable version**
+ - [*v1.5*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5)
+ - [*v1.4.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.4.1)
  - [*v1.4*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.4)
  - [*v1.4-steganography*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.4-steganography)
  - [*v1.3*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.3)
- - [*v1.2.2*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.2.2) 
+ - [*v1.3-beta*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.3-beta)
+ - [*v1.2.2*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.2.2)
+ - [*v1.2.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.2.1)
  - [*v1.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.1) 
  - [*v1.0*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.0)
 

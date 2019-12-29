@@ -75,7 +75,7 @@ def keys_stage():
     secret_key = None
     if read_keys_file:
         keys_file = read_data_from_console('Insert the name of yours keys file:\t')
-        keys_content = read_file_content(keys_file, buffer_size)
+        keys_content = read_file_content(keys_file, buffer_size, charset)
         from json import loads
         key = loads(keys_content)['key']
         secret_key = loads(keys_content)['secret_key']
@@ -100,7 +100,7 @@ def read_user_content_stage():
         files = files_string.split(' ')
         for file_name in files:
             print('Reading content of the file: {}'.format(file_name))
-            content_to_work.append(read_file_content(file_name, buffer_size))
+            content_to_work.append(read_file_content(file_name, buffer_size, charset))
 
     else:
         if is_encryption:

@@ -5,5 +5,3 @@ acessos.encrypted
 *.rdecrypted
 *.rkeys
 source/*.pyc
-config/mail-config.json
-/config/mail-config.json
