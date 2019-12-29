@@ -25,13 +25,14 @@ def send_message_mail(receiver:[], body:str, filename:str, subject: str = None):
 
 
     print('\n\tSMTP configuration: SERVER: {}, PORT: {}'.format(smtp_server, smtp_port))
-    print('\te-mail that is sending mail: {}\n'.format(e_mail))
-
 
     mail = MIMEMultipart()
     mail['From']    = e_mail
     mail['To']      = receiver  
     mail['Subject'] = subject
+
+    print('\tFrom e-mail: {}\n\tTo: {}\n\tSubject: {}\n\tThe e-mail will be sent as a: {}'.format(e_mail,  receiver, subject, 'text file' if send_as_file else 'text'))
+
 
     if send_as_file:
         part = MIMEBase("text", "plain")

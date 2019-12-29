@@ -172,17 +172,17 @@ def send_mail_stage(content: [], keys:str):
 
     string_content = '\n---------------\n'.join(content)
 
-    if input('Do you want to send one e-mail with the {} content and with the keys? [Yes,No]'.format('encrypted' if is_encryption else 'decrypted')).lower()[0] == 'y':
+    if input('Do you want to send one e-mail with the {} content and with the keys?[Yes, No]: '.format('encrypted' if is_encryption else 'decrypted')).lower()[0] == 'y':
         # send just one e-mail
-        subject =  read_data_from_console('Type the subject of e-mail, leave it empty if you want to use our default.\n')
-        string_content = string_content + '\n----KEYS----\n' + keys
+        subject =  read_data_from_console('\nType the subject of e-mail, leave it empty if you want to use our default.\n')
+        string_content = string_content + '\n\n---------KEYS---------\n\n' + keys
         send_message_mail(contacts, string_content, 'rcrypto-file0x003.txt', subject)
 
     else:
         # send two e-mails
         subject =  read_data_from_console('\nType the subject of the e-mail with the {}, leave it empty if you want to use our default.\n'.format('encrypted' if is_encryption else 'decrypted'))
         send_message_mail(contacts, string_content, '{}.txt'.format('encrypted' if is_encryption else 'decrypted'), subject)
-        subject =  read_data_from_console('Type the subject of the e-mail with the keys, leave it empty if you want to use our default.\n')
+        subject =  read_data_from_console('\nType the subject of the e-mail with the keys, leave it empty if you want to use our default.\n')
         send_message_mail(contacts, keys,  'keys.rkeys', subject)
 
     print('\n\tSend e-mail stage was finished!')
