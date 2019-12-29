@@ -84,3 +84,27 @@ class Cryptor():
         except Exception:
             raise InvalidKeyException()
     
+
+class SMTPServer():
+
+    # constructor
+    def __init__(self, server: str, port: int):
+        self.server = server
+        self.port   = port
+
+    # destructor
+    def __del__(self):
+        pass
+
+
+class EmailInfo():
+
+    # constructor
+    def __init__(self, e_mail: str, password: str, smtp: SMTPServer ):
+        self.e_mail   = e_mail
+        self.password = password
+        self.smtp     = smtp
+
+    # destructor
+    def __del__(self):
+        pass
