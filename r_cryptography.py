@@ -170,12 +170,13 @@ def send_mail_stage(content: [], keys:str):
     print('\n\tInit send e-mail stage . . .\n')
     contacts = read_data_from_console('Type the contacts to send e-mail. Use a comma to separete receivers.\n')
 
-    string_content = '\n---------------\n'.join(content)
+    
+    string_content = '\n\n{aux} ATTENTION: BELOW THIS LINE, IT\'S ANOTHER {type} CONTENT {aux}\n\n'.format(aux = 30 * '-', type = 'ENCRYPTED' if is_encryption else 'DECRYPTED').join(content)
 
     if input('Do you want to send one e-mail with the {} content and with the keys?[Yes, No]: '.format('encrypted' if is_encryption else 'decrypted')).lower()[0] == 'y':
         # send just one e-mail
         subject =  read_data_from_console('\nType the subject of e-mail, leave it empty if you want to use our default.\n')
-        string_content = string_content + '\n\n---------KEYS---------\n\n' + keys
+        string_content = string_content + '\n\n{aux} KEYS {aux}\n\n'.format(aux = 30 * '-') + keys
         send_message_mail(contacts, string_content, 'rcrypto-file0x003.txt', subject)
 
     else:
