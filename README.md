@@ -25,7 +25,8 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
     - *Enhancement*: https://github.com/matheus-rambo/r_crypto/issues/2. Now, the user can send e-mails with his content.
     - Mail.py file to help with the send of e-mails.
     - A config file to user configure the e-mail account, and smtp.    
-
+    - *r_cryptography.py* now has an option to send the *encrypted*/*decrypted* and the *keys* over an e-mail. And allows multiple receivers too.
+    - Sending unique e-mail to destinantions list, so then can not see who else received the same e-mail.
 
 - ***Version 1.5.1*** 
    - *Fixed*: https://github.com/matheus-rambo/r_crypto/issues/31
@@ -88,6 +89,7 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
     - Save files encrypted and decrypted.
 
 # Releases 
+ - [*v1.5.2*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5.2)
  - [*v1.5.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5.1) **Stable version**
  - [*v1.5*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5)
  - [*v1.4.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.4.1)

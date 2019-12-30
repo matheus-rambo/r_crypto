@@ -16,9 +16,10 @@ class Mail():
 
     # constructor
     def __init__(self):
-        self.email_info = None
+        self.email_info  = None
         self.smtp        = None
-        
+        send_as_file     = None
+
     
     # destructor
     def __del__(self):
@@ -26,10 +27,8 @@ class Mail():
         del self.email_info
 
 
-    def send_email(self, receiver:[], body:str, filename:str, subject: str = None):
-        print("\n\tInit send e-mail to {}".format(receiver))
-        
-        subject = send_as_file = None    
+    def send_email(self, destination:str, body:str, filename:str, subject: str = None):       
+
 
         # when send 2 emails, we only need to load the e-mail info for the first e-mail, at 
         # the second, we can reuse the same info
@@ -37,25 +36,25 @@ class Mail():
             
             if input('Read mail configuration file from default path: {} ? [Yes, No]:  '.format(default_mail_config_path)).lower()[0] == 'y':
                 
-                config            = read_file_content(file_name = default_mail_config_path , buffer_size = 2048)
-                json_body         = loads(config)
-                smtp_object       = json_body['smtp']
-                email_config      = json_body['mail_config']
+                config                 = read_file_content(file_name = default_mail_config_path , buffer_size = 2048)
+                json_body              = loads(config)
+                smtp_object            = json_body['smtp']
+                email_config           = json_body['mail_config']
                 
-                smtp_server       = smtp_object['server']
-                smtp_port         = smtp_object['port']
-                e_mail            = email_config['e-mail']
-                password          = email_config['password']
+                smtp_server            = smtp_object['server']
+                smtp_port              = smtp_object['port']
+                e_mail                 = email_config['e-mail']
+                password               = email_config['password']
 
-                self.smtp         = SMTPServer(smtp_server, smtp_port)
-                self.email_info   = EmailInfo(e_mail, password)
-                subject           = json_body['subject'] if subject is None  else subject
-                send_as_file      = json_body['send_as_file']
+                self.smtp              = SMTPServer(smtp_server, smtp_port)
+                self.email_info        = EmailInfo(e_mail, password)
+                subject                = json_body['subject'] if subject is None  else subject
+                self.send_as_file      = json_body['send_as_file']
 
             else:
                 self.request_email_information()
                 subject      = 'r_crypto message' if subject is None else subject
-                send_as_file = input('Do you want to send the content as a file? [Yes, No] ').lower()[0] == 'y'
+                self.send_as_file = input('Do you want to send the content as a file? [Yes, No] ').lower()[0] == 'y'
 
         else:
             print("\n\tUsing stored e-mail info . . . ")
@@ -71,7 +70,6 @@ class Mail():
 
         mail = MIMEMultipart()
         mail['From']    = self.email_info.e_mail
-        mail['To']      = receiver  
         mail['Subject'] = subject
 
         print("""\tFrom e-mail: {}
@@ -80,14 +78,13 @@ class Mail():
                 \n\tThe e-mail will be sent as a: {}
             """.format(
                     self.email_info.e_mail,
-                    receiver,
+                    destination,
                     subject, 
-                    'text file' if send_as_file else 'text'
+                    'text file' if self.send_as_file else 'text'
                     )
             )
 
-
-        if send_as_file:
+        if self.send_as_file:
             part = MIMEBase("text", "plain")
             part.set_payload(body.encode('utf-8'))
             encoders.encode_base64(part)
@@ -96,13 +93,17 @@ class Mail():
         else:
             mail.attach(MIMEText(body, "plain"))
 
-        message = mail.as_string()
 
         with SMTP(self.smtp.server, self.smtp.port) as server:
             server.starttls(context = create_default_context())
             server.login(self.email_info.e_mail, self.email_info.password)
-            server.sendmail(self.email_info.e_mail, receiver, message)
-            print("\n\tE-mail was sent to {}\n".format(receiver))
+
+            for receiver in destination.split(','):
+                mail['To'] = receiver
+                message = mail.as_string()
+                print('\n\tSending e-mail to: {}'.format(receiver))
+                server.sendmail(self.email_info.e_mail, receiver, message)
+                print('\n\tE-mail sent!')
             server.close()
 
 
