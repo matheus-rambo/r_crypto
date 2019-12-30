@@ -22,7 +22,7 @@ Json exemple of a configuration:
 ## SMTP configuration
  - *Server*: The **smtp** server that you are using.
    - *Google* smtp server is: ``smtp.gmail.com``.
-   - *Amazon* smtp server is: ``todo``.
+   - *Outlook* smtp server is: ``smtp-mail.outlook.com``.
 
 The *server* property is a string.
 
