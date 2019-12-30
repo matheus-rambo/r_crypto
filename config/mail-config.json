@@ -1,11 +1,11 @@
 {
     "smtp": {
-        "server": "smtp.gmail.com",
-        "port": 587
+        "server": "mail.smtp.host",
+        "port": 25
     },
     "mail_config":{
-        "e-mail": "",
-        "password": ""
+        "e-mail": "matheusrambo@localhost.com",
+        "password": "1598"
     },
     "subject": null,
     "send_as_file": true
