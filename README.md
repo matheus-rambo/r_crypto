@@ -27,6 +27,7 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
     - A config file to user configure the e-mail account, and smtp.    
     - *r_cryptography.py* now has an option to send the *encrypted*/*decrypted* and the *keys* over an e-mail. And allows multiple receivers too.
     - Sending unique e-mail to destinantions list, so then can not see who else received the same e-mail.
+    - User can decide if he wants to send the decrytion keys, and may send the keys to other e-mail.
 
 - ***Version 1.5.1*** 
    - *Fixed*: https://github.com/matheus-rambo/r_crypto/issues/31
