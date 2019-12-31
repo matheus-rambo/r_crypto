@@ -1,7 +1,6 @@
 import argparse
 from source.app_util import read_file_content, read_data_from_console, get_file_extension
 
-
 parser = argparse.ArgumentParser(description='Hide/Reveal messages inside an image file')
 
 parser._action_groups.pop()
@@ -14,13 +13,15 @@ required.add_argument('-is-hide', type=int, choices=[1,0], help='If you want hid
 optional.add_argument('--buffer-size', type=int, default=2048, help='Buffer size when reading the message from a file', dest='buffer_size')
 optional.add_argument('--show', type=int, choices=[1,0], default=0, help='If you want to see what you are typing.', dest='show')
 optional.add_argument('--charset', type=str, choices=['utf-8', 'utf-16'], default='utf-8', dest='charset')
+optional.add_argument('--send-mail', type=int, choices=[1,0], default=0, help='If you want to send the content over e-mail', dest='send_mail')
 
 args = parser.parse_args()
 
-is_hide = args.is_hide
+is_hide     = args.is_hide
 buffer_size = args.buffer_size
-show = args.show
-charset= args.charset
+show        = args.show
+charset     = args.charset
+send_mail   = args.send_mail
 
 def open_image_file_stage():
     print('\n\tInit get image file stage . . .')
@@ -66,6 +67,9 @@ def hide_message_stage(message:str, image_file_name:str):
         secret = lsb.hide(image_file_name, message)
         secret.save(file_with_message)
 
+    else:
+        raise Exception('Extension {} not supported!'.format(extension))
+
     print('\n\tHide message stage finished!')
 
 
@@ -76,11 +80,24 @@ def reveal_message_stage(image_file_name:str):
     if extension in ('.jpeg', '.jpg'):
         from stegano import exifHeader
         secret_message = exifHeader.reveal(image_file_name)
-    elif extension == '.png':
+    elif extension == '.png':   
         from stegano import lsb
         secret_message = lsb.reveal(image_file_name)
+    else:
+        raise Exception('Extension {} not supported!'.format(extension))
     print('Secret message is:\t{}'.format(secret_message.decode(charset)))
     print('\n\tReveal message stage finished!')
+
+def send_mail(image_path : str):
+    from source.mail import Mail
+    
+    contacts = read_data_from_console('\nType the contacts to send e-mail. Use a comma to separete receivers.\n')
+    
+        
+
+
+
+    pass
 
 
 def main():

@@ -176,13 +176,13 @@ def send_mail_stage(content: [], keys:str):
     if read_data_from_console('\nDo you want to send an e-mail with the {} content? [Yes, No]: '.format(formatted)).lower()[0] == 'y':
         contacts = read_data_from_console('\nType the contacts to send e-mail. Use a comma to separete receivers.\n')
         string_content = '\n\n{aux} ATTENTION: BELOW THIS LINE, IT\'S ANOTHER {type} CONTENT {aux}\n\n'.format(aux = 30 * '-', type = 'ENCRYPTED' if is_encryption else 'DECRYPTED').join(content)
-        subject =  read_data_from_console('\nSubject, or leave it empty to use a default: ')
+        subject =  read_data_from_console('\nSubject: ')
         mail.send_email(contacts, string_content, '{}.txt'.format(formatted), subject)
 
     if is_encryption and read_data_from_console('\nDo you want to send an e-mail with the keys do decrypt? [Yes, No]: ').lower()[0] == 'y':
         if not (contacts is not None and input('\nDo you want to use the same contacts? [Yes, No]: ').lower()[0] == 'y'):
             contacts = read_data_from_console('Type the contacts to send e-mail. Use a comma to separete receivers.\n')
-        subject =  read_data_from_console('\nSubject, or leave it empty to use a default: ')
+        subject =  read_data_from_console('\nSubject: ')
         mail.send_email(contacts, keys, 'decryption_keys.rkeys', subject)
 
     print('\n\tSend e-mail stage was finished!')

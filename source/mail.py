@@ -16,8 +16,8 @@ class Mail():
 
     # constructor
     def __init__(self):
-        self.email_info  = None
-        self.smtp        = None
+        self.email_info       = None
+        self.smtp             = None
         self.send_as_file     = None
 
     
@@ -27,33 +27,18 @@ class Mail():
         del self.email_info
 
 
-    def send_email(self, destination:str, body:str, filename:str, subject: str = None):       
-
+    def send_email(self, destination:str, body:str, filename:str, subject: str):       
 
         # when send 2 emails, we only need to load the e-mail info for the first e-mail, at 
         # the second, we can reuse the same info
         if self.email_info is None or self.smtp is None:
             
+            # TODO
+            # let user choice if he wants to use his own config file path, that can be in another directory
             if input('Read mail configuration file from default path: {} ? [Yes, No]:  '.format(default_mail_config_path)).lower()[0] == 'y':
-                
-                config                 = read_file_content(file_name = default_mail_config_path , buffer_size = 2048)
-                json_body              = loads(config)
-                smtp_object            = json_body['smtp']
-                email_config           = json_body['mail_config']
-                
-                smtp_server            = smtp_object['server']
-                smtp_port              = smtp_object['port']
-                e_mail                 = email_config['e-mail']
-                password               = email_config['password']
-
-                self.smtp              = SMTPServer(smtp_server, smtp_port)
-                self.email_info        = EmailInfo(e_mail, password)
-                subject                = json_body['subject'] if subject is None  else subject
-                self.send_as_file      = json_body['send_as_file']
-
+                self.read_from_config_file()    
             else:
                 self.request_email_information()
-                subject      = 'r_crypto message' if subject is None else subject
                 self.send_as_file = input('Do you want to send the content as a file? [Yes, No] ').lower()[0] == 'y'
 
         else:
@@ -99,12 +84,81 @@ class Mail():
             server.login(self.email_info.e_mail, self.email_info.password)
 
             for receiver in destination.split(','):
+                # TODO
+                # We can implement PGP later
+                mail['To'] = receiver
+                message    = mail.as_string()
+                print('\n\tSending e-mail to: {}'.format(receiver))
+                server.sendmail(self.email_info.e_mail, receiver, message)
+                print('\n\tE-mail sent!')
+            server.close()
+
+    def send_email_with_images(self, destination:str, image_path:str, subject : str):
+        if input('Read mail configuration file from default path: {} ? [Yes, No]:  '.format(default_mail_config_path)).lower()[0] == 'y':
+            self.read_from_config_file(default_mail_config_path)
+        else:
+            self.request_email_information()
+        
+        print("""
+                \n\tSMTP configuration: SERVER: {}, PORT: {}
+            """.format(
+                        self.smtp.server, 
+                        self.smtp.port
+                        )
+            )
+
+        mail = MIMEMultipart()
+        mail['From']    = self.email_info.e_mail
+        mail['Subject'] = subject
+
+        print("""\tFrom e-mail: {}
+                \n\tTo: {}
+                \n\tSubject: {}
+                \n\tThe e-mail will be sent as a: {}
+            """.format(
+                    self.email_info.e_mail,
+                    destination,
+                    subject, 
+                    'image'
+                    )
+            )
+
+        image_type = 'jpeg' if ( image_path[image_path.rindex('.'), len(image_path)] in ('jpeg', 'jpg')) else 'png'
+
+        part = MIMEBase("image", image_type)
+        with open( file = image_path, mode = 'rb') as file:
+            part.set_payload(file.read())
+            encoders.encode_base64(part)
+            part.add_header('Content-Disposition', f"attachment; filename= {image_path}")
+            mail.attach(part)
+
+
+        with SMTP(self.smtp.server, self.smtp.port) as server:
+            server.starttls(context = create_default_context())
+            server.login(self.email_info.e_mail, self.email_info.password)
+
+            for receiver in destination.split(','):
                 mail['To'] = receiver
                 message = mail.as_string()
                 print('\n\tSending e-mail to: {}'.format(receiver))
                 server.sendmail(self.email_info.e_mail, receiver, message)
                 print('\n\tE-mail sent!')
             server.close()
+
+    def read_from_config_file(self, config_file_path:str):
+        config                 = read_file_content(file_name = config_file_path , buffer_size = 2048)
+        json_body              = loads(config)
+        smtp_object            = json_body['smtp']
+        email_config           = json_body['mail_config']
+                
+        smtp_server            = smtp_object['server']
+        smtp_port              = smtp_object['port']
+        e_mail                 = email_config['e-mail']
+        password               = email_config['password']
+
+        self.smtp              = SMTPServer(smtp_server, smtp_port)
+        self.email_info        = EmailInfo(e_mail, password)
+        self.send_as_file      = json_body['send_as_file']
 
 
     def request_email_information(self):
