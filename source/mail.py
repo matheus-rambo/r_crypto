@@ -18,7 +18,7 @@ class Mail():
     def __init__(self):
         self.email_info  = None
         self.smtp        = None
-        send_as_file     = None
+        self.send_as_file     = None
 
     
     # destructor

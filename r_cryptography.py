@@ -168,24 +168,22 @@ def print_keys_stage(keys: Keys):
 def send_mail_stage(content: [], keys:str):
     from source.mail import Mail
     print('\n\tInit send e-mail stage . . .\n')
-    contacts = read_data_from_console('Type the contacts to send e-mail. Use a comma to separete receivers.\n')
-
-    mail = Mail()
     
-    string_content = '\n\n{aux} ATTENTION: BELOW THIS LINE, IT\'S ANOTHER {type} CONTENT {aux}\n\n'.format(aux = 30 * '-', type = 'ENCRYPTED' if is_encryption else 'DECRYPTED').join(content)
+    mail = Mail()
+    formatted = 'encrypted' if is_encryption else 'decrypted'
+    contacts = None
 
-    if input('Do you want to send one e-mail with the {} content and with the keys?[Yes, No]: '.format('encrypted' if is_encryption else 'decrypted')).lower()[0] == 'y':
-        # send just one e-mail
-        subject =  input('\nType the subject of e-mail, leave it empty if you want to use our default.\n')
-        string_content = string_content + '\n\n{aux} KEYS {aux}\n\n'.format(aux = 30 * '-') + keys
-        mail.send_email(contacts, string_content, 'rcrypto-file0x003.txt', subject)
+    if read_data_from_console('\nDo you want to send an e-mail with the {} content? [Yes, No]: '.format(formatted)).lower()[0] == 'y':
+        contacts = read_data_from_console('\nType the contacts to send e-mail. Use a comma to separete receivers.\n')
+        string_content = '\n\n{aux} ATTENTION: BELOW THIS LINE, IT\'S ANOTHER {type} CONTENT {aux}\n\n'.format(aux = 30 * '-', type = 'ENCRYPTED' if is_encryption else 'DECRYPTED').join(content)
+        subject =  read_data_from_console('\nSubject, or leave it empty to use a default: ')
+        mail.send_email(contacts, string_content, '{}.txt'.format(formatted), subject)
 
-    else:
-        # send two e-mails
-        subject =  input('\nType the subject of the e-mail with the {}, leave it empty if you want to use our default.\n'.format('encrypted' if is_encryption else 'decrypted'))
-        mail.send_email(contacts, string_content, '{}.txt'.format('encrypted' if is_encryption else 'decrypted'), subject)
-        subject =  input('\nType the subject of the e-mail with the keys, leave it empty if you want to use our default.\n')
-        mail.send_email(contacts, keys,  'keys.rkeys', subject)
+    if is_encryption and read_data_from_console('\nDo you want to send an e-mail with the keys do decrypt? [Yes, No]: ').lower()[0] == 'y':
+        if not (contacts is not None and input('\nDo you want to use the same contacts? [Yes, No]: ').lower()[0] == 'y'):
+            contacts = read_data_from_console('Type the contacts to send e-mail. Use a comma to separete receivers.\n')
+        subject =  read_data_from_console('\nSubject, or leave it empty to use a default: ')
+        mail.send_email(contacts, keys, 'decryption_keys.rkeys', subject)
 
     print('\n\tSend e-mail stage was finished!')
 
@@ -221,7 +219,7 @@ def main():
     
 if __name__ == "__main__":
     main()
-    print('\nDone')
+    print('\nDone.\tHave a nice day.')
 
 
 
