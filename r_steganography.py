@@ -71,6 +71,7 @@ def hide_message_stage(message:str, image_file_name:str):
         raise Exception('Extension {} not supported!'.format(extension))
 
     print('\n\tHide message stage finished!')
+    return file_with_message
 
 
 def reveal_message_stage(image_file_name:str):
@@ -88,24 +89,26 @@ def reveal_message_stage(image_file_name:str):
     print('Secret message is:\t{}'.format(secret_message.decode(charset)))
     print('\n\tReveal message stage finished!')
 
-def send_mail(image_path : str):
+def send_mail_stage(image_path : str):
     from source.mail import Mail
+    print('\n\tInit Send mail stage . . .')
     
-    contacts = read_data_from_console('\nType the contacts to send e-mail. Use a comma to separete receivers.\n')
+    contacts = read_data_from_console('\nType the contacts to send e-mail. Use a comma to separete receivers.\n', show)
+    subject  = read_data_from_console('Subject: ', show)
+    mail     = Mail()
+    mail.send_email_with_images(contacts, image_path, subject)
     
-        
-
-
-
-    pass
+    print('\n\tSend mail stage finished!')
 
 
 def main():
     
     if is_hide:
         image_file_name = open_image_file_stage()
-        message = read_secret_message_stage()
-        hide_message_stage(message, image_file_name)
+        message         = read_secret_message_stage()
+        hidden_file     = hide_message_stage(message, image_file_name)
+        if send_mail:
+            send_mail_stage(image_path = hidden_file)
     else:
         image_file_name = open_image_file_stage()
         reveal_message_stage(image_file_name)        

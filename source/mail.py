@@ -93,6 +93,7 @@ class Mail():
                 print('\n\tE-mail sent!')
             server.close()
 
+
     def send_email_with_images(self, destination:str, image_path:str, subject : str):
         if input('Read mail configuration file from default path: {} ? [Yes, No]:  '.format(default_mail_config_path)).lower()[0] == 'y':
             self.read_from_config_file(default_mail_config_path)
@@ -111,6 +112,9 @@ class Mail():
         mail['From']    = self.email_info.e_mail
         mail['Subject'] = subject
 
+        # when sending an attachment as an image, we need to specify the type
+        image_type = 'jpeg' if ( image_path[image_path.rindex('.'): len(image_path)] in ('jpeg', 'jpg')) else 'png'
+
         print("""\tFrom e-mail: {}
                 \n\tTo: {}
                 \n\tSubject: {}
@@ -119,11 +123,10 @@ class Mail():
                     self.email_info.e_mail,
                     destination,
                     subject, 
-                    'image'
+                    'image/{image_type}'
                     )
             )
 
-        image_type = 'jpeg' if ( image_path[image_path.rindex('.'), len(image_path)] in ('jpeg', 'jpg')) else 'png'
 
         part = MIMEBase("image", image_type)
         with open( file = image_path, mode = 'rb') as file:
@@ -144,6 +147,7 @@ class Mail():
                 server.sendmail(self.email_info.e_mail, receiver, message)
                 print('\n\tE-mail sent!')
             server.close()
+            
 
     def read_from_config_file(self, config_file_path:str):
         config                 = read_file_content(file_name = config_file_path , buffer_size = 2048)
