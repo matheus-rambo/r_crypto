@@ -57,9 +57,9 @@ class Mail():
         mail['Subject'] = subject
 
         print("""\tFrom e-mail: {}
-                \n\tTo: {}
-                \n\tSubject: {}
-                \n\tThe e-mail will be sent as a: {}
+                \tTo: {}
+                \tSubject: {}
+                \tThe e-mail will be sent as a: {}
             """.format(
                     self.email_info.e_mail,
                     destination,
@@ -115,8 +115,8 @@ class Mail():
 
 
         print("""\tFrom e-mail: {}
-                \n\tTo: {}
-                \n\tSubject: {}
+                \tTo: {}
+                \tSubject: {}
                """.format(
                     self.email_info.e_mail,
                     destination,
