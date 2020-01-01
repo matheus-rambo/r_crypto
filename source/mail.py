@@ -94,7 +94,7 @@ class Mail():
             server.close()
 
 
-    def send_email_with_images(self, destination:str, image_path:str, subject : str):
+    def send_email_with_images(self, destination:str, images:[], subject : str):
         if input('Read mail configuration file from default path: {} ? [Yes, No]:  '.format(default_mail_config_path)).lower()[0] == 'y':
             self.read_from_config_file(default_mail_config_path)
         else:
@@ -112,28 +112,28 @@ class Mail():
         mail['From']    = self.email_info.e_mail
         mail['Subject'] = subject
 
-        # when sending an attachment as an image, we need to specify the type
-        image_type = 'jpeg' if ( image_path[image_path.rindex('.'): len(image_path)] in ('jpeg', 'jpg')) else 'png'
 
         print("""\tFrom e-mail: {}
                 \n\tTo: {}
                 \n\tSubject: {}
-                \n\tThe e-mail will be sent as a: {}
-            """.format(
+               """.format(
                     self.email_info.e_mail,
                     destination,
-                    subject, 
-                    'image/{image_type}'
+                    subject
                     )
             )
 
+        for image in images:
+            # when sending an attachment as an image, we need to specify the type
+            image_type = 'jpeg' if ( image[image.rindex('.'): len(image)] in ('jpeg', 'jpg')) else 'png'
 
-        part = MIMEBase("image", image_type)
-        with open( file = image_path, mode = 'rb') as file:
-            part.set_payload(file.read())
-            encoders.encode_base64(part)
-            part.add_header('Content-Disposition', f"attachment; filename= {image_path}")
-            mail.attach(part)
+            # Opening the image file and reading it's bytes
+            part = MIMEBase("image", image_type)
+            with open( file = image, mode = 'rb') as file:
+                part.set_payload(file.read())
+                encoders.encode_base64(part)
+                part.add_header('Content-Disposition', f"attachment; filename= {image}")
+                mail.attach(part)
 
 
         with SMTP(self.smtp.server, self.smtp.port) as server:

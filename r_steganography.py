@@ -93,10 +93,22 @@ def send_mail_stage(image_path : str):
     from source.mail import Mail
     print('\n\tInit Send mail stage . . .')
     
+    images   = []
     contacts = read_data_from_console('\nType the contacts to send e-mail. Use a comma to separete receivers.\n', show)
     subject  = read_data_from_console('Subject: ', show)
     mail     = Mail()
-    mail.send_email_with_images(contacts, image_path, subject)
+
+    if input('Do you want to attach more images to difficult the discover of steganography? [Yes, No]: ').lower()[0] == 'y':
+        print('\n\tKeyboard Interrupt to stop... (Control + C)')
+        while True:
+            try:
+                images.append(read_data_from_console('Imaage path: ', show))
+            except KeyboardInterrupt:
+                print('Stopping . . .')
+                break
+
+    images.append(image_path)
+    mail.send_email_with_images(contacts, images, subject)
     
     print('\n\tSend mail stage finished!')
 
