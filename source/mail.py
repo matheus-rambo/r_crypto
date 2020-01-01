@@ -1,7 +1,7 @@
 from ssl import create_default_context
 from smtplib import SMTP
 from json import loads
-from .app_util import read_file_content
+from .app_util import read_file_content, read_ask_answear
 
 import email
 from email import encoders
@@ -33,14 +33,13 @@ class Mail():
         # the second, we can reuse the same info
         if self.email_info is None or self.smtp is None:
             
-            # TODO
-            # let user choice if he wants to use his own config file path, that can be in another directory
-            if input('Read mail configuration file from default path: {} ? [Yes, No]:  '.format(default_mail_config_path)).lower()[0] == 'y':
-                self.read_from_config_file()    
+            if read_ask_answear('Read mail configuration file from default path: {} ? [Yes, No]:  '.format(default_mail_config_path), True):
+                self.read_from_config_file(default_mail_config_path)
+            elif read_ask_answear('Do you want to use your own mail config file? [Yes, No]: ', True):    
+                self.read_from_config_file(input('Mail configuration file path: '))
             else:
                 self.request_email_information()
-                self.send_as_file = input('Do you want to send the content as a file? [Yes, No] ').lower()[0] == 'y'
-
+                self.send_as_file = read_ask_answear('Do you want to send the content as a file? [Yes, No]: ', True)
         else:
             print("\n\tUsing stored e-mail info . . . ")
 
@@ -95,8 +94,10 @@ class Mail():
 
 
     def send_email_with_images(self, destination:str, images:[], subject : str):
-        if input('Read mail configuration file from default path: {} ? [Yes, No]:  '.format(default_mail_config_path)).lower()[0] == 'y':
+        if read_ask_answear('Read mail configuration file from default path: {} ? [Yes, No]:  '.format(default_mail_config_path), True):
             self.read_from_config_file(default_mail_config_path)
+        elif read_ask_answear('Do you want to use your own mail config file? [Yes, No]: ', True):    
+            self.read_from_config_file(input('Mail configuration file path: '))
         else:
             self.request_email_information()
         
@@ -127,12 +128,14 @@ class Mail():
             # when sending an attachment as an image, we need to specify the type
             image_type = 'jpeg' if ( image[image.rindex('.'): len(image)] in ('jpeg', 'jpg')) else 'png'
 
+            temp_name = image if '/' not in image else image[image.rindex('/'): len(image)]
+
             # Opening the image file and reading it's bytes
             part = MIMEBase("image", image_type)
             with open( file = image, mode = 'rb') as file:
                 part.set_payload(file.read())
                 encoders.encode_base64(part)
-                part.add_header('Content-Disposition', f"attachment; filename= {image}")
+                part.add_header('Content-Disposition', f"attachment; filename= {temp_name}")
                 mail.attach(part)
 
 

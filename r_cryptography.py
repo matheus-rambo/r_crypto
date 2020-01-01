@@ -1,7 +1,7 @@
 import argparse
 from getpass import getpass
 from source.classes import Cryptor, Keys
-from source.app_util import write, read_file_content
+from source.app_util import write, read_file_content, read_ask_answear, read_data_from_console
 
 
 parser = argparse.ArgumentParser(description='Encrypt/Decrypt text and text files with this script. With this tool, you can encrypt/decrypt files, and texts, then save them, load file of keys and creates keys file.')
@@ -63,27 +63,21 @@ charset = args.charset
 # if the user want to send an e-mail
 send_mail = args.send_mail
 
-def read_data_from_console(message: str):
-    if show_user_input:
-        return input(message)
-    else:
-        return getpass(message) 
-
 def keys_stage():
     print('\n\tInit keys stage . . . ')
     key = None
     secret_key = None
     if read_keys_file:
-        keys_file = read_data_from_console('Insert the name of yours keys file:\t')
+        keys_file = read_data_from_console('Insert the name of yours keys file:\t', show_user_input)
         keys_content = read_file_content(keys_file, buffer_size, charset)
         from json import loads
         key = loads(keys_content)['key']
         secret_key = loads(keys_content)['secret_key']
         print('\nKeys were loaded') 
     else:
-        key = read_data_from_console('Insert your key:\t')
+        key = read_data_from_console('Insert your key:\t', show_user_input)
         if is_secret_key_computed:
-            secret_key = read_data_from_console('Insert your secret key:\t')
+            secret_key = read_data_from_console('Insert your secret key:\t', show_user_input)
     
     print('\n\tKeys stage was finished!')
     return {
@@ -96,7 +90,7 @@ def read_user_content_stage():
     content_to_work = []
     if is_file:
         print('For two or more files, type: file1 file2 file3 . . .')
-        files_string = read_data_from_console('Insert the path of the file(s):\t')
+        files_string = read_data_from_console('Insert the path of the file(s):\t', show_user_input)
         files = files_string.split(' ')
         for file_name in files:
             print('Reading content of the file: {}'.format(file_name))
@@ -104,9 +98,9 @@ def read_user_content_stage():
 
     else:
         if is_encryption:
-            content_to_work.append(read_data_from_console('Insert the message:\t'))
+            content_to_work.append(read_data_from_console('Insert the message:\t', show_user_input))
         else:
-            content_to_work.append(read_data_from_console('Insert the encrypted message:\t'))
+            content_to_work.append(read_data_from_console('Insert the encrypted message:\t', show_user_input))
 
     print('\n\tRead user content stage was finished!')
     return content_to_work
@@ -138,7 +132,7 @@ def save_content_stage(contents: list):
     print('\n\tInit save content stage . . .\n')
 
     for content in contents:
-        file_name = read_data_from_console('Insert the name of {} file:\t'.format(message))
+        file_name = read_data_from_console('Insert the name of {} file:\t'.format(message), show_user_input)
         write(file_name, content, extension)
         print('File created: {}'.format(file_name + extension))
 
@@ -154,7 +148,7 @@ def print_content_stage(contents:list):
 
 def save_keys_stage(keys:Keys):
     print('\n\tInit save keys stage . . .\n')
-    keys_file = read_data_from_console('Insert the name of keys file:\t')
+    keys_file = read_data_from_console('Insert the name of keys file:\t', show_user_input)
     write(keys_file, keys.get_keys(), '.rkeys')
     print('File created: {}'.format(keys_file + '.rkeys'))
     print('\n\tSave keys stage was finished!')
@@ -173,16 +167,16 @@ def send_mail_stage(content: [], keys:str):
     formatted = 'encrypted' if is_encryption else 'decrypted'
     contacts = None
 
-    if read_data_from_console('\nDo you want to send an e-mail with the {} content? [Yes, No]: '.format(formatted)).lower()[0] == 'y':
-        contacts = read_data_from_console('\nType the contacts to send e-mail. Use a comma to separete receivers.\n')
+    if read_ask_answear('\nDo you want to send an e-mail with the {} content? [Yes, No]: '.format(formatted), show_user_input):
+        contacts = read_data_from_console('\nType the contacts to send e-mail. Use a comma to separete receivers.\n', show_user_input)
         string_content = '\n\n{aux} ATTENTION: BELOW THIS LINE, IT\'S ANOTHER {type} CONTENT {aux}\n\n'.format(aux = 30 * '-', type = 'ENCRYPTED' if is_encryption else 'DECRYPTED').join(content)
-        subject =  read_data_from_console('\nSubject: ')
+        subject =  read_data_from_console('\nSubject: ', show_user_input)
         mail.send_email(contacts, string_content, '{}.txt'.format(formatted), subject)
 
-    if is_encryption and read_data_from_console('\nDo you want to send an e-mail with the keys do decrypt? [Yes, No]: ').lower()[0] == 'y':
-        if not (contacts is not None and input('\nDo you want to use the same contacts? [Yes, No]: ').lower()[0] == 'y'):
-            contacts = read_data_from_console('Type the contacts to send e-mail. Use a comma to separete receivers.\n')
-        subject =  read_data_from_console('\nSubject: ')
+    if is_encryption and read_ask_answear('\nDo you want to send an e-mail with the keys to decrypt? [Yes, No]: ', True):
+        if not (contacts is not None and read_ask_answear('\nDo you want to use the same contacts? [Yes, No]: ', True)):
+            contacts = read_data_from_console('Type the contacts to send e-mail. Use a comma to separete receivers.\n', show_user_input)
+        subject =  read_data_from_console('\nSubject: ', show_user_input)
         mail.send_email(contacts, keys, 'decryption_keys.rkeys', subject)
 
     print('\n\tSend e-mail stage was finished!')
@@ -220,7 +214,3 @@ def main():
 if __name__ == "__main__":
     main()
     print('\nDone.\tHave a nice day.')
-
-
-
-

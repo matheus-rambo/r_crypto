@@ -4,7 +4,7 @@
 def write(file_name:str, content:str, extension:str):
     # if the user defined a extension, we will remove it and then add our extension
     if '.' in file_name:
-        index = file.rindex('.')
+        index = file_name.rindex('.')
         file_name = file_name[0:index]
     file_name = file_name + extension
     with open(file_name, 'wt') as file:
@@ -24,7 +24,7 @@ def read_file_content(file_name:str, buffer_size:int, charset: str = 'utf-8'):
             content = content + data
     return content
     
-def read_data_from_console(message: str, show_input: bool = False):
+def read_data_from_console(message: str, show_input: bool = True):
     if show_input:
         return input(message)
     else:
@@ -34,3 +34,9 @@ def read_data_from_console(message: str, show_input: bool = False):
 def get_file_extension(file_name: str):
     last_index = file_name.rindex('.')
     return file_name[last_index:] 
+
+def read_ask_answear(message:str, show_input: bool = False):
+    answear = read_data_from_console(message, show_input) 
+    return False if ( answear is None or answear.strip() == '' ) else answear.lower()[0] == 'y'
+
+

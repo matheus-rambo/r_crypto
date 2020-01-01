@@ -1,5 +1,5 @@
 import argparse
-from source.app_util import read_file_content, read_data_from_console, get_file_extension
+from source.app_util import read_file_content, read_data_from_console, get_file_extension, read_ask_answear
 
 parser = argparse.ArgumentParser(description='Hide/Reveal messages inside an image file')
 
@@ -38,7 +38,7 @@ def open_image_file_stage():
 def read_secret_message_stage():
     print('\n\tInit read secret message stage . . .')
     message = None
-    if input('Do you want to read the message from a file? [Yes, No]\t').lower()[0] == 'y':
+    if read_ask_answear('Do you want to read the message from a file? [Yes, No]\t', True):
         file_name = read_data_from_console('Insert the file name:\t', show)
         message = read_file_content(file_name, buffer_size)
     else:
@@ -98,13 +98,13 @@ def send_mail_stage(image_path : str):
     subject  = read_data_from_console('Subject: ', show)
     mail     = Mail()
 
-    if input('Do you want to attach more images to difficult the discover of steganography? [Yes, No]: ').lower()[0] == 'y':
+    if read_ask_answear('Do you want to attach more images to difficult the discover of steganography? [Yes, No]: ', True):
         print('\n\tKeyboard Interrupt to stop... (Control + C)')
         while True:
             try:
-                images.append(read_data_from_console('Imaage path: ', show))
+                images.append(read_data_from_console('Image path: ', show))
             except KeyboardInterrupt:
-                print('Stopping . . .')
+                print('\nStopping . . .\n')
                 break
 
     images.append(image_path)
