@@ -78,7 +78,7 @@ def keys_stage():
         print('\nKeys were loaded') 
     else:
         key = read_data_from_console('Insert your key:\t')
-        if is_secret_key_computed:
+        if is_secret_key_computed or not is_encryption:
             secret_key = read_data_from_console('Insert your secret key:\t')
     
     print('\n\tKeys stage was finished!')
