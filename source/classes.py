@@ -24,13 +24,19 @@ class Keys():
         alphabet        = ascii_letters + digits
         token           = token_urlsafe(32)
         secret_key      = ""
-        secret_key_size = 50
-        while secret_key_size >= 0:
-            if secret_key_size % 2 == 0:
-                secret_key = choice(alphabet) + secret_key + choice(token) 
+        secret_key_size = 25
+        # generate a password with 50 characters
+        while secret_key_size > 0:            
+            if secret_key_size % 4 == 0:
+                secret_key = choice(alphabet) + secret_key + choice(token)                
+            elif secret_key_size % 3 == 0:
+                secret_key = choice(token) + secret_key + choice(alphabet)                 
+            elif secret_key_size % 2 == 0:
+                secret_key = secret_key + choice(alphabet) + choice(token)
             else:
-                secret_key = choice(token) + secret_key + choice(alphabet)
-            secret_key_size -= 2
+                secret_key = secret_key + choice(token) + choice(alphabet)
+            secret_key_size -= 1
+
         return secret_key
 
 
