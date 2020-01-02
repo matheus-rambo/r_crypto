@@ -21,6 +21,9 @@ https://www.techopedia.com/definition/4131/steganography
 Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-Started).
 
 # Release notes
+- ***Version 1.5.2***
+   - Update how secret key is generate. Now, we use the ***secrets*** module. We are not using anymore the secret key as a hexadecimal string.
+
 - ***Version 1.5.1*** 
    - *Fixed*: https://github.com/matheus-rambo/r_crypto/issues/31
 
