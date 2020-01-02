@@ -93,9 +93,9 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
     - Save files encrypted and decrypted.
 
 # Releases 
- - [*v1.5.3*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5.3)
+ - [*v1.5.3*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5.3) ***Stable Version*** [*Docker Tag*]
  - [*v1.5.2*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5.2) 
- - [*v1.5.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5.1) **Stable version** [*Docker Tag*](https://hub.docker.com/layers/matheusrambo/r_crypto/v1.5/images/sha256-01d205e2f17a6fe8e19f5b7f4baed5fb00cd0ef8d6fcade94bc21d89f761e959)
+ - [*v1.5.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5.1) 
  - [*v1.5*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5)
  - [*v1.4.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.4.1) [*Docker Tag*](https://hub.docker.com/layers/matheusrambo/r_crypto/v1.4/images/sha256-1492892d04b139fea9455edb95e67b66164c80accb343b3b18c4909b2d3abf61)
  - [*v1.4*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.4)
