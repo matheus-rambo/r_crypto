@@ -21,13 +21,16 @@ https://www.techopedia.com/definition/4131/steganography
 Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-Started).
 
 # Release notes
-- ***Version 1.5.2***
+- ***Version 1.5.3***
     - *Enhancement*: https://github.com/matheus-rambo/r_crypto/issues/2. Now, the user can send e-mails with his content.
     - Mail.py file to help with the send of e-mails.
     - A config file to user configure the e-mail account, and smtp.    
     - *r_cryptography.py* now has an option to send the *encrypted*/*decrypted* and the *keys* over an e-mail. And allows multiple receivers too.
     - Sending unique e-mail to destinantions list, so then can not see who else received the same e-mail.
     - User can decide if he wants to send the decryption keys, and may send the keys to other e-mail.
+
+- ***Version 1.5.2***
+   - Update how secret key is generate. Now, we use the ***secrets*** module. We are not using anymore the secret key as a hexadecimal string.
 
 - ***Version 1.5.1*** 
    - *Fixed*: https://github.com/matheus-rambo/r_crypto/issues/31
@@ -90,7 +93,8 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
     - Save files encrypted and decrypted.
 
 # Releases 
- - [*v1.5.2*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5.2)
+ - [*v1.5.3*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5.3)
+ - [*v1.5.2*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5.2) 
  - [*v1.5.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5.1) **Stable version** [*Docker Tag*](https://hub.docker.com/layers/matheusrambo/r_crypto/v1.5/images/sha256-01d205e2f17a6fe8e19f5b7f4baed5fb00cd0ef8d6fcade94bc21d89f761e959)
  - [*v1.5*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5)
  - [*v1.4.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.4.1) [*Docker Tag*](https://hub.docker.com/layers/matheusrambo/r_crypto/v1.4/images/sha256-1492892d04b139fea9455edb95e67b66164c80accb343b3b18c4909b2d3abf61)

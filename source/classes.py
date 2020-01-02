@@ -1,29 +1,44 @@
 #!/usr/bin/python
 
 import base64
-from cryptography.fernet import Fernet
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 import random
 import time
+from cryptography.fernet                       import Fernet
+from cryptography.hazmat.backends              import default_backend
+from cryptography.hazmat.primitives            import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 class Keys():
     def __init__(self, user_key:str, secret_key:str = None, charset:str = 'utf-8'):
-        self.user_key = user_key
-        self.charset = charset
-        self.secret_key = self.generate_secret_key() if secret_key is None else secret_key
-
+        self.user_key         = user_key
+        self.charset          = charset
+        self.secret_key       = self.generate_secret_key() if secret_key is None else secret_key
+       
     def __del__(self):
         pass
 
     def generate_secret_key(self):
-        hexadecimal_key = self.user_key.encode(self.charset).hex()
-        for integer in range(20):
-            hexadecimal_key = hexadecimal_key + str(random.randint(1000, 10000)).encode(self.charset).hex() + str(integer)
-        hexadecimal_key = self.user_key.encode(self.charset).hex() + hexadecimal_key + str(time.time()).encode(self.charset).hex()
-        print('\nSecret key was generated.')
-        return hexadecimal_key
+        from secrets import token_urlsafe, choice
+        from string  import ascii_letters, digits
+        
+        alphabet        = ascii_letters + digits
+        token           = token_urlsafe(32)
+        secret_key      = ""
+        secret_key_size = 25
+        # generate a password with 50 characters
+        while secret_key_size > 0:            
+            if secret_key_size % 4 == 0:
+                secret_key = choice(alphabet) + secret_key + choice(token)                
+            elif secret_key_size % 3 == 0:
+                secret_key = choice(token) + secret_key + choice(alphabet)                 
+            elif secret_key_size % 2 == 0:
+                secret_key = secret_key + choice(alphabet) + choice(token)
+            else:
+                secret_key = secret_key + choice(token) + choice(alphabet)
+            secret_key_size -= 1
+
+        return secret_key
+
 
     def show_keys(self):
         print('\nYour key is:\t{}'.format(self.user_key))
