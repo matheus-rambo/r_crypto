@@ -1,3 +1,12 @@
+def encrypt(byte_array:bytes, key_factor:int):
+    encrypted = []
+    for byte in byte_array:
+        temp = byte ^ key_factor
+        encrypted.append(temp)
+    encrypted.reverse()
+    return bytes(encrypted)
+
+
 def main():
     file_name            = 'C:/Users/matheus.rambo/Pictures/Celtinha.jpg'
     extension            = file_name[file_name.rindex('.'):]
@@ -10,9 +19,9 @@ def main():
                 write_file.write(b'\0')
             write_file.write(bytes(extension, 'ascii'))
             while True:
-                buffer = file.read(10)
+                buffer = file.read(100)
                 if buffer != b"":
-                    write_file.write(buffer)
+                    write_file.write(encrypt(buffer, 2))
                 else:
                     break
 
