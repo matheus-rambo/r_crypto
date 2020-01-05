@@ -90,7 +90,7 @@ class Cryptor():
         fernet_key = base64.urlsafe_b64encode(kdf.derive(key.encode(self.charset)))        
         return Fernet(fernet_key)    
                 
-    def encrypt(self, content:bytes):
+    def encrypt(self, content:bytes):  
         return self._fernet.encrypt(content)
     
     def decrypt(self, content:bytes):

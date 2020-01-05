@@ -17,13 +17,13 @@ required.add_argument('-is-encryption', type=int, choices=[1,0], help='If you wa
 
 
 # optional arguments
-optional.add_argument('--save-content', type=int, choices=[1, 0], default=0,  help='If you want to save the encrypted content to a file, otherwise it will be prompted at console.', dest='save_content')
+optional.add_argument('--save-content', type=int, choices=[1, 0], default=0,  help='If you want to save the encrypted/decrypted content to a file, otherwise it will be prompted at console.', dest='save_content')
 optional.add_argument('--show', type=int, choices=[1, 0], default=0, help='Show the characters that you typed.', dest='show_user_input')
 optional.add_argument('--secret-key-computed', type=int, choices=[1,0], default=0, help='If you have an secret key that was generated with your key, you can use it here.', dest='is_secret_key_computed' )
 optional.add_argument('--save-keys', type=int, choices=[1,0], default=0, help='If you want to save the keys at a file. Otherwise, the keys will be prompted.', dest='save_keys')
 optional.add_argument('--chunk-size', type=int, default=2048, help='Size of bytes to read at time.', dest='chunk_size')
 optional.add_argument('--read-keys-file', type=int, choices=[1, 0], default=0, help='If you have a keys file, you can read it.', dest='read_keys_file')
-optional.add_argument('--charset', type=str, choices=['utf-8', 'utf-16'], default='utf-8', help='Charset that you want to use.')
+optional.add_argument('--charset', type=str, choices=['utf-8', 'utf-16', 'ascii'], default='utf-8', help='Charset that you want to use.')
 optional.add_argument('--send-mail', type=int, choices=[1,0], default=0, help='If you want to send the content over e-mail', dest='send_mail')
 
 
@@ -36,7 +36,6 @@ is_file = args.is_file
 
 # if user wants to encrypt
 is_encryption = args.is_encryption
-
 
 # if user wants to save the encrypted content
 save_content = args.save_content
@@ -100,10 +99,10 @@ def read_user_content_stage():
     else:
         if is_encryption:
             message = read_data_from_console('Insert the message:\t', show_user_input)
-            bytes_array.append(bytes(message.encode('utf-8')))
+            bytes_array.append(bytes(message.encode(charset)))
         else:
             message = read_data_from_console('Insert the encrypted message:\t', show_user_input)
-            bytes_array.append(bytes(message.encode('utf-8')))
+            bytes_array.append(bytes(message.encode(charset)))
 
     print('\n\tRead user content stage was finished!')
     return bytes_array
@@ -145,14 +144,14 @@ def print_content_stage(contents:list):
     print('\n\tInit print content stage . . .\n')
     message = 'Your encrypted content:\t{}\n' if is_encryption else 'Your decrypted content:\t{}\n'
     for content in contents:
-        print(message.format(content))
+        print(message.format(content.decode(charset)))
     print('\tPrint content stage finished!')    
 
 
 def save_keys_stage(keys:Keys):
     print('\n\tInit save keys stage . . .\n')
     keys_file = read_data_from_console('Insert the name of keys file:\t', show_user_input)
-    write(keys_file, bytes(keys.get_keys().encode('utf-8')), '.rkeys')
+    write(keys_file, bytes(keys.get_keys().encode(charset)), '.rkeys')
     print('File created: {}'.format(keys_file + '.rkeys'))
     print('\n\tSave keys stage was finished!')
 
