@@ -11,6 +11,7 @@ def main():
     file_name            = 'C:/Users/matheus.rambo/Pictures/Celtinha.jpg'
     extension            = file_name[file_name.rindex('.'):]
     extension_max_length = 10
+    key_factor           = int(input('Choose a number for the key factor: ')) 
 
     with open(file=file_name, mode='rb') as file:
         buffer = None
@@ -21,7 +22,7 @@ def main():
             while True:
                 buffer = file.read(100)
                 if buffer != b"":
-                    write_file.write(encrypt(buffer, 2))
+                    write_file.write(encrypt(buffer, key_factor))
                 else:
                     break
 

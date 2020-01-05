@@ -8,6 +8,7 @@ def decrypt(byte_array:bytes, key_factor:int):
 
 def main():
     file_name            = 'C:/Users/matheus.rambo/Pictures/Celtinha.rencrypted'
+    key_factor           = int(input('Choose a number for the key factor: ')) 
     with open(file=file_name, mode='rb') as file:
         buffer = file.read(10)
         extension = buffer.decode('ascii').strip('\0') 
@@ -15,7 +16,7 @@ def main():
             while True:
                 buffer = file.read(100)
                 if buffer != b"":
-                    write_file.write(decrypt(buffer, 2))            
+                    write_file.write(decrypt(buffer, key_factor))
                 else:
                     break
 
