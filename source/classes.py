@@ -61,7 +61,7 @@ class InvalidKeyException(Exception):
 class Cryptor():
     # Constructor
     def __init__(self, user_key:str, secret_key:str = None, charset:str = 'utf-8'):
-        self.keys = None
+        self.keys    = None
         self.charset = charset
         self._fernet = None
         self.update_keys(user_key, secret_key, charset)
@@ -72,7 +72,7 @@ class Cryptor():
         del self.keys
     
     def update_keys(self, user_key: str, secret_key:str = None, charset:str = 'utf-8'):
-        self.keys = Keys(user_key, secret_key)
+        self.keys    = Keys(user_key, secret_key)
         self.charset = charset
         self._fernet = self.generate_fernet()
 
@@ -81,11 +81,11 @@ class Cryptor():
         secret_key = self.keys.secret_key
         key = self.keys.user_key
         kdf = PBKDF2HMAC(
-        algorithm=hashes.SHA256(),
-        length=32,
-        salt=bytes(secret_key.encode(self.charset)),
-        iterations=100000,
-        backend=default_backend()
+            algorithm=hashes.SHA256(),
+            length=32,
+            salt=bytes(secret_key.encode(self.charset)),
+            iterations=100000,
+            backend=default_backend()
         )
         fernet_key = base64.urlsafe_b64encode(kdf.derive(key.encode(self.charset)))        
         return Fernet(fernet_key)    
@@ -98,4 +98,7 @@ class Cryptor():
             return self._fernet.decrypt(content)
         except Exception:
             raise InvalidKeyException()
+
+
+
     
