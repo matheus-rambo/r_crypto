@@ -90,12 +90,12 @@ class Cryptor():
         fernet_key = base64.urlsafe_b64encode(kdf.derive(key.encode(self.charset)))        
         return Fernet(fernet_key)    
                 
-    def encrypt(self, content:str):
-        return self._fernet.encrypt(content.encode(self.charset)).decode(self.charset)
+    def encrypt(self, content:bytes):
+        return self._fernet.encrypt(content)
     
-    def decrypt(self, content:str):
+    def decrypt(self, content:bytes):
         try:
-            return self._fernet.decrypt(content.encode(self.charset)).decode(self.charset)
+            return self._fernet.decrypt(content)
         except Exception:
             raise InvalidKeyException()
     

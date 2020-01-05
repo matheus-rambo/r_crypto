@@ -1,7 +1,7 @@
 import argparse
 from getpass import getpass
 from source.classes import Cryptor, Keys
-from source.app_util import write, read_file_content, read_ask_answear, read_data_from_console
+from source.app_util import write, read, read_ask_answear, read_data_from_console,convert_bytearray_to_string
 
 
 parser = argparse.ArgumentParser(description='Encrypt/Decrypt text and text files with this script. With this tool, you can encrypt/decrypt files, and texts, then save them, load file of keys and creates keys file.')
@@ -21,7 +21,7 @@ optional.add_argument('--save-content', type=int, choices=[1, 0], default=0,  he
 optional.add_argument('--show', type=int, choices=[1, 0], default=0, help='Show the characters that you typed.', dest='show_user_input')
 optional.add_argument('--secret-key-computed', type=int, choices=[1,0], default=0, help='If you have an secret key that was generated with your key, you can use it here.', dest='is_secret_key_computed' )
 optional.add_argument('--save-keys', type=int, choices=[1,0], default=0, help='If you want to save the keys at a file. Otherwise, the keys will be prompted.', dest='save_keys')
-optional.add_argument('--buffer-size', type=int, default=2048, help='Size of the buffer when reading data from a file.', dest='buffer_size')
+optional.add_argument('--chunk-size', type=int, default=2048, help='Size of bytes to read at time.', dest='chunk_size')
 optional.add_argument('--read-keys-file', type=int, choices=[1, 0], default=0, help='If you have a keys file, you can read it.', dest='read_keys_file')
 optional.add_argument('--charset', type=str, choices=['utf-8', 'utf-16'], default='utf-8', help='Charset that you want to use.')
 optional.add_argument('--send-mail', type=int, choices=[1,0], default=0, help='If you want to send the content over e-mail', dest='send_mail')
@@ -51,8 +51,8 @@ is_secret_key_computed = args.is_secret_key_computed
 # if the user want to save the keys at a file
 save_keys = args.save_keys
 
-# Size of buffer for reading characters of a text file
-buffer_size = args.buffer_size
+# Size of bytes to read at time
+chunk_size = args.chunk_size
 
 # if the user wants to read the keys from a file
 read_keys_file = args.read_keys_file
@@ -68,11 +68,12 @@ def keys_stage():
     key = None
     secret_key = None
     if read_keys_file:
-        keys_file = read_data_from_console('Insert the name of yours keys file:\t', show_user_input)
-        keys_content = read_file_content(keys_file, buffer_size, charset)
         from json import loads
-        key = loads(keys_content)['key']
-        secret_key = loads(keys_content)['secret_key']
+        keys_file    = read_data_from_console('Insert the name of yours keys file:\t', show_user_input)
+        byte_array   = read(keys_file, chunk_size)
+        keys_content = convert_bytearray_to_string(byte_array)
+        key          = loads(keys_content)['key']
+        secret_key   = loads(keys_content)['secret_key']
         print('\nKeys were loaded') 
     else:
         key = read_data_from_console('Insert your key:\t')
@@ -87,23 +88,25 @@ def keys_stage():
 
 def read_user_content_stage():
     print('\n\tInit read user content stage . . .\n')
-    content_to_work = []
+    # we will store the bytes 
+    bytes_array = []
     if is_file:
         print('For two or more files, type: file1 file2 file3 . . .')
         files_string = read_data_from_console('Insert the path of the file(s):\t', show_user_input)
         files = files_string.split(' ')
         for file_name in files:
             print('Reading content of the file: {}'.format(file_name))
-            content_to_work.append(read_file_content(file_name, buffer_size, charset))
-
+            bytes_array.append(read(file_name, chunk_size))
     else:
         if is_encryption:
-            content_to_work.append(read_data_from_console('Insert the message:\t', show_user_input))
+            message = read_data_from_console('Insert the message:\t', show_user_input)
+            bytes_array.append(bytes(message.encode('utf-8')))
         else:
-            content_to_work.append(read_data_from_console('Insert the encrypted message:\t', show_user_input))
+            message = read_data_from_console('Insert the encrypted message:\t', show_user_input)
+            bytes_array.append(bytes(message.encode('utf-8')))
 
     print('\n\tRead user content stage was finished!')
-    return content_to_work
+    return bytes_array
 
 
 def encrypt_stage(content: list, cryptor: Cryptor):
@@ -149,7 +152,7 @@ def print_content_stage(contents:list):
 def save_keys_stage(keys:Keys):
     print('\n\tInit save keys stage . . .\n')
     keys_file = read_data_from_console('Insert the name of keys file:\t', show_user_input)
-    write(keys_file, keys.get_keys(), '.rkeys')
+    write(keys_file, bytes(keys.get_keys().encode('utf-8')), '.rkeys')
     print('File created: {}'.format(keys_file + '.rkeys'))
     print('\n\tSave keys stage was finished!')
 
@@ -169,7 +172,7 @@ def send_mail_stage(content: [], keys:str):
 
     if read_ask_answear('\nDo you want to send an e-mail with the {} content? [Yes, No]: '.format(formatted), show_user_input):
         contacts = read_data_from_console('\nType the contacts to send e-mail. Use a comma to separete receivers.\n', show_user_input)
-        string_content = '\n\n{aux} ATTENTION: BELOW THIS LINE, IT\'S ANOTHER {type} CONTENT {aux}\n\n'.format(aux = 30 * '-', type = 'ENCRYPTED' if is_encryption else 'DECRYPTED').join(content)
+        string_content = '\n\n{aux} ATTENTION: BELOW THIS LINE, IT\'S ANOTHER {type} CONTENT {aux}\n\n'.format(aux = 30 * '-', type = 'ENCRYPTED' if is_encryption else 'DECRYPTED').join(content.decode('utf-8'))
         subject =  read_data_from_console('\nSubject: ', show_user_input)
         mail.send_email(contacts, string_content, '{}.txt'.format(formatted), subject)
 

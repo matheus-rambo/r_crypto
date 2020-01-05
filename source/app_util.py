@@ -1,28 +1,36 @@
-# writes text content to a file
-# Note that the parameter 'wt' overwrites the content if the file exists    
-# 'wt' means Writes Text, it is the same as just 'w'
-def write(file_name:str, content:str, extension:str):
-    # if the user defined a extension, we will remove it and then add our extension
+_READ_BINARY  = 'rb'
+_WRITE_BINARY = 'wb'
+
+
+def write(file_name:str, content:bytes, extension:str):
     if '.' in file_name:
         index = file_name.rindex('.')
         file_name = file_name[0:index]
     file_name = file_name + extension
-    with open(file_name, 'wt') as file:
+    with open(file = file_name, mode = _WRITE_BINARY ) as file:
         file.write(content)
 
 
-# rt means Read Text
-def read_file_content(file_name:str, buffer_size:int, charset: str = 'utf-8'):
-    content = ""
-    data = -1
-    position = 0
-    with open(file_name, 'rt', encoding=charset) as file:
-        while data != "":
-            data = file.read(buffer_size) 
-            position = position + buffer_size
-            file.seek(position)
-            content = content + data
-    return content
+def read(file_name:str, chunk_size:int = 2048):
+    byte_array = bytearray()
+    buffer     = None
+    with open(file = file_name, mode = _READ_BINARY) as file:
+        while True:
+            buffer = file.read(chunk_size)
+            if buffer:
+                for byte in buffer:
+                    byte_array.append(byte)
+            else:
+                break
+    return byte_array
+
+def convert_bytearray_to_string(byte_array:bytearray):
+    string = ""
+    for byte in byte_array:
+        string += chr(byte)
+    return string
+
+
     
 def read_data_from_console(message: str, show_input: bool = True):
     if show_input:
