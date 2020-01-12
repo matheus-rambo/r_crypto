@@ -86,17 +86,17 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
 
 # Releases 
  - [*v2.0*](https://github.com/matheus-rambo/r_crypto/releases/tag/v2.0) **Stable Version**  
- - [*v1.5.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5.1) [*Docker Tag*](https://hub.docker.com/layers/matheusrambo/r_crypto/v1.5/images/sha256-01d205e2f17a6fe8e19f5b7f4baed5fb00cd0ef8d6fcade94bc21d89f761e959)
+ - [*v1.5.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5.1) 
  - [*v1.5*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5)
- - [*v1.4.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.4.1) [*Docker Tag*](https://hub.docker.com/layers/matheusrambo/r_crypto/v1.4/images/sha256-1492892d04b139fea9455edb95e67b66164c80accb343b3b18c4909b2d3abf61)
+ - [*v1.4.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.4.1) 
  - [*v1.4*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.4)
  - [*v1.4-steganography*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.4-steganography)
- - [*v1.3*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.3) [*Docker Tag*](https://hub.docker.com/layers/matheusrambo/r_crypto/v1.3/images/sha256-d8f8b8feeb001dfe4491befeb62cdb659afbdfa1b3ff23c1f3fae41f243fef60)
+ - [*v1.3*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.3)
  - [*v1.3-beta*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.3-beta)
- - [*v1.2.2*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.2.2) [*Docker Tag*](https://hub.docker.com/layers/matheusrambo/r_crypto/v1.2/images/sha256-16e95224bd39359fba72c38209a1f9a7ec1cf2ae173936d868961d39d1261e75)
+ - [*v1.2.2*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.2.2)
  - [*v1.2.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.2.1)
- - [*v1.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.1) [*Docker Tag*](https://hub.docker.com/layers/matheusrambo/r_crypto/v1.1/images/sha256-f898469acc6b5f2f418d2dc4cea365eb929292ca44c2188593b39745d4fab120) 
- - [*v1.0*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.0) [*Docker Tag*](https://hub.docker.com/layers/matheusrambo/r_crypto/v1.0/images/sha256-c0421b81bd580a8ea54e60ff0f2d7a5dc7ca45ef095cfa35a61736906a0a9085)
+ - [*v1.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.1) 
+ - [*v1.0*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.0)
 
 # Docs
  - ***Version 1.0***: [v1.0](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v1.0)
@@ -105,6 +105,7 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
  - ***Version 1.3***: [v1.3](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v1.3)
  - ***Version 1.4***: [v1.4](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v1.4)
  - ***Version 1.5***: [v1.5](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v1.5)
+ - ***Version 2.0***: [v2.0](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v2.0)
 
 
 # Author
