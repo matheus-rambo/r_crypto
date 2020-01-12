@@ -1,5 +1,5 @@
 import argparse
-from source.app_util import read_file_content, read_data_from_console, get_file_extension, read_ask_answear
+from source.app_util import read, read_data_from_console, get_file_extension, read_ask_answear
 
 parser = argparse.ArgumentParser(description='Hide/Reveal messages inside an image file')
 
