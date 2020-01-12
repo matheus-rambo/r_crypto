@@ -21,8 +21,7 @@ https://www.techopedia.com/definition/4131/steganography
 Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-Started).
 
 # Release notes
-<<<<<<< HEAD
-- ***Version 1.5.3***
+- ***Version 2.1***
     - *Enhancement*: https://github.com/matheus-rambo/r_crypto/issues/2. Now, the user can send e-mails with his content.
     - Mail.py file to help with the send of e-mails.
     - A config file to user configure the e-mail account, and smtp.    
@@ -30,10 +29,7 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
     - Sending unique e-mail to destinantions list, so then can not see who else received the same e-mail.
     - User can decide if he wants to send the decryption keys, and may send the keys to other e-mail.
 
-- ***Version 1.5.2***
-=======
 - ***Version 2.0***
->>>>>>> efcc0bf8e7d52a93fa1ee4b05abdce505f88c568
    - Update how secret key is generate. Now, we use the ***secrets*** module. We are not using anymore the secret key as a hexadecimal string.
 
 - ***Version 1.5.1*** 
@@ -97,8 +93,8 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
     - Save files encrypted and decrypted.
 
 # Releases 
- - [*v2.0*](https://github.com/matheus-rambo/r_crypto/releases/tag/v2.0) **Stable Version**  
- - [*v1.5.3*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5.3)
+ - [*v2.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v2.1) **Stable Version**  
+ - [*v2.0*](https://github.com/matheus-rambo/r_crypto/releases/tag/v2.0)  
  - [*v1.5.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5.1) 
  - [*v1.5*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5)
  - [*v1.4.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.4.1) 
@@ -119,6 +115,7 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
  - ***Version 1.4***: [v1.4](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v1.4)
  - ***Version 1.5***: [v1.5](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v1.5)
  - ***Version 2.0***: [v2.0](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v2.0)
+ - ***Version 2.1***: [v2.1](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v2.1)
 
 
 # Author
