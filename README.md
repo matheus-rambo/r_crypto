@@ -21,6 +21,12 @@ https://www.techopedia.com/definition/4131/steganography
 Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-Started).
 
 # Release notes
+
+
+- ***Version 3.0***
+   - *Fixed*: https://github.com/matheus-rambo/r_crypto/issues/20
+   - What was encryted with a version fewer than *3*, can not be decrypted with this version.   
+
 - ***Version 2.1***
     - *Enhancement*: https://github.com/matheus-rambo/r_crypto/issues/2. Now, the user can send e-mails with his content.
     - Mail.py file to help with the send of e-mails.
@@ -93,6 +99,7 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
     - Save files encrypted and decrypted.
 
 # Releases 
+ - [*v3.0*](https://github.com/matheus-rambo/r_crypto/releases/tag/v3.0)
  - [*v2.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v2.1) **Stable Version**  
  - [*v2.0*](https://github.com/matheus-rambo/r_crypto/releases/tag/v2.0)  
  - [*v1.5.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5.1) 
@@ -108,6 +115,7 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
  - [*v1.0*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.0)
 
 # Docs
+ - ***Version 3.0***: [v3.0](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v3.0)
  - ***Version 2.1***: [v2.1](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v2.1)
  - ***Version 2.0***: [v2.0](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v2.0)
  - ***Version 1.5***: [v1.5](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v1.5)
