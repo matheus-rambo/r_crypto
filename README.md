@@ -25,7 +25,8 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
 
 - ***Version 3.0***
    - *Fixed*: https://github.com/matheus-rambo/r_crypto/issues/20
-   - What was encryted with a version fewer than *3*, can not be decrypted with this version.   
+   - What was encryted with a version fewer than *3*, can not be decrypted with this version.
+   - Optional argument ``buffer-size`` on steganography and cryptography was renamed to ``chunk-size``.   
 
 - ***Version 2.1***
     - *Enhancement*: https://github.com/matheus-rambo/r_crypto/issues/2. Now, the user can send e-mails with his content.
