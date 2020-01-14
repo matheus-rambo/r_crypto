@@ -1,8 +1,6 @@
 _READ_BINARY  = 'rb'
 _WRITE_BINARY = 'wb'
 
-from os import path 
-
 def write(file_name:str, content:bytes, extension:str):
     if '.' in file_name:
         index = file_name.rindex('.')
@@ -13,8 +11,7 @@ def write(file_name:str, content:bytes, extension:str):
 
 
 def read(file_name:str, chunk_size:int = 2048):
-    file_bytes_length = path.getsize(file_name) 
-    byte_array = bytearray(file_bytes_length)
+    byte_array = bytearray()
     buffer     = None
     with open(file = file_name, mode = _READ_BINARY) as file:
         while True:
