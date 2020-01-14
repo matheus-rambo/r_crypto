@@ -30,6 +30,9 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
    - Now, files are written and read in binary format, with this, we can encrypt images too. 
    - We can encrypt images, videos and much more. At lower versions, we could only encrypt text files, now we can do anything.
 
+- ***Version 2.1.1***
+   - *Fixed*: https://github.com/matheus-rambo/r_crypto/issues/41
+    
 - ***Version 2.1***
     - *Enhancement*: https://github.com/matheus-rambo/r_crypto/issues/2. Now, the user can send e-mails with his content.
     - Mail.py file to help with the send of e-mails.
@@ -103,7 +106,8 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
 
 # Releases 
  - [*v3.0*](https://github.com/matheus-rambo/r_crypto/releases/tag/v3.0)
- - [*v2.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v2.1) **Stable Version**  
+ - [*v2.1.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v2.1.1) **Stable Version**  
+ - [*v2.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v2.1)   
  - [*v2.0*](https://github.com/matheus-rambo/r_crypto/releases/tag/v2.0)  
  - [*v1.5.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5.1) 
  - [*v1.5*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.5)
