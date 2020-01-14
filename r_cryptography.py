@@ -87,7 +87,7 @@ def keys_stage():
 
 def read_user_content_stage():
     print('\n\tInit read user content stage . . .\n')
-    # we will store the bytes 
+    # we will store the bytes
     bytes_array = []
     if is_file:
         print('For two or more files, type: file1 file2 file3 . . .')
@@ -135,8 +135,14 @@ def save_content_stage(contents: list):
 
     for content in contents:
         file_name = read_data_from_console('Insert the name of {} file:\t'.format(message), show_user_input)
-        write(file_name, content, extension)
-        print('File created: {}'.format(file_name + extension))
+        message = None
+        if is_encryption and read_ask_answear('Do you want to store a message inside the file? [Yes, No]: ', True):
+            message = read_data_from_console('Your message: ')
+            write(file_name, content, extension, True, bytes(message.encode(charset)))
+        else:
+            write(file_name, content, extension, is_encryption, None)
+
+    print('File created: {}'.format(file_name + extension))
 
     print('\n\tSave content stage was finished!')
 
