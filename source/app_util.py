@@ -13,8 +13,8 @@ def write(filename:str, content:bytes, extension:str, is_encryption:bool = False
         if is_encryption:
 
             if message is not None:
-                # we will write yes, so wen we decrypt we can restore the message
-                file.write('YES'.encode('ascii'))    
+                # we will write three null bytes to specify that there is an message
+                file.write(b'\0\0\0')    
                 
                 # we will store how many bytes we need to store the message
                 message_size = len(message)
@@ -25,13 +25,6 @@ def write(filename:str, content:bytes, extension:str, is_encryption:bool = False
                 file.write(message_bytes)
                 file.write(message)
 
-
-            else:
-                # we will write NO with a Null byte so the length is the same as the yes word
-                # so when we decrypt the file, we will no that thre is not a message to retrieve
-                file.write('NO\0'.encode('ascii'))
-
-
         file.write(content)
 
 
@@ -39,17 +32,15 @@ def read(file_name:str, chunk_size:int = 2048):
     byte_array = bytearray()
     buffer     = None
     with open(file = file_name, mode = _READ_BINARY) as file:
-        try:
-            has_message = file.read(3).decode()
-            if has_message == 'YES':
+        has_message = file.read(3)
+            if has_message == b'\0\0\0':
                 size = int.from_bytes(bytes = file.read(1), byteorder='big')
                 message = file.read(size)
                 print(message)
-            elif has_message != 'NO\0':
+            else:
+                # we reset to the first byte
                 file.seek(0)
-        except UnicodeDecodeError:
-            print('Error')
-            file.seek(0)
+                
         while True:
             buffer = file.read(chunk_size)
             if buffer:
