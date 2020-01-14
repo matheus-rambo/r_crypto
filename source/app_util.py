@@ -1,6 +1,7 @@
 _READ_BINARY  = 'rb'
 _WRITE_BINARY = 'wb'
 
+from os import path 
 
 def write(file_name:str, content:bytes, extension:str):
     if '.' in file_name:
@@ -11,33 +12,19 @@ def write(file_name:str, content:bytes, extension:str):
         file.write(content)
 
 
-# TODO must return bytes
-# def read(file_name:str, chunk_size:int = 2048):
-#     byte_array = bytearray()
-#     buffer     = None
-#     with open(file = file_name, mode = _READ_BINARY) as file:
-#         while True:
-#             buffer = file.read(chunk_size)
-#             if buffer:
-#                 for byte in buffer:
-#                     byte_array.append(byte)
-#             else:
-#                 break
-#     return byte_array
-
 def read(file_name:str, chunk_size:int = 2048):
-    byt = None
+    file_bytes_length = path.getsize(file_name) 
+    byte_array = bytearray(file_bytes_length)
+    buffer     = None
     with open(file = file_name, mode = _READ_BINARY) as file:
-        # READS all the bytes of the file 
-        byt = file.read()
-    return byt
-
-def convert_bytearray_to_string(byte_array:bytearray):
-    string = ""
-    for byte in byte_array:
-        string += chr(byte)
-    return string
-
+        while True:
+            buffer = file.read(chunk_size)
+            if buffer:
+                for byte in buffer:
+                    byte_array.append(byte)
+            else:
+                break
+    return bytes(byte_array)
 
     
 def read_data_from_console(message: str, show_input: bool = True):

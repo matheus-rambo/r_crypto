@@ -1,7 +1,7 @@
 import argparse
 from getpass import getpass
 from source.classes import Cryptor, Keys
-from source.app_util import write, read, read_ask_answear, read_data_from_console,convert_bytearray_to_string
+from source.app_util import write, read, read_ask_answear, read_data_from_console
 
 
 parser = argparse.ArgumentParser(description='Encrypt/Decrypt text and text files with this script. With this tool, you can encrypt/decrypt files, and texts, then save them, load file of keys and creates keys file.')
@@ -70,7 +70,7 @@ def keys_stage():
         from json import loads
         keys_file    = read_data_from_console('Insert the name of yours keys file:\t', show_user_input)
         byte_array   = read(keys_file, chunk_size)
-        keys_content = convert_bytearray_to_string(byte_array)
+        keys_content = byte_array.decode(charset)
         key          = loads(keys_content)['key']
         secret_key   = loads(keys_content)['secret_key']
         print('\nKeys were loaded') 
