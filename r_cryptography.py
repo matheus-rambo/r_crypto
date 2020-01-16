@@ -1,7 +1,7 @@
 import argparse
 from getpass import getpass
 from source.classes import Cryptor, Keys, Encrypted
-from source.app_util import write, read, read_ask_answear, read_data_from_console, persist_info, extract_info
+from source.app_util import write, read, read_ask_answear, read_data_from_console, persist_info, extract_info, get_file_from_absolute_path
 
 
 parser = argparse.ArgumentParser(description='Encrypt/Decrypt text and text files with this script. With this tool, you can encrypt/decrypt files, and texts, then save them, load file of keys and creates keys file.')
@@ -95,11 +95,19 @@ def read_user_content_stage():
         files = files_string.split(' ')
         for file_name in files:
             print('Reading content of the file: {}'.format(file_name))
-            bytes_array.append(read(file_name, chunk_size))
+            if not is_encryption:
+                bytes_array.append(read(file_name, chunk_size))
+            else:                
+                file_bytes = read(file_name, chunk_size)
+                file       = get_file_from_absolute_path(file_name) 
+                persist_bytes = persist_info(file_bytes, file)
+                bytes_array.append(persist_bytes)
     else:
         if is_encryption:
-            message = read_data_from_console('Insert the message:\t', show_user_input)
-            bytes_array.append(bytes(message.encode(charset)))
+            message       = read_data_from_console('Insert the message:\t', show_user_input)
+            message_bytes = bytes(message.encode(charset))
+            persist_bytes = persist_info(message_bytes)
+            bytes_array.append(persist_bytes)
         else:
             message = read_data_from_console('Insert the encrypted message:\t', show_user_input)
             bytes_array.append(bytes(message.encode(charset)))
@@ -125,27 +133,25 @@ def decrypt_stage(content: list, cryptor: Cryptor):
         print('Decrypting content: {}'.format(index + 1))
         byte = cryptor.decrypt(content[index])
         decrypted = extract_info(byte)
-        decrypted_content.append(decrypted.message)
-        print(decrypted.info)
+        decrypted_content.append(decrypted)
 
     print('\n\tDecryption stage was finished!')
     return decrypted_content
 
 def save_content_stage(contents: list):
-    extension = '.rencrypted' if is_encryption else '.rdecrypted'
-    message = 'encrypted' if is_encryption else 'decrypted'
     print('\n\tInit save content stage . . .\n')
 
-    for content in contents:
-        file_name = read_data_from_console('Insert the name of {} file:\t'.format(message), show_user_input)
-        message = None
-        if is_encryption and read_ask_answear('Do you want to store a message inside the file? [Yes, No]: ', True):
-            message = read_data_from_console('Your message: ')
-            write(file_name, content, extension, True, bytes(message.encode(charset)))
+    for byte in contents:
+        if is_encryption:
+            filename = read_data_from_console('Name for the encrypted file: ', show_user_input)
+            write(filename, byte)
         else:
-            write(file_name, content, extension, is_encryption, None)
+            filename = byte.get_real_filename()
+            if not filename:
+                print('This decrypted content was not encrypt from a file, so we can not choose the best filename.')
+                filename = read_data_from_console('Please, type a filename: ', show_user_input)
+            write(filename, byte.message)
 
-    print('File created: {}'.format(file_name + extension))
 
     print('\n\tSave content stage was finished!')
 
@@ -153,7 +159,10 @@ def print_content_stage(contents:list):
     print('\n\tInit print content stage . . .\n')
     message = 'Your encrypted content:\t{}\n' if is_encryption else 'Your decrypted content:\t{}\n'
     for content in contents:
-        print(message.format(content.decode(charset)))
+        if is_encryption:
+            print(message.format(content.decode(charset)))
+        else:
+            print(message.format(content.message.decode(charset)))
     print('\tPrint content stage finished!')    
 
 

@@ -104,5 +104,16 @@ class Encrypted():
         self.message = None
         self.info    = None
 
+    def get_real_filename(self):
+        if not self.info:
+            return None
+        from json import loads
+        json_str = self.info.decode('ascii')
+        info     = loads(json_str)
+        if 'filename' in info:
+            return info['filename']
+        else:
+            return None
+
 
     

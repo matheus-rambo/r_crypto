@@ -2,8 +2,9 @@ _READ_BINARY  = 'rb'
 _WRITE_BINARY = 'wb'
 
 from .classes import Encrypted
-from json import dumps
+from json     import dumps
 from datetime import datetime
+from getpass  import getuser
 
 
 def write(filename:str, content:bytes):
@@ -24,17 +25,23 @@ def read(file_name:str, chunk_size:int = 2048):
                 break
     return bytes(byte_array)
 
-def generate_info(extension: str = None):
+def generate_info(filename: str = None):
     info_tuple = None
-    info_tuple = {
-            'date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-            'author': 'Ramboso Killer'
-        }     
+    if filename:
+        info_tuple = {
+            'date'      : datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'created_by': getuser(),
+            'filename'  : filename 
+        }
+    else:
+        info_tuple = {
+            'date'      : datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'created_by': getuser()
+        }
     return bytes(dumps(info_tuple).encode('ascii'))
 
 def extract_info(byte_array:bytes):
     encrypted = Encrypted()
-    print(byte_array)
     if byte_array[0:3] == b'\0\0\0':
         info_bytes_length = byte_array[3]
         # 3 null bytes and one byte to store the info length
@@ -47,8 +54,8 @@ def extract_info(byte_array:bytes):
 
     return encrypted
 
-def persist_info(byte_array:bytes, extension:str = None):
-    info        = generate_info(extension)
+def persist_info(byte_array:bytes, filename:str = None):
+    info        = generate_info(filename)
     info_length = len(info)
 
     # we write 3 null bytes, so we can make it compatible with older
@@ -79,5 +86,14 @@ def get_file_extension(file_name: str):
 def read_ask_answear(message:str, show_input: bool = False):
     answear = read_data_from_console(message, show_input) 
     return False if ( answear is None or answear.strip() == '' ) else answear.lower()[0] == 'y'
+
+def get_file_from_absolute_path(path:str):
+    if '/' in path:
+        return path[path.rindex('/'):] 
+    elif '\\' in path:
+        return path[path.rindex('\\'):] 
+    else:
+        return path
+
 
 
