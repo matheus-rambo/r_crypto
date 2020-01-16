@@ -99,6 +99,10 @@ class Cryptor():
         except Exception:
             raise InvalidKeyException()
 
+class Encrypted():
+    def __init__(self):
+        self.message = None
+        self.info    = None
 
 
     

@@ -1,7 +1,7 @@
 import argparse
 from getpass import getpass
-from source.classes import Cryptor, Keys
-from source.app_util import write, read, read_ask_answear, read_data_from_console
+from source.classes import Cryptor, Keys, Encrypted
+from source.app_util import write, read, read_ask_answear, read_data_from_console, persist_info, extract_info
 
 
 parser = argparse.ArgumentParser(description='Encrypt/Decrypt text and text files with this script. With this tool, you can encrypt/decrypt files, and texts, then save them, load file of keys and creates keys file.')
@@ -123,7 +123,10 @@ def decrypt_stage(content: list, cryptor: Cryptor):
     print('\n\tInit decryption stage . . .\n')
     for index in range(0, len(content)):
         print('Decrypting content: {}'.format(index + 1))
-        decrypted_content.append(cryptor.decrypt(content[index]))
+        byte = cryptor.decrypt(content[index])
+        decrypted = extract_info(byte)
+        decrypted_content.append(decrypted.message)
+        print(decrypted.info)
 
     print('\n\tDecryption stage was finished!')
     return decrypted_content

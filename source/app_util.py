@@ -1,46 +1,20 @@
 _READ_BINARY  = 'rb'
 _WRITE_BINARY = 'wb'
 
+from .classes import Encrypted
+from json import dumps
+from datetime import datetime
 
-def write(filename:str, content:bytes, extension:str, is_encryption:bool = False, message:bytes = None):
-    if '.' in filename:
-        index = filename.rindex('.')
-        filename = filename[0:index]
-    filename = filename + extension
 
+def write(filename:str, content:bytes):
     with open(file = filename, mode = _WRITE_BINARY ) as file:
-
-        if is_encryption:
-
-            if message is not None:
-                # we will write three null bytes to specify that there is an message
-                file.write(b'\0\0\0')    
-                
-                # we will store how many bytes we need to store the message
-                message_size = len(message)
-
-                # convert the size of the message to bytes
-                message_bytes = message_size.to_bytes((message_size.bit_length() + 7) // 8, 'big')   
-
-                file.write(message_bytes)
-                file.write(message)
-
         file.write(content)
 
 
 def read(file_name:str, chunk_size:int = 2048):
     byte_array = bytearray()
     buffer     = None
-    with open(file = file_name, mode = _READ_BINARY) as file:
-        has_message = file.read(3)
-            if has_message == b'\0\0\0':
-                size = int.from_bytes(bytes = file.read(1), byteorder='big')
-                message = file.read(size)
-                print(message)
-            else:
-                # we reset to the first byte
-                file.seek(0)
-                
+    with open(file = file_name, mode = _READ_BINARY) as file:        
         while True:
             buffer = file.read(chunk_size)
             if buffer:
@@ -50,7 +24,47 @@ def read(file_name:str, chunk_size:int = 2048):
                 break
     return bytes(byte_array)
 
+def generate_info(extension: str = None):
+    info_tuple = None
+    info_tuple = {
+            'date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'author': 'Ramboso Killer'
+        }     
+    return bytes(dumps(info_tuple).encode('ascii'))
+
+def extract_info(byte_array:bytes):
+    encrypted = Encrypted()
+    print(byte_array)
+    if byte_array[0:3] == b'\0\0\0':
+        info_bytes_length = byte_array[3]
+        # 3 null bytes and one byte to store the info length
+        temp_size         = 4
+        encrypted.message = byte_array[info_bytes_length + temp_size:]
+        encrypted.info    = byte_array[4:info_bytes_length + temp_size]
+    else:
+        # compatible with older versions
+        encrypted.message = byte_array 
+
+    return encrypted
+
+def persist_info(byte_array:bytes, extension:str = None):
+    info        = generate_info(extension)
+    info_length = len(info)
+
+    # we write 3 null bytes, so we can make it compatible with older
+    # versions when reading
+    temp_bytes  = bytearray('\0\0\0'.encode('ascii'))
+    temp_bytes.append(info_length)
+
+    for byte in info:
+        temp_bytes.append(byte)
     
+    for byte in byte_array:
+        temp_bytes.append(byte)
+    
+    return bytes(temp_bytes)
+
+
 def read_data_from_console(message: str, show_input: bool = True):
     if show_input:
         return input(message)
