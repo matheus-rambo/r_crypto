@@ -89,9 +89,9 @@ def read_ask_answear(message:str, show_input: bool = False):
 
 def get_file_from_absolute_path(path:str):
     if '/' in path:
-        return path[path.rindex('/'):] 
+        return path[path.rindex('/') + 1:] 
     elif '\\' in path:
-        return path[path.rindex('\\'):] 
+        return path[path.rindex('\\') + 1:] 
     else:
         return path
 

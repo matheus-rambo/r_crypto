@@ -146,11 +146,17 @@ def save_content_stage(contents: list):
             filename = read_data_from_console('Name for the encrypted file: ', show_user_input)
             write(filename, byte)
         else:
-            filename = byte.get_real_filename()
+            # init the extraction of meta information
+            byte.extract_metadata()
+            filename = byte.filename
             if not filename:
                 print('This decrypted content was not encrypt from a file, so we can not choose the best filename.')
                 filename = read_data_from_console('Please, type a filename: ', show_user_input)
+            print('\t\nInformation about this file')
+            print('Encrypted by: {user} in {date}'.format(user = byte.created_by, date = byte.created_date))
+
             write(filename, byte.message)
+            
 
 
     print('\n\tSave content stage was finished!')

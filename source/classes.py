@@ -101,19 +101,23 @@ class Cryptor():
 
 class Encrypted():
     def __init__(self):
-        self.message = None
-        self.info    = None
+        self.message      = None
+        self.info         = None
+        self.filename     = None
+        self.created_by   = None
+        self.created_date = None
 
-    def get_real_filename(self):
-        if not self.info:
-            return None
-        from json import loads
-        json_str = self.info.decode('ascii')
-        info     = loads(json_str)
-        if 'filename' in info:
-            return info['filename']
-        else:
-            return None
+    def extract_metadata(self):
+        if self.info:
+           from json import loads
+           json_str = self.info.decode('ascii')
+           info     = loads(json_str)
+           
+           # Verifies if the key filename exists
+           if 'filename' in info:
+               self.filename = info['filename']
+           self.created_by   = info['created_by']
+           self.created_date = info['date'] 
 
 
     
