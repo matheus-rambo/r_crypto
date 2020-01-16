@@ -148,12 +148,16 @@ def save_content_stage(contents: list):
         else:
             # init the extraction of meta information
             byte.extract_metadata()
-            filename = byte.filename
-            if not filename:
+            filename     = byte.filename
+            temp_message = None
+            if filename is None:
                 print('This decrypted content was not encrypt from a file, so we can not choose the best filename.')
                 filename = read_data_from_console('Please, type a filename: ', show_user_input)
-            print('\t\nInformation about this file')
-            print('Encrypted by: {user} in {date}'.format(user = byte.created_by, date = byte.created_date))
+                temp_message = '\n\n\tInformation about the text.'
+            else:
+                temp_message = '\n\n\tInformation about this file: {file}.'.format(file = filename)
+            print(temp_message)
+            print('\tEncrypted by: {user} in {date}'.format(user = byte.created_by, date = byte.created_date))
 
             write(filename, byte.message)
             
@@ -163,12 +167,21 @@ def save_content_stage(contents: list):
 
 def print_content_stage(contents:list):
     print('\n\tInit print content stage . . .\n')
-    message = 'Your encrypted content:\t{}\n' if is_encryption else 'Your decrypted content:\t{}\n'
     for content in contents:
         if is_encryption:
-            print(message.format(content.decode(charset)))
+            print('Your encrypted content:\t{}'.format(content.decode(charset)))
         else:
-            print(message.format(content.message.decode(charset)))
+            content.extract_metadata()
+            filename     = content.filename
+            temp_message = None
+            if filename is not None:
+                temp_message = '\n\n\tInformation about the file: {file}.'.format(file = filename)
+            else:
+                temp_message = '\n\n\tInformation about this text.'
+            print(temp_message)
+            print('\tEncrypted by: {user} in {date}'.format(user = content.created_by, date = content.created_date))
+            print(content.message)
+
     print('\tPrint content stage finished!')    
 
 
