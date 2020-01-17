@@ -2,7 +2,6 @@ _READ_BINARY  = 'rb'
 _WRITE_BINARY = 'wb'
 
 from .classes import Encrypted
-from json     import dumps
 from datetime import datetime
 from getpass  import getuser
 
@@ -25,47 +24,52 @@ def read(file_name:str, chunk_size:int = 2048):
                 break
     return bytes(byte_array)
 
-def generate_info(filename: str = None):
-    info_tuple = None
+def generate_info( message:str, filename: str = None):
+    info = None
     if filename:
-        info_tuple = {
-            'date'      : datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-            'created_by': getuser(),
-            'filename'  : filename 
-        }
+        info = '{};\0;{};\0;{};\0;{}'.format(datetime.now().strftime('%Y-%m-%d %H:%M:%S'), getuser(), message, filename)
     else:
-        info_tuple = {
-            'date'      : datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-            'created_by': getuser()
-        }
-    return bytes(dumps(info_tuple).encode('ascii'))
+        info = '{};\0;{};\0;{}'.format(datetime.now().strftime('%Y-%m-%d %H:%M:%S'), getuser(), message)
+    return bytes(info.encode('utf-8'))
 
+    
 def extract_info(byte_array:bytes):
     encrypted = Encrypted()
+
     if byte_array[0:3] == b'\0\0\0':
-        info_bytes_length = byte_array[3]
-        # 3 null bytes and one byte to store the info length
-        temp_size         = 4
-        encrypted.message = byte_array[info_bytes_length + temp_size:]
-        encrypted.info    = byte_array[4:info_bytes_length + temp_size]
+
+        message_size   = None
+        for index in range(3, len(byte_array)):
+            
+            # we write 3 null bytes so specify the end of message
+            if byte_array[index:index + 3] == b'\0\0\0':
+                message_size = index + 3
+                break
+        
+        # 3 null bytes and more the message length
+        encrypted.message = byte_array[message_size:]
+        encrypted.info    = byte_array[3:message_size - 3]
     else:
         # compatible with older versions
         encrypted.message = byte_array 
 
     return encrypted
 
-def persist_info(byte_array:bytes, filename:str = None):
-    info        = generate_info(filename)
-    info_length = len(info)
-
+def persist_info(byte_array:bytes, message:str = 'User that encrypted did not let a message to you.', filename:str = None):
+    info        = generate_info(message, filename)
+    
     # we write 3 null bytes, so we can make it compatible with older
     # versions when reading
-    temp_bytes  = bytearray('\0\0\0'.encode('ascii'))
-    temp_bytes.append(info_length)
-
+    temp_bytes  = bytearray(b'\0\0\0')
+    
     for byte in info:
         temp_bytes.append(byte)
     
+    # we will write 3 null bytes to specify the end of the info
+    temp_bytes.append(0)
+    temp_bytes.append(0)
+    temp_bytes.append(0)
+
     for byte in byte_array:
         temp_bytes.append(byte)
     
@@ -94,6 +98,5 @@ def get_file_from_absolute_path(path:str):
         return path[path.rindex('\\') + 1:] 
     else:
         return path
-
 
 

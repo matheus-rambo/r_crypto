@@ -98,15 +98,23 @@ def read_user_content_stage():
             if not is_encryption:
                 bytes_array.append(read(file_name, chunk_size))
             else:                
-                file_bytes = read(file_name, chunk_size)
-                file       = get_file_from_absolute_path(file_name) 
-                persist_bytes = persist_info(file_bytes, file)
+                file_bytes   = read(file_name, chunk_size)
+                file         = get_file_from_absolute_path(file_name) 
+                user_message = None
+                if read_ask_answear('Do you want to store a message? So when someone decrypts it, he can read your message.[Yes, No]: ', show_user_input):
+                    user_message =  read_data_from_console('Your message: ', show_user_input)
+
+                persist_bytes = persist_info(file_bytes, user_message, file)
                 bytes_array.append(persist_bytes)
     else:
         if is_encryption:
             message       = read_data_from_console('Insert the message:\t', show_user_input)
             message_bytes = bytes(message.encode(charset))
-            persist_bytes = persist_info(message_bytes)
+            user_message = None
+            if read_ask_answear('Do you want to store a message? So when someone decrypts it, he can read your message.[Yes, No]: ', show_user_input):
+                user_message =  read_data_from_console('Your message: ', show_user_input)
+
+            persist_bytes = persist_info(message_bytes, user_message)
             bytes_array.append(persist_bytes)
         else:
             message = read_data_from_console('Insert the encrypted message:\t', show_user_input)
@@ -138,30 +146,39 @@ def decrypt_stage(content: list, cryptor: Cryptor):
     print('\n\tDecryption stage was finished!')
     return decrypted_content
 
+def show_info(item:Encrypted):
+    if item.info is not None:
+        # there are things to show
+        temp_message = None
+        if item.filename is None:
+            temp_message = '\n\n\tInformation about the text.'
+        else:
+            temp_message = '\n\n\tInformation about this file: {file}.'.format(file = item.filename)
+        print('\tEncrypted by: {user} in {date}'.format(user = item.created_by, date = item.created_date))
+        print('\tMessage: {user_message}'.format(user_message = item.user_message))
+    else:
+        # was encrypted with a lower version than 3.1
+        pass
+
+
 def save_content_stage(contents: list):
     print('\n\tInit save content stage . . .\n')
 
-    for byte in contents:
+    for item in contents:
         if is_encryption:
             filename = read_data_from_console('Name for the encrypted file: ', show_user_input)
-            write(filename, byte)
+            write(filename, item)
         else:
             # init the extraction of meta information
-            byte.extract_metadata()
-            filename     = byte.filename
+            item.extract_metadata()
+            filename     = item.filename
             temp_message = None
             if filename is None:
                 print('This decrypted content was not encrypt from a file, so we can not choose the best filename.')
                 filename = read_data_from_console('Please, type a filename: ', show_user_input)
-                temp_message = '\n\n\tInformation about the text.'
-            else:
-                temp_message = '\n\n\tInformation about this file: {file}.'.format(file = filename)
-            print(temp_message)
-            print('\tEncrypted by: {user} in {date}'.format(user = byte.created_by, date = byte.created_date))
-
-            write(filename, byte.message)
+            show_info(item)
+            write(filename, item.message)
             
-
 
     print('\n\tSave content stage was finished!')
 
@@ -172,23 +189,15 @@ def print_content_stage(contents:list):
             print('Your encrypted content:\t{}'.format(content.decode(charset)))
         else:
             content.extract_metadata()
-            filename     = content.filename
-            temp_message = None
-            if filename is not None:
-                temp_message = '\n\n\tInformation about the file: {file}.'.format(file = filename)
-            else:
-                temp_message = '\n\n\tInformation about this text.'
-            print(temp_message)
-            print('\tEncrypted by: {user} in {date}'.format(user = content.created_by, date = content.created_date))
-            print(content.message)
+            show_info(content)
 
-    print('\tPrint content stage finished!')    
+    print('\n\tPrint content stage finished!')    
 
 
 def save_keys_stage(keys:Keys):
     print('\n\tInit save keys stage . . .\n')
     keys_file = read_data_from_console('Insert the name of keys file:\t', show_user_input)
-    write(keys_file, bytes(keys.get_keys().encode(charset)), '.rkeys')
+    write(keys_file, bytes(keys.get_keys().encode(charset)))
     print('File created: {}'.format(keys_file + '.rkeys'))
     print('\n\tSave keys stage was finished!')
 
@@ -219,6 +228,8 @@ def send_mail_stage(content: [], keys:str):
         mail.send_email(contacts, keys, 'decryption_keys.rkeys', subject)
 
     print('\n\tSend e-mail stage was finished!')
+
+
 
 
 def main():      

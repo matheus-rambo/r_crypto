@@ -106,18 +106,15 @@ class Encrypted():
         self.filename     = None
         self.created_by   = None
         self.created_date = None
+        self.user_message = None
 
     def extract_metadata(self):
         if self.info:
-           from json import loads
-           json_str = self.info.decode('ascii')
-           info     = loads(json_str)
-           
-           # Verifies if the key filename exists
-           if 'filename' in info:
-               self.filename = info['filename']
-           self.created_by   = info['created_by']
-           self.created_date = info['date'] 
-
+            info_str = self.info.decode('utf-8').split(';\0;')
+            if len(info_str) == 4:
+                self.filename = info_str[3]
+            self.created_date = info_str[0]
+            self.created_by   = info_str[1]
+            self.user_message = info_str[2]
 
     
