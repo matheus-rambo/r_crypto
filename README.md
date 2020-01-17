@@ -23,6 +23,11 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
 
 # Release notes
 
+- ***Version 3.1***
+   - Now, we add metadata inside an encrypted content( it can be a file, text, image whatever), and when the content is decrypted we show the metadata to the user.
+   - *Enhancement*: https://github.com/matheus-rambo/r_crypto/issues/43. When a file is encrypted, we store its extension, so when it is decrypted, we may(if the user wants to) save the file with its original extension back.
+   - *Enhancement*: https://github.com/matheus-rambo/r_crypto/issues/42. Storing metadata inside the content.
+
 - ***Version 3.0***
    - *Fixed*: https://github.com/matheus-rambo/r_crypto/issues/20
    - What was encryted with a version lower than *3*, can not be decrypted with this version.
