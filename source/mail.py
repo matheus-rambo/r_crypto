@@ -1,7 +1,7 @@
 from ssl import create_default_context
 from smtplib import SMTP
 from json import loads
-from .app_util import read_file_content, read_ask_answear
+from .app_util import read, read_ask_answear
 
 import email
 from email import encoders
