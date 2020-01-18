@@ -10,7 +10,7 @@ optional = parser.add_argument_group('optional arguments')
 
 required.add_argument('-is-hide', type=int, choices=[1,0], help='If you want hide and message, otherwise we will reveal a message from an image file', required=True, dest='is_hide')
 
-optional.add_argument('--buffer-size', type=int, default=2048, help='Buffer size when reading the message from a file', dest='buffer_size')
+optional.add_argument('--chunk-size', type=int, default=2048, help='Size of bytes to read at time.', dest='chunk_size')
 optional.add_argument('--show', type=int, choices=[1,0], default=0, help='If you want to see what you are typing.', dest='show')
 optional.add_argument('--charset', type=str, choices=['utf-8', 'utf-16'], default='utf-8', dest='charset')
 optional.add_argument('--send-mail', type=int, choices=[1,0], default=0, help='If you want to send the content over e-mail', dest='send_mail')
