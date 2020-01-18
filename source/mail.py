@@ -85,6 +85,7 @@ class Mail():
             for receiver in destination.split(','):
                 # TODO
                 # We can implement PGP later
+                # Pretty Good Privacy
                 mail['To'] = receiver
                 message    = mail.as_string()
                 print('\n\tSending e-mail to: {}'.format(receiver))
