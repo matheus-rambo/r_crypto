@@ -209,15 +209,21 @@ def print_keys_stage(keys: Keys):
 
 def send_mail_stage(content: [], keys:str):
     from source.mail import Mail
+    from base64 import b64encode
     print('\n\tInit send e-mail stage . . .\n')
     
     mail = Mail()
     formatted = 'encrypted' if is_encryption else 'decrypted'
     contacts = None
 
+    bytes_converted = []
+    for byte_array in content:
+        byte = b64encode(byte_array)
+        bytes_converted.append(byte.decode(charset))
+
     if read_ask_answear('\nDo you want to send an e-mail with the {} content? [Yes, No]: '.format(formatted), show_user_input):
         contacts = read_data_from_console('\nType the contacts to send e-mail. Use a comma to separete receivers.\n', show_user_input)
-        string_content = '\n\n{aux} ATTENTION: BELOW THIS LINE, IT\'S ANOTHER {type} CONTENT {aux}\n\n'.format(aux = 30 * '-', type = 'ENCRYPTED' if is_encryption else 'DECRYPTED').join(content.decode('utf-8'))
+        string_content = '\n\n{aux} ATTENTION: BELOW THIS LINE, IT\'S ANOTHER {type} CONTENT {aux}\n\n'.format(aux = 30 * '-', type = 'ENCRYPTED' if is_encryption else 'DECRYPTED').join(bytes_converted)
         subject =  read_data_from_console('\nSubject: ', show_user_input)
         mail.send_email(contacts, string_content, '{}.txt'.format(formatted), subject)
 
