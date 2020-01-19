@@ -23,6 +23,9 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
 
 # Release notes
 
+- ***Version 3.0.2***
+   - *Fixed*: https://github.com/matheus-rambo/r_crypto/issues/51. Error when running r_steganography.
+
 - ***Version 3.0.1***
    - *Fixed*: https://github.com/matheus-rambo/r_crypto/issues/47. Was not possible to send e-mails with the 3.0 version.
    - We encode the *bytes* with **base64** before send the e-mail. So, before decrypt it, you will need to decode the **base64** to get the *bytes*.
