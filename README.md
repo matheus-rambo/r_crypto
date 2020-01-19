@@ -29,6 +29,9 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
    - *Enhancement*: https://github.com/matheus-rambo/r_crypto/issues/42. Storing metadata inside the content.
    - Removed rkeys extension for file with keys to decrypt. 
    - Removed rencrypted extension when a file is encrypted.
+   
+- ***Version 3.0.2***
+   - *Fixed*: https://github.com/matheus-rambo/r_crypto/issues/51. Error when running r_steganography.
 
 - ***Version 3.0.1***
    - *Fixed*: https://github.com/matheus-rambo/r_crypto/issues/47. Was not possible to send e-mails with the 3.0 version.
@@ -116,6 +119,8 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
     - Save files encrypted and decrypted.
 
 # Releases 
+ - [*v3.0.2*](https://github.com/matheus-rambo/r_crypto/releases/tag/v3.0.2)
+ - [*v3.0.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v3.0.1)
  - [*v3.0*](https://github.com/matheus-rambo/r_crypto/releases/tag/v3.0)
  - [*v2.1.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v2.1.1) **Stable Version**  
  - [*v2.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v2.1)   
