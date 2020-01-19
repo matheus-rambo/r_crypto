@@ -119,6 +119,7 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
     - Save files encrypted and decrypted.
 
 # Releases 
+ - [*v3.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v3.1)
  - [*v3.0.2*](https://github.com/matheus-rambo/r_crypto/releases/tag/v3.0.2)
  - [*v3.0.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v3.0.1)
  - [*v3.0*](https://github.com/matheus-rambo/r_crypto/releases/tag/v3.0)
