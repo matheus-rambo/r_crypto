@@ -27,7 +27,9 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
    - Now, we add metadata inside an encrypted content( it can be a file, text, image whatever), and when the content is decrypted we show the metadata to the user.
    - *Enhancement*: https://github.com/matheus-rambo/r_crypto/issues/43. When a file is encrypted, we store its extension, so when it is decrypted, we may(if the user wants to) save the file with its original extension back.
    - *Enhancement*: https://github.com/matheus-rambo/r_crypto/issues/42. Storing metadata inside the content.
-   
+   - Removed rkeys extension for file with keys to decrypt. 
+   - Removed rencrypted extension when a file is encrypted.
+
 - ***Version 3.0.1***
    - *Fixed*: https://github.com/matheus-rambo/r_crypto/issues/47. Was not possible to send e-mails with the 3.0 version.
    - We encode the *bytes* with **base64** before send the e-mail. So, before decrypt it, you will need to decode the **base64** to get the *bytes*.

@@ -198,7 +198,6 @@ def save_keys_stage(keys:Keys):
     print('\n\tInit save keys stage . . .\n')
     keys_file = read_data_from_console('Insert the name of keys file:\t', show_user_input)
     write(keys_file, bytes(keys.get_keys().encode(charset)))
-    print('File created: {}'.format(keys_file + '.rkeys'))
     print('\n\tSave keys stage was finished!')
 
 def print_keys_stage(keys: Keys):
