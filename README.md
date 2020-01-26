@@ -122,6 +122,7 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
     - Save files encrypted and decrypted.
 
 # Releases 
+ - [*v3.1.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v3.1.1)
  - [*v3.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v3.1)
  - [*v3.0.2*](https://github.com/matheus-rambo/r_crypto/releases/tag/v3.0.2)
  - [*v3.0.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v3.0.1)
@@ -142,6 +143,7 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
  - [*v1.0*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.0)
 
 # Docs
+ - ***Version 3.1***: [v3.1](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v3.1)
  - ***Version 3.0***: [v3.0](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v3.0)
  - ***Version 2.1***: [v2.1](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v2.1)
  - ***Version 2.0***: [v2.0](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v2.0)
