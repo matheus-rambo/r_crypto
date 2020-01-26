@@ -136,7 +136,8 @@ def read_user_content_stage():
         directories_string = read_data_from_console('Insert the directory(ies): \t', show_user_input)
         directories        = directories_string.split(delimitter)
         for directory in directories:
-            files = get_all_files_from_directory(directory)    
+            recursion_in_directory = read_ask_answear('Do you want to get files inside directories that are inside {dir}.[Yes, No]: '.format(dir = directory), show_user_input)
+            files = get_all_files_from_directory(directory, recursion_in_directory)    
             bytes_array += read_from_files(files)
 
     print('\n\tRead user content stage was finished!')
