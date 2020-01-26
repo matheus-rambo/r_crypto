@@ -1,7 +1,7 @@
 import argparse
 from getpass import getpass
 from source.classes import Cryptor, Keys, Encrypted
-from source.app_util import write, read, read_ask_answear, read_data_from_console, persist_info, extract_info, get_file_from_absolute_path
+from source.app_util import write, read, read_ask_answear, read_data_from_console, persist_info, extract_info, get_file_from_absolute_path, get_all_files_from_directory
 
 
 parser = argparse.ArgumentParser(description='Encrypt/Decrypt text and text files with this script. With this tool, you can encrypt/decrypt files, and texts, then save them, load file of keys and creates keys file.')
@@ -12,7 +12,7 @@ required = parser.add_argument_group('required arguments')
 optional = parser.add_argument_group('optional arguments')
 
 # required arguments
-required.add_argument('-is-file', type=int, choices=[1,0], help='If you want to work over a file, otherwise a text will be used', required=True, dest='is_file')
+required.add_argument('-use', type=str, choices=['text', 'file', 'directory'], help='With what the script will work', required=True, dest='use')
 required.add_argument('-is-encryption', type=int, choices=[1,0], help='If you want to work with encryption, otherwise we will decrypt', required=True, dest='is_encryption')
 
 
@@ -25,6 +25,8 @@ optional.add_argument('--chunk-size', type=int, default=2048, help='Size of byte
 optional.add_argument('--read-keys-file', type=int, choices=[1, 0], default=0, help='If you have a keys file, you can read it.', dest='read_keys_file')
 optional.add_argument('--charset', type=str, choices=['utf-8', 'utf-16', 'ascii'], default='utf-8', help='Charset that you want to use.')
 optional.add_argument('--send-mail', type=int, choices=[1,0], default=0, help='If you want to send the content over e-mail', dest='send_mail')
+optional.add_argument('--delimitter', type=str, default=';', help='The delimitter to limit string ends.', dest='delimitter')
+
 
 
 # we get the command line arguments
@@ -32,7 +34,7 @@ args = parser.parse_args()
 
 
 # if the users wants to encrypt a file
-is_file = args.is_file
+use = args.use
 
 # if user wants to encrypt
 is_encryption = args.is_encryption
@@ -62,6 +64,9 @@ charset = args.charset
 # if the user want to send an e-mail
 send_mail = args.send_mail
 
+# delimitter
+delimitter = args.delimitter
+
 def keys_stage():
     print('\n\tInit keys stage . . . ')
     key = None
@@ -85,40 +90,55 @@ def keys_stage():
         'secret_key': secret_key
     }
 
+def read_from_files(files:[]):
+    bytes_array = []
+    for file in files:
+        print('Reading content from file: {file}'.format(file = file))
+        file_bytes = read(file, chunk_size)
+        if is_encryption:
+            filename     = get_file_from_absolute_path(file)
+            user_message = None
+            if read_ask_answear('Do you want to store a message inside the encrypted file? [Yes, No]: ', show_user_input):
+                user_message = read_data_from_console('Your message: ', show_user_input)
+
+            persisted_metadata = persist_info(file_bytes, user_message, filename)
+            bytes_array.append(persisted_metadata)
+        else:
+            bytes_array.append(file_bytes)
+    return bytes_array
+
+
 def read_user_content_stage():
     print('\n\tInit read user content stage . . .\n')
-    # we will store the bytes
-    bytes_array = []
-    if is_file:
-        print('For two or more files, type: file1 file2 file3 . . .')
-        files_string = read_data_from_console('Insert the path of the file(s):\t', show_user_input)
-        files = files_string.split(' ')
-        for file_name in files:
-            print('Reading content of the file: {}'.format(file_name))
-            if not is_encryption:
-                bytes_array.append(read(file_name, chunk_size))
-            else:                
-                file_bytes   = read(file_name, chunk_size)
-                file         = get_file_from_absolute_path(file_name) 
-                user_message = None
-                if read_ask_answear('Do you want to store a message? So when someone decrypts it, he can read your message.[Yes, No]: ', show_user_input):
-                    user_message =  read_data_from_console('Your message: ', show_user_input)
-
-                persist_bytes = persist_info(file_bytes, user_message, file)
-                bytes_array.append(persist_bytes)
-    else:
+    bytes_array = None
+    if use == 'text':
+        # reads from text
+         message       = read_data_from_console('Insert the message:\t', show_user_input)
+         message_bytes = bytes(message.encode(charset))
         if is_encryption:
-            message       = read_data_from_console('Insert the message:\t', show_user_input)
-            message_bytes = bytes(message.encode(charset))
-            user_message = None
-            if read_ask_answear('Do you want to store a message? So when someone decrypts it, he can read your message.[Yes, No]: ', show_user_input):
-                user_message =  read_data_from_console('Your message: ', show_user_input)
-
-            persist_bytes = persist_info(message_bytes, user_message)
-            bytes_array.append(persist_bytes)
+           user_message = None
+           if read_ask_answear('Do you want to store a message inside the encrypted file? [Yes, No]: ', show_user_input):
+               user_message = read_data_from_console('Your message: ', show_user_input)
+           persist_metadata = persist_info(message_bytes, user_message)
+           bytes_array.append(persist_metadata)
         else:
-            message = read_data_from_console('Insert the encrypted message:\t', show_user_input)
-            bytes_array.append(bytes(message.encode(charset)))
+            bytes_array.append(message_bytes)
+
+    elif use == 'file':
+        # reads from file
+        print('For two or more files, type: filepath1{delimitter}filepath2{delimitter}filepath3 and so on.'.format(delimitter = delimitter))
+        files_string = read_data_from_console('Insert the file(s) path: \t', show_user_input)
+        files = files_string.split(delimitter)
+        bytes_array = read_from_files(files)
+    else:
+        # reads from directory
+        print('For two or more directories, type: directory1{delimitter}directory2{delimitter}directory3{delimitter} and so on.', format(delimitter = delimitter))
+        directories_string = read_data_from_console('Insert the directory(ies): \t', show_user_input)
+        directories        = directories_string.split(delimitter)
+        bytes_array = []
+        for directory in directories:
+            files = get_all_files_from_directory(directory)    
+            bytes_array += read_from_files(files)
 
     print('\n\tRead user content stage was finished!')
     return bytes_array

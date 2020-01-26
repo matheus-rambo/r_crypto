@@ -99,4 +99,15 @@ def get_file_from_absolute_path(path:str):
     else:
         return path
 
+def get_all_files_from_directory(directory:str, recursively:bool = False):
+    from os import path, listdir
+    files = []
+    for item in listdir(directory):
+        if recursively and path.isdir(item):
+            # merge lists
+            files = files + get_all_files_from_directory(item, recursively) 
+        else:
+            files.append(item)
+    return files
+
 
