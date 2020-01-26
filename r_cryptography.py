@@ -110,11 +110,11 @@ def read_from_files(files:[]):
 
 def read_user_content_stage():
     print('\n\tInit read user content stage . . .\n')
-    bytes_array = None
+    bytes_array = []
     if use == 'text':
         # reads from text
-         message       = read_data_from_console('Insert the message:\t', show_user_input)
-         message_bytes = bytes(message.encode(charset))
+        message       = read_data_from_console('Insert the message:\t', show_user_input)
+        message_bytes = bytes(message.encode(charset))
         if is_encryption:
            user_message = None
            if read_ask_answear('Do you want to store a message inside the encrypted file? [Yes, No]: ', show_user_input):
@@ -135,7 +135,6 @@ def read_user_content_stage():
         print('For two or more directories, type: directory1{delimitter}directory2{delimitter}directory3{delimitter} and so on.', format(delimitter = delimitter))
         directories_string = read_data_from_console('Insert the directory(ies): \t', show_user_input)
         directories        = directories_string.split(delimitter)
-        bytes_array = []
         for directory in directories:
             files = get_all_files_from_directory(directory)    
             bytes_array += read_from_files(files)
