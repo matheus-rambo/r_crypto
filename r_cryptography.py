@@ -207,6 +207,7 @@ def print_content_stage(contents:list):
         if is_encryption:
             print('Your encrypted content:\t{}'.format(content.decode(charset)))
         else:
+            print('Your decrypted content:\t{}'.format(content.message.decode(charset)))
             content.extract_metadata()
             show_info(content)
 
