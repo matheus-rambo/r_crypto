@@ -107,7 +107,8 @@ def get_all_files_from_directory(directory:str, recursively:bool = False):
             # merge lists
             files = files + get_all_files_from_directory(item, recursively) 
         else:
-            files.append(item)
+            path = '{dir}/{file}'.format(dir = directory, file = item)
+            files.append(path)
     return files
 
 

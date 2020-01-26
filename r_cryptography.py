@@ -132,7 +132,7 @@ def read_user_content_stage():
         bytes_array = read_from_files(files)
     else:
         # reads from directory
-        print('For two or more directories, type: directory1{delimitter}directory2{delimitter}directory3{delimitter} and so on.', format(delimitter = delimitter))
+        print('For two or more directories, type: directory1{delimitter}directory2{delimitter}directory3{delimitter} and so on.'.format(delimitter = delimitter))
         directories_string = read_data_from_console('Insert the directory(ies): \t', show_user_input)
         directories        = directories_string.split(delimitter)
         for directory in directories:
