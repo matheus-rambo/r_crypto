@@ -40,7 +40,8 @@ def read_secret_message_stage():
     message = None
     if read_ask_answear('Do you want to read the message from a file? [Yes, No]\t', True):
         file_name = read_data_from_console('Insert the file name:\t', show)
-        message = read_file_content(file_name, chunk_size)
+        message = read(file_name, chunk_size)
+        message = message.decode(charset)
     else:
         message = read_data_from_console('Insert your message:\t', show)
     print('\n\tRead secret message stage finished!')
