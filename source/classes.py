@@ -106,7 +106,6 @@ class ContentType(Enum):
         self._type = type_str
         
 
-# We will use this object as a ciphed content
 class Message():
 
     def __init__(self, content:bytes, user_message:str, file_path:str = None):
@@ -118,10 +117,9 @@ class Message():
         self.created_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         self.file_path    = file_path
     
-    def to_json_bytes(self, charset:str = 'utf-8') -> bytes:
+    def _metadata_to_json(self, charset:str = 'utf-8') -> str:
 
-        dictionary = {
-            "content"     : self.content,
+        metadata = {
             "filename"    : self.filename,
             "created_by"  : self.created_by,
             "created_date": self.created_date,
@@ -129,17 +127,35 @@ class Message():
             "file_path"   : self.file_path
         }  
 
-        json_str = dumps(dictionary)
-        #return '{null_bytes}{json}'.format(null_bytes = _NULL_BYTES, json = json_str)
-        return json_str.encode(charset)
+        json_str = dumps(metadata)
+        return json_str
+
+    def compact(self, charset:str) -> bytes:
+
+        json_bytes = self._to_json_bytes.encode(charset)
+
+        # init the array with 3 null bytes
+        array_bytes = bytearray(bytes(_NULL_BYTES))
+
+        # copy the metadata
+        for byte in json_bytes:
+            array_bytes.appen(byte)
+        
+        # insert three null bytes
+        array_bytes.append(0)
+        array_bytes.append(0)
+        array_bytes.append(0)
+
+        # copy the content
+        for byte in self.content:
+            array_bytes.append(byte)
+
+        # creates a new byte array
+        return bytes(array_bytes)
 
     @staticmethod
     def create_from_json(json_str:str):
-        json_object = loads(json_str)
-        message = Message(json_object['content'], json_object['user_message'], json_object['filename'])
-        message.created_by  = json_object['created_by']
-        mesage.created_date = json_object['created_date']
-        return message
+        pass
 
     def _get_filename(self, path:str):
         if '/' in path:
@@ -215,9 +231,10 @@ class Cryptography():
         self._send_email   = send_email
 
         # Objects that are used internally
-        self._io   = IOUtil(show_input)
-        self._keys = self._construct_keys(read_keys_file = read_keys_file, secret_key_computed = secret_key_computed)
-
+        self._io       = IOUtil(show_input)
+        self._keys     = self._construct_keys(read_keys_file = read_keys_file, secret_key_computed = secret_key_computed)
+        self._crypto   = None
+        self._messages = None
 
 
     def _construct_keys(self, read_keys_file:bool, secret_key_computed:bool) -> Keys:
@@ -245,24 +262,21 @@ class Cryptography():
         ## Construc the keys object
         return Keys(user_key=user_key, secret_key=secret_key)
 
-    def read(self) -> []:
-
-        messages = None
+    def _read(self) -> None:
 
         if self._content_type == ContentType.TEXT:
 
-            messages = []
-            messages.append(self._read_text())
+            self._messages = []
+            self._messages.append(self._read_text())
 
         elif self._content_type == ContentType.FILE:
-
-            messages = self._read_file()
+            
+            self._messages = self._read_file()
 
         else:
             # directory
             pass
-
-        return messages
+        
 
 
     def _read_text(self) -> Message:
@@ -271,12 +285,12 @@ class Cryptography():
         user_message = None
 
         if self._encryption:
-            message = self._io.stdin('Insert the message: \t')
+            message = self._io.stdin_to_bytes('Insert the message: \t', self._charset)
             insert_message_inside = self._io.read_ask_answear('Do you want to store a message inside the encrypted file? [Yes, No]:')
             if insert_message_inside:
                 user_message = self._io.stdin("Insert the message to store inside: ")
         else:
-            message = self._io.stdin('Insert the encrypted message: \t')
+            message = self._io.stdin_to_bytes('Insert the message: \t', self._charset)
 
         return Message(content=message, user_message=user_message)
     
@@ -285,18 +299,36 @@ class Cryptography():
         messages = []
         self._io.stdout("For two or more files, type: file;file;file3")
         files = self._io.stdin("Files: \t ").split(";")
+
         for filename in files:
             messages.append(self._read_file_content(filename))
         return messages
         
 
     def _read_file_content(self, filename:str) -> Message:
+        
         user_message = None
+
         if self._encryption:
             insert_message_inside = self._io.read_ask_answear('Do you want to store a message inside the encrypted file? [Yes, No]:')
+          
             if insert_message_inside:
                 user_message = self._io.stdin("Insert the message to store inside: ")
+        
         file_object = File(filename=filename, charset=self._charset, chunk_size=self._chunk_size)
-        message = file_object.read().decode(self._charset)
+        message = file_object.read()
         del file_object
         return Message(content=message, user_message=user_message, file_path=filename)
+
+    def _encrypt_message(self) -> None:
+        self._crypto = Cryptor(self._keys, self._charset)
+        for message in self._messages:
+            message.content = self._crypto.encrypt(message.content)
+
+    def init(self):
+        self._read()
+        if self._encryption:
+            self._encrypt_message()
+        else:
+            pass
+

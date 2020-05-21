@@ -62,8 +62,7 @@ send_mail = args.send_mail
 
 def main():
     cryptography = Cryptography(use, encryption, save_content, show_input, secret_key_computed, save_keys, chunk_size, read_keys_file, charset, send_mail)
-    print(cryptography.read()[0].to_json_bytes())
-
+    cryptography.init()
 
 if __name__ == "__main__":
     main()
