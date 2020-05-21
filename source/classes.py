@@ -7,6 +7,8 @@ from cryptography.fernet                       import Fernet
 from cryptography.hazmat.backends              import default_backend
 from cryptography.hazmat.primitives            import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+from getpass                                   import getpass
+
 
 class Keys():
     def __init__(self, user_key:str, secret_key:str = None, charset:str = 'utf-8'):
@@ -20,7 +22,7 @@ class Keys():
     def generate_secret_key(self):
         from secrets import token_urlsafe, choice
         from string  import ascii_letters, digits
-        
+
         alphabet        = ascii_letters + digits
         token           = token_urlsafe(32)
         secret_key      = ""
@@ -123,3 +125,96 @@ class Encrypted():
             self.created_by   = info_str[1]
             self.user_message = info_str[2]
     
+
+class File():
+    def __init__(self, filename:str, charset: str = 'utf-8', chunk_size:int = None):
+        self.filename   = filename
+        self.chunk_size = chunk_size
+        self.charset    = charset
+
+    def read_content(self):
+        byte_array = bytearray()
+        buffer     = None
+        with open(file = self.filename, mode = 'rb') as file:        
+            while True:
+                buffer = file.read(self.chunk_size)
+                if buffer:
+                    for byte in buffer:
+                        byte_array.append(byte)
+                else:
+                    break
+        return bytes(byte_array)
+
+    def read_content_to_json(self):
+        content = self.read_content()
+        from json import loads
+        return loads(content.decode(self.charset))
+    
+    def write(self, content:bytes):
+        with open(file = self.filename, mode = 'wb') as file:
+            file.write(content)
+
+
+class IOUtil():
+    def __init__(self, show_input:bool):
+        self.show_input = show_input
+
+    def stdin(self, message:str):
+        if self.show_input:
+            return input(message)
+        return getpass(message)
+
+    def read_ask_answear(self, message:str, acceptable_answear:chr):
+        answear = self.stdin(message)
+        return False if ( answear is None or answear.strip() == '' ) else answear.lower()[0] == acceptable_answear
+
+    def stdout(self, message:str, parameters:dict = None):
+        if parameters is not None:
+            print(message.format(**parameters))
+        else:
+            print(message)
+
+class Cryptography():
+
+    def __init__(self, encryption:bool, save_content:bool, show_input:bool, 
+            secret_key_computed:bool, save_keys:bool, chunk_size:int, read_keys_file:bool, charset:str, send_email:bool):
+
+        # Objects that will be used in the internally objects
+        self._encryption = encryption
+        self._save_content  = save_content
+        self._save_keys     = save_keys     
+        self._chunk_size   = chunk_size
+        self._charset = charset
+        self._send_email = send_email
+
+        # Objects that are used internally
+        self._io   = IOUtil(show_input)
+        self._keys = self.construct_keys(read_keys_file = read_keys_file, secret_key_computed = secret_key_computed)
+
+
+
+    def construct_keys(self, read_keys_file:bool, secret_key_computed:bool):
+
+        # User passphrase
+        user_key   = None
+
+        # if the secret key remains none, a key will be generated
+        secret_key = None
+
+        # The user wants to read the keys from a file
+        if read_keys_file:
+            filename = self._io.stdin("Insert the name of yours keys file:\t")
+            file_object = File(filename, self._charset, self._chunk_size)   
+            json_bytes = file_object.read_content_to_json()
+            del file_object
+            user_key   = json_bytes['key']
+            secret_key = json_bytes['secret_key']
+        else:
+            user_key = self._io.stdin("Insert your key:\t")
+            # The user already has a secret key or he is decrypting something
+            if secret_key_computed or not self._encryption:
+                secret_key = self._io.stdin("Insert your secret key:\t")
+
+        ## Construc the keys object
+        return Keys(user_key=user_key, secret_key=secret_key)
+
