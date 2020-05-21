@@ -8,6 +8,7 @@ from cryptography.hazmat.backends              import default_backend
 from cryptography.hazmat.primitives            import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from getpass                                   import getpass
+from enum                                      import Enum
 
 
 class Keys():
@@ -105,7 +106,14 @@ class Cryptor():
 
 
 
+class ContentType(Enum):
+    TEXT      = ('text')
+    FILE      = ('file')
+    DIRECTORY = ('directory')
 
+    def __init__(self, type_str:str):
+        self._type = type_str
+        
 
 class Encrypted():
     def __init__(self):
@@ -176,10 +184,11 @@ class IOUtil():
 
 class Cryptography():
 
-    def __init__(self, encryption:bool, save_content:bool, show_input:bool, 
+    def __init__(self, use:str, encryption:bool, save_content:bool, show_input:bool, 
             secret_key_computed:bool, save_keys:bool, chunk_size:int, read_keys_file:bool, charset:str, send_email:bool):
 
         # Objects that will be used in the internally objects
+        self._content_type = ContentType(use)
         self._encryption = encryption
         self._save_content  = save_content
         self._save_keys     = save_keys     

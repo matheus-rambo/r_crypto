@@ -28,7 +28,7 @@ optional.add_argument('--send-mail', type=int, choices=[1,0], default=0, help='I
 # we get the command line arguments
 args = parser.parse_args() 
 
-# if the users wants to encrypt a file
+# What user wants to use, a file, text or directory
 use = args.use
 
 # if user wants to encrypt
@@ -61,7 +61,7 @@ send_mail = args.send_mail
 
 
 def main():
-    cryptography = Cryptography(encryption, save_content, show_input, secret_key_computed, save_keys, chunk_size, read_keys_file, charset, send_mail)
+    cryptography = Cryptography(use, encryption, save_content, show_input, secret_key_computed, save_keys, chunk_size, read_keys_file, charset, send_mail)
     
 
     
