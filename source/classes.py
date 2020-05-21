@@ -65,7 +65,7 @@ class Cryptor():
         self.keys    = keys
         self.charset = charset
         self._fernet = None
-        self.update_keys(user_key, secret_key, charset)
+        self.update_keys(keys, charset)
 
     # Destructor
     def __del__(self):
