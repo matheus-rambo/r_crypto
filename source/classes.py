@@ -109,35 +109,45 @@ class ContentType(Enum):
 # We will use this object as a ciphed content
 class Message():
 
-    def __init__(self, content:bytes, user_message:str, filename:str = None):
+    def __init__(self, content:bytes, user_message:str, file_path:str = None):
 
         self.content      = content
         self.user_message = user_message
-        self.filename     = filename
+        self.filename     = self._get_filename(file_path) if file_path is not None else None 
         self.created_by   = getuser()
         self.created_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        self.file_path    = file_path
     
-    def to_json_bytes(self, charset:str = 'utf-8') -> str:
+    def to_json_bytes(self, charset:str = 'utf-8') -> bytes:
 
         dictionary = {
             "content"     : self.content,
             "filename"    : self.filename,
             "created_by"  : self.created_by,
             "created_date": self.created_date,
-            "user_message": self.user_message
+            "user_message": self.user_message,
+            "file_path"   : self.file_path
         }  
 
-        json_str = dumps(dictionary).encode(charset)
+        json_str = dumps(dictionary)
         #return '{null_bytes}{json}'.format(null_bytes = _NULL_BYTES, json = json_str)
-        return json_str
+        return json_str.encode(charset)
 
     @staticmethod
-    def create_from_json(json_str:str) -> Message:
+    def create_from_json(json_str:str):
         json_object = loads(json_str)
         message = Message(json_object['content'], json_object['user_message'], json_object['filename'])
         message.created_by  = json_object['created_by']
         mesage.created_date = json_object['created_date']
         return message
+
+    def _get_filename(self, path:str):
+        if '/' in path:
+            return path[path.rindex('/') + 1:] 
+        elif '\\' in path:
+            return path[path.rindex('\\') + 1:] 
+        else:
+            return path
 
 class File():
     def __init__(self, filename:str, charset: str = 'utf-8', chunk_size:int = None):
@@ -145,7 +155,7 @@ class File():
         self.chunk_size = chunk_size
         self.charset    = charset
 
-    def read_content(self):
+    def read(self):
         byte_array = bytearray()
         buffer     = None
         with open(file = self.filename, mode = _READ_BINARY ) as file:        
@@ -159,7 +169,7 @@ class File():
         return bytes(byte_array)
 
     def read_content_to_json(self):
-        content = self.read_content()
+        content = self.read()
         from json import loads
         return loads(content.decode(self.charset))
     
@@ -210,7 +220,7 @@ class Cryptography():
 
 
 
-    def _construct_keys(self, read_keys_file:bool, secret_key_computed:bool):
+    def _construct_keys(self, read_keys_file:bool, secret_key_computed:bool) -> Keys:
 
         # User passphrase
         user_key   = None
@@ -235,21 +245,58 @@ class Cryptography():
         ## Construc the keys object
         return Keys(user_key=user_key, secret_key=secret_key)
 
-    def read_text(self) -> Message:
+    def read(self) -> []:
 
-        message_bytes        = None
-        insert_message_inside = None
+        messages = None
 
-        # User wants to encrypt a single message
+        if self._content_type == ContentType.TEXT:
+
+            messages = []
+            messages.append(self._read_text())
+
+        elif self._content_type == ContentType.FILE:
+
+            messages = self._read_file()
+
+        else:
+            # directory
+            pass
+
+        return messages
+
+
+    def _read_text(self) -> Message:
+
+        message      = None
+        user_message = None
+
         if self._encryption:
-            message_bytes = self._io.stdin_to_bytes('Insert the message: \t', self._charset)
+            message = self._io.stdin('Insert the message: \t')
             insert_message_inside = self._io.read_ask_answear('Do you want to store a message inside the encrypted file? [Yes, No]:')
             if insert_message_inside:
-                appended_message = self._io.stdin_to_bytes("Insert the message to store inside: ")
+                user_message = self._io.stdin("Insert the message to store inside: ")
         else:
-            message_bytes = self._io.stdin_to_bytes('Insert the encrypted message: \t', self._charset)
+            message = self._io.stdin('Insert the encrypted message: \t')
 
+        return Message(content=message, user_message=user_message)
+    
+    def _read_file(self) -> []:
 
-        return Message(content=message_bytes, user_message=insert_message_inside)
+        messages = []
+        self._io.stdout("For two or more files, type: file;file;file3")
+        files = self._io.stdin("Files: \t ").split(";")
+        for filename in files:
+            messages.append(self._read_file_content(filename))
+        return messages
+        
 
-
+    def _read_file_content(self, filename:str) -> Message:
+        user_message = None
+        if self._encryption:
+            insert_message_inside = self._io.read_ask_answear('Do you want to store a message inside the encrypted file? [Yes, No]:')
+            if insert_message_inside:
+                user_message = self._io.stdin("Insert the message to store inside: ")
+        file_object = File(filename=filename, charset=self._charset, chunk_size=self._chunk_size)
+        message = file_object.read().decode(self._charset)
+        del file_object
+        return Message(content=message, user_message=user_message, file_path=filename)

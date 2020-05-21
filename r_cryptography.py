@@ -1,5 +1,5 @@
 import argparse
-from source.classes import Cryptography
+from source.classes import Cryptography, Message
 
 parser = argparse.ArgumentParser(description='Encrypt/Decrypt text and text files with this script. With this tool, you can encrypt/decrypt files, and texts, then save them, load file of keys and creates keys file.')
 
@@ -62,9 +62,9 @@ send_mail = args.send_mail
 
 def main():
     cryptography = Cryptography(use, encryption, save_content, show_input, secret_key_computed, save_keys, chunk_size, read_keys_file, charset, send_mail)
-    cryptography.read_text()
+    print(cryptography.read()[0].to_json_bytes())
 
-    
+
 if __name__ == "__main__":
     main()
     print('\nDone.\tHave a nice day.')
