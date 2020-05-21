@@ -359,11 +359,13 @@ class Cryptography():
         for message in self._messages:
             message.content = self._crypto.decrypt(message.content)
 
-    def _save(self) -> None:
+    def _save_messages(self) -> None:
         pass
 
-    def _show_in_console(self) -> None:
-        pass
+    def _show_messages_in_console(self) -> None:
+        if self._encrypt:
+            for message in self._messages:
+                self._io.stdout("Your encrypted content: {msg}", {'msg':message.content})
 
 
     def _encrypt_or_decrypt(self) -> None:
@@ -377,18 +379,22 @@ class Cryptography():
 
         del self._crypto
 
-    def _save_or_show(self):
-
-        if self._save_content:
-            self._save()
+    def _save_or_show(self, messages:bool):
+        if messages:
+            if self._save_content:
+                self._save_messages()
+            else:
+                self._show_messages_in_console()
         else:
-            self._show_in_console
-
+            if self._save_keys:
+                pass
+            else:
+                self._io.stdout("Your key: {key}\tYour secret key: {secret_key}", {'key': self._keys.user_key, 'secret_key': self._keys.secret_key})
 
 
     def init(self):
         self._read()
         self._encrypt_or_decrypt()
-        self._save_or_show()
-        if self._save_keys:
-            pass        
+        self._save_or_show(True)
+        self._save_or_show(False)
+         
