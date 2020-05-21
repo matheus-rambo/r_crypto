@@ -320,15 +320,44 @@ class Cryptography():
         del file_object
         return Message(content=message, user_message=user_message, file_path=filename)
 
-    def _encrypt_message(self) -> None:
-        self._crypto = Cryptor(self._keys, self._charset)
+    def _encrypt(self) -> None:
         for message in self._messages:
             message.content = self._crypto.encrypt(message.content)
 
+    def _decrypt(self) -> None:
+        for message in self._messages:
+            message.content = self._crypto.decrypt(message.content)
+
+    def _save(self) -> None:
+        pass
+
+    def _show_in_console(self) -> None:
+        pass
+
+
+    def _encrypt_or_decrypt(self) -> None:
+
+        self._crypto = Cryptor(self._keys, self._charset)
+
+        if self._encryption:
+            self._encrypt()
+        else:
+            self._decrypt()
+
+        del self._crypto
+
+    def _save_or_show(self):
+
+        if self._save_content:
+            self._save()
+        else:
+            self._show_in_console
+
+
+
     def init(self):
         self._read()
-        if self._encryption:
-            self._encrypt_message()
-        else:
-            pass
-
+        self._encrypt_or_decrypt()
+        self._save_or_show()
+        if self._save_keys:
+            pass        
