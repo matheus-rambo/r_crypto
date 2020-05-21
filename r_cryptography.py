@@ -85,10 +85,7 @@ def keys_stage():
             secret_key = read_data_from_console('Insert your secret key:\t', show_user_input)
     
     print('\n\tKeys stage was finished!')
-    return {
-        'key': key,
-        'secret_key': secret_key
-    }
+    return Keys(user_key=key, secret_key=secret_key)
 
 def read_from_files(files:[]):
     bytes_array = []
@@ -180,7 +177,6 @@ def show_info(item:Encrypted):
         # was encrypted with a lower version than 3.1
         pass
 
-
 def save_content_stage(contents: list):
     print('\n\tInit save content stage . . .\n')
 
@@ -264,7 +260,7 @@ def main():
     content = read_user_content_stage()
 
     # cryptor object    
-    cryptor = Cryptor(keys['key'], keys['secret_key'], charset)    
+    cryptor = Cryptor(keys, charset)    
     
     if is_encryption:
         content = encrypt_stage(content, cryptor)

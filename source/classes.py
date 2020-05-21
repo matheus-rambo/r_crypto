@@ -53,6 +53,7 @@ class Keys():
         return dumps(json)        
         
 
+
 class InvalidKeyException(Exception):
     def __init__(self):
         self.message = "\n\nWe could not decrypt your content! Are you using the correct key and the correct Secret Key?"
@@ -60,8 +61,8 @@ class InvalidKeyException(Exception):
 
 class Cryptor():
     # Constructor
-    def __init__(self, user_key:str, secret_key:str = None, charset:str = 'utf-8'):
-        self.keys    = None
+    def __init__(self, keys: Keys, charset:str = 'utf-8'):
+        self.keys    = keys
         self.charset = charset
         self._fernet = None
         self.update_keys(user_key, secret_key, charset)
@@ -71,8 +72,8 @@ class Cryptor():
         del self._fernet
         del self.keys
     
-    def update_keys(self, user_key: str, secret_key:str = None, charset:str = 'utf-8'):
-        self.keys    = Keys(user_key, secret_key)
+    def update_keys(self, keys:Keys, charset:str = 'utf-8'):
+        self.keys    = keys
         self.charset = charset
         self._fernet = self.generate_fernet()
 
@@ -99,6 +100,11 @@ class Cryptor():
         except Exception:
             raise InvalidKeyException()
 
+
+
+
+
+
 class Encrypted():
     def __init__(self):
         self.message      = None
@@ -116,5 +122,4 @@ class Encrypted():
             self.created_date = info_str[0]
             self.created_by   = info_str[1]
             self.user_message = info_str[2]
-
     
