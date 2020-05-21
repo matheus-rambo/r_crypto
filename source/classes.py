@@ -7,9 +7,15 @@ from cryptography.fernet                       import Fernet
 from cryptography.hazmat.backends              import default_backend
 from cryptography.hazmat.primitives            import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-from getpass                                   import getpass
+from getpass                                   import getpass, getuser
 from enum                                      import Enum
+from source.app_util                           import persist_info
+from json                                      import dumps, loads
+from datetime import datetime
 
+_NULL_BYTES   = '\0\0\0'
+_WRITE_BINARY = 'wb'
+_READ_BINARY  = 'rb'
 
 class Keys():
     def __init__(self, user_key:str, secret_key:str = None, charset:str = 'utf-8'):
@@ -40,20 +46,7 @@ class Keys():
                 secret_key = secret_key + choice(token) + choice(alphabet)
             secret_key_size -= 1
 
-        return secret_key
-
-
-    def show_keys(self):
-        print('\nYour key is:\t{}'.format(self.user_key))
-        print('Your secret key is:\t{}'.format(self.secret_key))
-
-    def get_keys(self):
-        from json import dumps
-        json = {
-            "key": self.user_key,
-            "secret_key": self.secret_key
-        }
-        return dumps(json)        
+        return secret_key      
         
 
 
@@ -103,10 +96,8 @@ class Cryptor():
         except Exception:
             raise InvalidKeyException()
 
-
-
-
 class ContentType(Enum):
+    
     TEXT      = ('text')
     FILE      = ('file')
     DIRECTORY = ('directory')
@@ -115,24 +106,38 @@ class ContentType(Enum):
         self._type = type_str
         
 
-class Encrypted():
-    def __init__(self):
-        self.message      = None
-        self.info         = None
-        self.filename     = None
-        self.created_by   = None
-        self.created_date = None
-        self.user_message = None
+# We will use this object as a ciphed content
+class Message():
 
-    def extract_metadata(self):
-        if self.info:
-            info_str = self.info.decode('utf-8').split(';\0;')
-            if len(info_str) == 4:
-                self.filename = info_str[3]
-            self.created_date = info_str[0]
-            self.created_by   = info_str[1]
-            self.user_message = info_str[2]
+    def __init__(self, content:bytes, user_message:str, filename:str = None):
+
+        self.content      = content
+        self.user_message = user_message
+        self.filename     = filename
+        self.created_by   = getuser()
+        self.created_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     
+    def to_json_bytes(self, charset:str = 'utf-8') -> str:
+
+        dictionary = {
+            "content"     : self.content,
+            "filename"    : self.filename,
+            "created_by"  : self.created_by,
+            "created_date": self.created_date,
+            "user_message": self.user_message
+        }  
+
+        json_str = dumps(dictionary).encode(charset)
+        #return '{null_bytes}{json}'.format(null_bytes = _NULL_BYTES, json = json_str)
+        return json_str
+
+    @staticmethod
+    def create_from_json(json_str:str) -> Message:
+        json_object = loads(json_str)
+        message = Message(json_object['content'], json_object['user_message'], json_object['filename'])
+        message.created_by  = json_object['created_by']
+        mesage.created_date = json_object['created_date']
+        return message
 
 class File():
     def __init__(self, filename:str, charset: str = 'utf-8', chunk_size:int = None):
@@ -143,7 +148,7 @@ class File():
     def read_content(self):
         byte_array = bytearray()
         buffer     = None
-        with open(file = self.filename, mode = 'rb') as file:        
+        with open(file = self.filename, mode = _READ_BINARY ) as file:        
             while True:
                 buffer = file.read(self.chunk_size)
                 if buffer:
@@ -159,7 +164,7 @@ class File():
         return loads(content.decode(self.charset))
     
     def write(self, content:bytes):
-        with open(file = self.filename, mode = 'wb') as file:
+        with open(file = self.filename, mode = _WRITE_BINARY ) as file:
             file.write(content)
 
 
@@ -172,7 +177,10 @@ class IOUtil():
             return input(message)
         return getpass(message)
 
-    def read_ask_answear(self, message:str, acceptable_answear:chr):
+    def stdin_to_bytes(self, message:str, charset:str = 'utf-8'):
+        return self.stdin(message).encode(charset)
+
+    def read_ask_answear(self, message:str, acceptable_answear:chr = 'y'):
         answear = self.stdin(message)
         return False if ( answear is None or answear.strip() == '' ) else answear.lower()[0] == acceptable_answear
 
@@ -189,20 +197,20 @@ class Cryptography():
 
         # Objects that will be used in the internally objects
         self._content_type = ContentType(use)
-        self._encryption = encryption
-        self._save_content  = save_content
-        self._save_keys     = save_keys     
+        self._encryption   = encryption
+        self._save_content = save_content
+        self._save_keys    = save_keys     
         self._chunk_size   = chunk_size
-        self._charset = charset
-        self._send_email = send_email
+        self._charset      = charset
+        self._send_email   = send_email
 
         # Objects that are used internally
         self._io   = IOUtil(show_input)
-        self._keys = self.construct_keys(read_keys_file = read_keys_file, secret_key_computed = secret_key_computed)
+        self._keys = self._construct_keys(read_keys_file = read_keys_file, secret_key_computed = secret_key_computed)
 
 
 
-    def construct_keys(self, read_keys_file:bool, secret_key_computed:bool):
+    def _construct_keys(self, read_keys_file:bool, secret_key_computed:bool):
 
         # User passphrase
         user_key   = None
@@ -226,4 +234,22 @@ class Cryptography():
 
         ## Construc the keys object
         return Keys(user_key=user_key, secret_key=secret_key)
+
+    def read_text(self) -> Message:
+
+        message_bytes        = None
+        insert_message_inside = None
+
+        # User wants to encrypt a single message
+        if self._encryption:
+            message_bytes = self._io.stdin_to_bytes('Insert the message: \t', self._charset)
+            insert_message_inside = self._io.read_ask_answear('Do you want to store a message inside the encrypted file? [Yes, No]:')
+            if insert_message_inside:
+                appended_message = self._io.stdin_to_bytes("Insert the message to store inside: ")
+        else:
+            message_bytes = self._io.stdin_to_bytes('Insert the encrypted message: \t', self._charset)
+
+
+        return Message(content=message_bytes, user_message=insert_message_inside)
+
 

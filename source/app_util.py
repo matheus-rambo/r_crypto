@@ -1,7 +1,6 @@
 _READ_BINARY  = 'rb'
 _WRITE_BINARY = 'wb'
 
-from .classes import Encrypted
 from datetime import datetime
 from getpass  import getuser
 
@@ -32,28 +31,6 @@ def generate_info( message:str, filename: str = None):
         info = '{};\0;{};\0;{}'.format(datetime.now().strftime('%Y-%m-%d %H:%M:%S'), getuser(), message)
     return bytes(info.encode('utf-8'))
 
-    
-def extract_info(byte_array:bytes):
-    encrypted = Encrypted()
-
-    if byte_array[0:3] == b'\0\0\0':
-
-        message_size   = None
-        for index in range(3, len(byte_array)):
-            
-            # we write 3 null bytes so specify the end of message
-            if byte_array[index:index + 3] == b'\0\0\0':
-                message_size = index + 3
-                break
-        
-        # 3 null bytes and more the message length
-        encrypted.message = byte_array[message_size:]
-        encrypted.info    = byte_array[3:message_size - 3]
-    else:
-        # compatible with older versions
-        encrypted.message = byte_array 
-
-    return encrypted
 
 def persist_info(byte_array:bytes, message:str = 'User that encrypted did not let a message to you.', filename:str = None):
     info        = generate_info(message, filename)

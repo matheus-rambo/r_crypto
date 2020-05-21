@@ -62,7 +62,7 @@ send_mail = args.send_mail
 
 def main():
     cryptography = Cryptography(use, encryption, save_content, show_input, secret_key_computed, save_keys, chunk_size, read_keys_file, charset, send_mail)
-    
+    cryptography.read_text()
 
     
 if __name__ == "__main__":
