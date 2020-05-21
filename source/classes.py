@@ -113,8 +113,8 @@ class Message():
         self.content      = content
         self.user_message = user_message
         self.filename     = self._get_filename(file_path) if file_path is not None else None 
-        self.created_by   = getuser()
-        self.created_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        self.created_by   = None
+        self.created_date = None
         self.file_path    = file_path
     
     def _metadata_to_json(self, charset:str = 'utf-8') -> str:
@@ -132,14 +132,17 @@ class Message():
 
     def compact(self, charset:str) -> bytes:
 
-        json_bytes = self._to_json_bytes.encode(charset)
+        self.created_by   = getuser()
+        self.created_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+
+        json_bytes = self._metadata_to_json().encode(charset)
 
         # init the array with 3 null bytes
         array_bytes = bytearray(_NULL_BYTES)
 
         # copy the metadata
         for byte in json_bytes:
-            array_bytes.appen(byte)
+            array_bytes.append(byte)
         
         # insert three null bytes
         array_bytes.append(0)
@@ -153,7 +156,7 @@ class Message():
         # creates a new byte array
         return bytes(array_bytes)
 
-    def decompress(self) -> None:
+    def decompress(self, charset:str) -> None:
 
         # 3 null bytes to specify that has metadata
         if self.content[0:3] == _NULL_BYTES:
@@ -171,22 +174,21 @@ class Message():
 
             metadata = self.content[3:metadata_info_size]   
             self.content = self.content[content_index:]
-
+            self._extract_metadata(metadata, charset)
             
 
     def _extract_metadata(self, metadata:bytes, charset:str) -> None:
 
         json_string = metadata.decode(charset)
         json_object = loads(json_string)
-        self.file_path = json_object['file_path']
-
-
         
+        self.file_path    = json_object['file_path']
+        self.created_by   = json_object['created_by']
+        self.created_date = json_object['created_date']
+        self.filename     = json_object['filename']
+        self.user_message = json_object['user_message']
 
 
-    @staticmethod
-    def create_from_json(json_str:str):
-        pass
 
     def _get_filename(self, path:str):
         if '/' in path:
@@ -250,7 +252,7 @@ class IOUtil():
 class Cryptography():
 
     def __init__(self, use:str, encryption:bool, save_content:bool, show_input:bool, 
-            secret_key_computed:bool, save_keys:bool, chunk_size:int, read_keys_file:bool, charset:str, send_email:bool):
+            secret_key_computed:bool, save_keys:bool, chunk_size:int, read_keys_file:bool, charset:str):
 
         # Objects that will be used in the internally objects
         self._content_type = ContentType(use)
@@ -259,7 +261,6 @@ class Cryptography():
         self._save_keys    = save_keys     
         self._chunk_size   = chunk_size
         self._charset      = charset
-        self._send_email   = send_email
 
         # Objects that are used internally
         self._io       = IOUtil(show_input)
@@ -308,8 +309,6 @@ class Cryptography():
             # directory
             pass
         
-
-
     def _read_text(self) -> Message:
 
         message      = None
@@ -321,7 +320,7 @@ class Cryptography():
             if insert_message_inside:
                 user_message = self._io.stdin("Insert the message to store inside: ")
         else:
-            message = self._io.stdin_to_bytes('Insert the message: \t', self._charset)
+            message = self._io.stdin_to_bytes('Insert the encrypted message: \t', self._charset)
 
         return Message(content=message, user_message=user_message)
     
@@ -334,7 +333,6 @@ class Cryptography():
         for filename in files:
             messages.append(self._read_file_content(filename))
         return messages
-        
 
     def _read_file_content(self, filename:str) -> Message:
         
@@ -353,20 +351,22 @@ class Cryptography():
 
     def _encrypt(self) -> None:
         for message in self._messages:
-            message.content = self._crypto.encrypt(message.content)
+            to_encrypt = message.compact(self._charset)
+            message.content = self._crypto.encrypt(to_encrypt)
 
     def _decrypt(self) -> None:
         for message in self._messages:
             message.content = self._crypto.decrypt(message.content)
+            message.decompress(self._charset)
 
     def _save_messages(self) -> None:
-        pass
+        for message in self._messages:
+            pass                
 
     def _show_messages_in_console(self) -> None:
         if self._encrypt:
             for message in self._messages:
                 self._io.stdout("Your encrypted content: {msg}", {'msg':message.content})
-
 
     def _encrypt_or_decrypt(self) -> None:
 
