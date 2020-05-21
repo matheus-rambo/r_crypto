@@ -13,7 +13,7 @@ from source.app_util                           import persist_info
 from json                                      import dumps, loads
 from datetime import datetime
 
-_NULL_BYTES   = '\0\0\0'
+_NULL_BYTES   = bytes('\0\0\0'.encode('ascii'))
 _WRITE_BINARY = 'wb'
 _READ_BINARY  = 'rb'
 
@@ -135,7 +135,7 @@ class Message():
         json_bytes = self._to_json_bytes.encode(charset)
 
         # init the array with 3 null bytes
-        array_bytes = bytearray(bytes(_NULL_BYTES))
+        array_bytes = bytearray(_NULL_BYTES)
 
         # copy the metadata
         for byte in json_bytes:
@@ -152,6 +152,37 @@ class Message():
 
         # creates a new byte array
         return bytes(array_bytes)
+
+    def decompress(self) -> None:
+
+        # 3 null bytes to specify that has metadata
+        if self.content[0:3] == _NULL_BYTES:
+
+            metadata_info_size = None
+
+            for index in range(3, len(self.content)):
+
+                # 3 null consecutive null bytes, it means that is the end of metadata information
+                if self.content[index:index + 3] == _NULL_BYTES:
+
+                    metadata_info_size = index
+                    content_index      = index + 3
+                    break
+
+            metadata = self.content[3:metadata_info_size]   
+            self.content = self.content[content_index:]
+
+            
+
+    def _extract_metadata(self, metadata:bytes, charset:str) -> None:
+
+        json_string = metadata.decode(charset)
+        json_object = loads(json_string)
+        self.file_path = json_object['file_path']
+
+
+        
+
 
     @staticmethod
     def create_from_json(json_str:str):
