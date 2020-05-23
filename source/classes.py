@@ -118,6 +118,7 @@ class Message():
         self.created_by   = None
         self.created_date = None
         self.file_path    = file_path
+        self.version      = None
     
     def _metadata_to_json(self, charset:str = 'utf-8') -> str:
 
@@ -126,7 +127,8 @@ class Message():
             "created_by"  : self.created_by,
             "created_date": self.created_date,
             "user_message": self.user_message,
-            "file_path"   : self.file_path
+            "file_path"   : self.file_path,
+            "version"     : self.version
         }  
 
         json_str = dumps(metadata)
@@ -136,6 +138,7 @@ class Message():
 
         self.created_by   = getuser()
         self.created_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        self.version      = VERSION
 
         json_bytes = self._metadata_to_json().encode(charset)
 
@@ -189,7 +192,7 @@ class Message():
         self.created_date = json_object['created_date']
         self.filename     = json_object['filename']
         self.user_message = json_object['user_message']
-
+        self.version      = json_object['version']
 
 
     def _get_filename(self, path:str):
@@ -198,7 +201,7 @@ class Message():
         elif '\\' in path:
             return path[path.rindex('\\') + 1:] 
         else:
-            return path
+            return path        
 
 class File():
 
