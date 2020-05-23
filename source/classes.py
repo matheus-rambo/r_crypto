@@ -366,16 +366,16 @@ class Cryptography():
             message.decompress(self._charset)
 
     def _save_messages(self) -> None:
-        if self._encrypt:            
+        if self._encryption:            
             for message in self._messages:
-                filename = self._io.stdin("Insert the name for the encrypted file name for {filename}.", {"filename": message.filename})
+                filename = self._io.stdin("Insert the name for the encrypted version of the file {filename}: ".format(filename=message.filename))
                 file_object = File(filename, self._charset)
-                file_object.write()
+                file_object.write(message.content)
                 del file_object
         else:
             for message in self._messages:
                 file_object = File(message.filename, self._charset)
-                file_object.write()
+                file_object.write(message.content)
                 del file_object
 
     def _show_messages_in_console(self) -> None:
