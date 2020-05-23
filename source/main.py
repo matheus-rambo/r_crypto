@@ -25,14 +25,14 @@ class Main():
 
         # Objects that are used internally
         self._io        = IOUtil(show_input)
+        self._formatter = Formatter()
         self._keys      = self._construct_keys(read_keys_file = read_keys_file, secret_key_computed = secret_key_computed)
         self._crypto    = None
         self._messages  = None
-        self._formatter = Formatter()
 
     def _construct_keys(self, read_keys_file:bool, secret_key_computed:bool) -> Keys:
 
-        self._io.stdout(Formatter.yellow_foreground("\n\tStage 1 read user keys initiliazed ...\n"))
+        self._io.stdout(self._formatter.yellow_foreground("\n\tStage 1 read user keys initiliazed ...\n"))
 
         # User passphrase
         user_key   = None
@@ -56,7 +56,7 @@ class Main():
                 secret_key = self._io.stdin(" Insert your secret key:\t")
 
 
-        self._io.stdout(Formatter.green_foreground("\n\tStage 1 read user keys finished ..."))
+        self._io.stdout(self._formatter.green_foreground("\n\tStage 1 read user keys finished ..."))
 
 
         ## Construc the keys object
@@ -64,7 +64,7 @@ class Main():
 
     def _read(self) -> None:
 
-        self._io.stdout(Formatter.yellow_foreground("\n\tStage 2 read user content initiliazed ...\n"))
+        self._io.stdout(self._formatter.yellow_foreground("\n\tStage 2 read user content initiliazed ...\n"))
 
         if self._content_type == ContentType.TEXT:
 
@@ -79,7 +79,7 @@ class Main():
 
             self._messages = self._read_directory()
 
-        self._io.stdout(Formatter.green_foreground("\n\tStage 2 read user content finished ... "))
+        self._io.stdout(self._formatter.green_foreground("\n\tStage 2 read user content finished ... "))
 
 
     def _read_text(self) -> Message:
@@ -89,7 +89,7 @@ class Main():
 
         if self._encryption:
             message = self._io.stdin_to_bytes(' Insert the message: \t', self._charset)
-            str_ask = ' Do you want to store a message inside the encrypted file?' + Formatter.purple_foreground('[Yes, No]:')
+            str_ask = ' Do you want to store a message inside the encrypted file?' + self._formatter.purple_foreground('[Yes, No]:')
             insert_message_inside = self._io.read_ask_answear(str_ask)
             if insert_message_inside:
                 user_message = self._io.stdin(" Insert the message to store inside: ")
