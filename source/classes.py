@@ -9,13 +9,10 @@ from cryptography.hazmat.primitives            import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from getpass                                   import getpass, getuser
 from enum                                      import Enum
-from source.app_util                           import persist_info
 from json                                      import dumps, loads
-from datetime import datetime
+from datetime                                  import datetime
+from source.app_constants                      import READ_BINARY, WRITE_BINARY, NULL_BYTES, VERSION 
 
-_NULL_BYTES   = bytes('\0\0\0'.encode('ascii'))
-_WRITE_BINARY = 'wb'
-_READ_BINARY  = 'rb'
 
 class Keys():
 
@@ -143,7 +140,7 @@ class Message():
         json_bytes = self._metadata_to_json().encode(charset)
 
         # init the array with 3 null bytes
-        array_bytes = bytearray(_NULL_BYTES)
+        array_bytes = bytearray(NULL_BYTES)
 
         # copy the metadata
         for byte in json_bytes:
@@ -164,14 +161,14 @@ class Message():
     def decompress(self, charset:str) -> None:
 
         # 3 null bytes to specify that has metadata
-        if self.content[0:3] == _NULL_BYTES:
+        if self.content[0:3] == NULL_BYTES:
 
             metadata_info_size = None
 
             for index in range(3, len(self.content)):
 
                 # 3 null consecutive null bytes, it means that is the end of metadata information
-                if self.content[index:index + 3] == _NULL_BYTES:
+                if self.content[index:index + 3] == NULL_BYTES:
 
                     metadata_info_size = index
                     content_index      = index + 3
@@ -213,7 +210,7 @@ class File():
     def read(self):
         byte_array = bytearray()
         buffer     = None
-        with open(file = self.filename, mode = _READ_BINARY ) as file:        
+        with open(file = self.filename, mode = READ_BINARY ) as file:        
             while True:
                 buffer = file.read(self.chunk_size)
                 if buffer:
@@ -229,7 +226,7 @@ class File():
         return loads(content.decode(self.charset))
     
     def write(self, content:bytes):
-        with open(file = self.filename, mode = _WRITE_BINARY ) as file:
+        with open(file = self.filename, mode = WRITE_BINARY ) as file:
             file.write(content)
 
 
