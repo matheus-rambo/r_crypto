@@ -164,15 +164,15 @@ class Main():
 
         if message.file_path and message.filename:
 
-            print("Original file path: {}".format(message.file_path))
-            print("Original filename: {}".format(message.filename))
+            self._io.stdout("Original file path: {}".format(message.file_path))
+            self._io.stdout("Original filename: {}".format(message.filename))
 
-        print("Created at: {} by: {} ".format(message.created_date, message.created_by))
+        self._io.stdout("Created at: {} by: {} ".format(message.created_date, message.created_by))
 
         if message.user_message:
-            print("{} left a message to you: {}".format(message.created_by, message.user_message))
+            self._io.stdout("{} left a message to you: {}".format(message.created_by, message.user_message))
 
-        print("Encrypted with r_crypto version: {}".format(message.version))
+        self._io.stdout("Encrypted with r_crypto version: {}".format(message.version))
 
     def _save_messages(self) -> None:
         if self._encryption:          
