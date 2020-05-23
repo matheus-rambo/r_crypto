@@ -31,7 +31,7 @@ class Main():
 
     def _construct_keys(self, read_keys_file:bool, secret_key_computed:bool) -> Keys:
 
-        self._io.stdout("\n\tStage 1 read user keys initiliazed ...\n")
+        self._io.stdout(Formatter.yellow_foreground("\n\tStage 1 read user keys initiliazed ...\n"))
 
         # User passphrase
         user_key   = None
@@ -49,13 +49,13 @@ class Main():
             user_key   = json_bytes['key']
             secret_key = json_bytes['secret_key']
         else:
-            user_key = self._io.stdin("Insert your key:\t")
+            user_key = self._io.stdin(" Insert your key:\t")
             # The user already has a secret key or he is decrypting something
             if secret_key_computed or not self._encryption:
-                secret_key = self._io.stdin("Insert your secret key:\t")
+                secret_key = self._io.stdin(" Insert your secret key:\t")
 
 
-        self._io.stdout("\n\tStage 1 read user keys finished ...")
+        self._io.stdout(Formatter.green_foreground("\n\tStage 1 read user keys finished ..."))
 
 
         ## Construc the keys object
@@ -63,7 +63,7 @@ class Main():
 
     def _read(self) -> None:
 
-        self._io.stdout("\n\tStage 2 read user content initiliazed ...\n")
+        self._io.stdout(Formatter.yellow_foreground("\n\tStage 2 read user content initiliazed ...\n"))
 
         if self._content_type == ContentType.TEXT:
 
@@ -78,7 +78,7 @@ class Main():
 
             self._messages = self._read_directory()
 
-        self._io.stdout("\n\tStage 2 read user content finished ... ")
+        self._io.stdout(Formatter.green_foreground("\n\tStage 2 read user content finished ... "))
 
 
     def _read_text(self) -> Message:
@@ -87,12 +87,13 @@ class Main():
         user_message = None
 
         if self._encryption:
-            message = self._io.stdin_to_bytes('Insert the message: \t', self._charset)
-            insert_message_inside = self._io.read_ask_answear('Do you want to store a message inside the encrypted file? [Yes, No]:')
+            message = self._io.stdin_to_bytes(' Insert the message: \t', self._charset)
+            str_ask = ' Do you want to store a message inside the encrypted file?' + Formatter.purple_foreground('[Yes, No]:')
+            insert_message_inside = self._io.read_ask_answear(str_ask)
             if insert_message_inside:
-                user_message = self._io.stdin("Insert the message to store inside: ")
+                user_message = self._io.stdin(" Insert the message to store inside: ")
         else:
-            message = self._io.stdin_to_bytes('Insert the encrypted message: \t', self._charset)
+            message = self._io.stdin_to_bytes('I nsert the encrypted message: \t', self._charset)
 
         return Message(content=message, user_message=user_message)
     
@@ -100,7 +101,7 @@ class Main():
 
         messages = []
         self._io.stdout("For two or more files, type: file;file;file3")
-        files = self._io.stdin("Files: \t ").split(";")
+        files = self._io.stdin(" Files: \t ").split(";")
 
         for filename in files:
             messages.append(self._read_file_content(filename))

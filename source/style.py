@@ -52,4 +52,10 @@ class Formatter():
     def red_foreground(string:str) -> str: 
         return Formatter._format_foreground(Foreground.RED, string)
 
+    @staticmethod
+    def yellow_foreground(string:str) -> str: 
+        return Formatter._format_foreground(Foreground.YELLOW, string)
 
+    @staticmethod
+    def purple_foreground(string:str) -> str: 
+        return Formatter._format_foreground(Foreground.PURPLE, string)
