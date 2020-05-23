@@ -1,4 +1,5 @@
-from enum import Enum 
+from enum                 import Enum 
+from source.app_constants import WINDOWS_OS
 
 class Background(Enum):
 
@@ -38,19 +39,20 @@ class Atributes(Enum):
 class Formatter():
 
     def __init__(self):
-        pass
+        from platform import system
+        if system() == WINDOWS_OS:
+            import os 
+            # enable colors in prompt
+            os.system('color')
 
-    @staticmethod
-    def _format_foreground(foreground: Foreground, string:str) -> str:
+    def _format_foreground(self, foreground: Foreground, string:str) -> str:
         return '{}{}{}'.format(foreground.value, string, Atributes.RESET.value)
 
-    @staticmethod
-    def green_foreground(string:str) -> str:
-        return Formatter._format_foreground(Foreground.GREEN, string)
-
-    @staticmethod
-    def red_foreground(string:str) -> str: 
-        return Formatter._format_foreground(Foreground.RED, string)
+    def green_foreground(self, string:str) -> str:
+        return self._format_foreground(Foreground.GREEN, string)
+    
+    def red_foreground(self, string:str) -> str: 
+        return self._format_foreground(Foreground.RED, string)
 
     @staticmethod
     def yellow_foreground(string:str) -> str: 

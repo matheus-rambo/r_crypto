@@ -24,10 +24,11 @@ class Main():
         self._read_keys    = read_keys_file
 
         # Objects that are used internally
-        self._io       = IOUtil(show_input)
-        self._keys     = self._construct_keys(read_keys_file = read_keys_file, secret_key_computed = secret_key_computed)
-        self._crypto   = None
-        self._messages = None
+        self._io        = IOUtil(show_input)
+        self._keys      = self._construct_keys(read_keys_file = read_keys_file, secret_key_computed = secret_key_computed)
+        self._crypto    = None
+        self._messages  = None
+        self._formatter = None
 
     def _construct_keys(self, read_keys_file:bool, secret_key_computed:bool) -> Keys:
 
@@ -41,7 +42,7 @@ class Main():
 
         # The user wants to read the keys from a file
         if read_keys_file:
-            formatted = Formatter.green_foreground("Insert the name of yours keys file:\t")
+            formatted = self._formatter.green_foreground("Insert the name of yours keys file:\t")
             filename = self._io.stdin(formatted)
             file_object = File(filename, self._charset, self._chunk_size)   
             json_bytes = file_object.read_content_to_json()
