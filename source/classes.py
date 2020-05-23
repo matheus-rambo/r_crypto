@@ -52,6 +52,10 @@ class Keys():
             'secret_key': self.secret_key
         }
 
+    def get_keys_as_json(self) -> str:
+        dictionary = self.get_keys()
+        return dumps(dictionary)
+
 class InvalidKeyException(Exception):
     def __init__(self):
         self.message = "\n\nWe could not decrypt your content! Are you using the correct key and the correct Secret Key?"
@@ -365,6 +369,15 @@ class Cryptography():
             message.content = self._crypto.decrypt(message.content)
             message.decompress(self._charset)
 
+    def _show_metadata(self, message: Message) -> None :
+        if message.file_path and message.filename:
+            print("Original file path: {}".format(message.file_path))
+            print("Original filename: {}".format(message.filename))
+        print("Created at: {} by: {} ".format(message.created_date, message.created_by))
+        if message.user_message:
+            print("{} left a message to you: {}".format(message.created_by, message.user_message))
+        print("Encrypted with r_crypto version: {}".format(message.version))
+
     def _save_messages(self) -> None:
         if self._encryption:            
             for message in self._messages:
@@ -377,11 +390,17 @@ class Cryptography():
                 file_object = File(message.filename, self._charset)
                 file_object.write(message.content)
                 del file_object
+                self._show_metadata(message)
 
     def _show_messages_in_console(self) -> None:
-        base_message = "Your encrypted content: " if self._encrypt else "Your decrypted content: "
-        for message in self._messages:
-            self._io.stdout("{base_message}: {msg}", {'base_message': base_message, 'msg':message.content})
+        
+        if self._encryption:
+            for message in self._messages:
+                print("Your encrypted content: {}".format(message.content))
+        else:
+            for message in self._messages:
+                self._show_metadata(message)
+                print("Your decrypted content: {}".format(message.content))
 
 
     def _encrypt_or_decrypt(self) -> None:
@@ -402,11 +421,12 @@ class Cryptography():
                 self._save_messages()
             else:
                 self._show_messages_in_console()
-        else:
+        elif not self._read_file :
             if self._save_keys:
-                keys_file_name = self._io.stdin("Insert the keys file name")
+                keys_file_name = self._io.stdin("Insert the keys file name: ")
+                keys_content   = self._keys.get_keys_as_json().encode(self._charset)
                 file_object = File(keys_file_name, self._charset)
-                file_object.write()
+                file_object.write(keys_content)
                 del file_object
             else:
                 self._io.stdout("Your key: {key}\tYour secret key: {secret_key}", self._keys.get_keys())
