@@ -326,9 +326,9 @@ class Cryptography():
             self._messages = self._read_file()
 
         else:
-            # directory
-            pass
-        
+
+            self._messages = self._read_directory()
+
     def _read_text(self) -> Message:
 
         message      = None
@@ -354,12 +354,52 @@ class Cryptography():
             messages.append(self._read_file_content(filename))
         return messages
 
+    def _read_directory(self) -> []:
+        
+        messages = []
+
+        self._io.stdout("For two or mode directories, type: directory;directory;directory")
+        directories = self._io.stdin("Directories: \t").split(";")
+
+        recursively = self._io.read_ask_answear("Do you want to access all files of directories recursively? [Yes, No]: ")
+
+        for directory in directories:
+            files = self._get_directory_files(directory, recursively)
+            for filename in files:
+                messages.append(self._read_file_content(filename))
+        
+        return messages
+
+
+    def _get_directory_files(self, directory: str, recursively:bool) -> []:
+
+        import os 
+        files = []
+
+        if recursively:
+
+            for directory_item in os.listdir(directory):
+                path = '{}/{}'.format(directory, directory_item)
+                # we will get the files recursively
+                if os.path.isdir(path):
+                    files = files + self._get_directory_files(path, recursively)
+                else:
+                    files.append(path)
+        else:
+            for directory_item in os.listdir(directory):
+                path = '{}/{}'.format(directory, directory_item)
+                if not os.path.isdir(path):
+                    files.append(path)
+
+        return files
+
     def _read_file_content(self, filename:str) -> Message:
         
         user_message = None
 
         if self._encryption:
-            insert_message_inside = self._io.read_ask_answear('Do you want to store a message inside the encrypted file? [Yes, No]:')
+            
+            insert_message_inside = self._io.read_ask_answear('Do you want to store a message inside the {} encrypted file? [Yes, No]:'.format(filename))
           
             if insert_message_inside:
                 user_message = self._io.stdin("Insert the message to store inside: ")
@@ -367,6 +407,7 @@ class Cryptography():
         file_object = File(filename=filename, charset=self._charset, chunk_size=self._chunk_size)
         message = file_object.read()
         del file_object
+
         return Message(content=message, user_message=user_message, file_path=filename)
 
     def _encrypt(self) -> None:
@@ -379,13 +420,18 @@ class Cryptography():
             message.content = self._crypto.decrypt(message.content)
             message.decompress(self._charset)
 
-    def _show_metadata(self, message: Message) -> None :
+    def _show_metadata(self, message: Message) -> None:
+
         if message.file_path and message.filename:
+
             print("Original file path: {}".format(message.file_path))
             print("Original filename: {}".format(message.filename))
+
         print("Created at: {} by: {} ".format(message.created_date, message.created_by))
+
         if message.user_message:
             print("{} left a message to you: {}".format(message.created_by, message.user_message))
+
         print("Encrypted with r_crypto version: {}".format(message.version))
 
     def _save_messages(self) -> None:
@@ -398,7 +444,7 @@ class Cryptography():
                 if self._content_type == ContentType.TEXT:
                     filename = self._io.stdin("Insert the name for the encrypted file of the text: ")
                 else:
-                    filename = self._io.stdin("Insert the name for the encrypted file of the file: {filename}", {"filename":message.filename})
+                    filename = self._io.stdin("Insert the name for the encrypted file of the file {} :".format(message.filename))
 
                 file_object = File(filename, self._charset)
                 file_object.write(message.content, ENCRYPTED_EXTENSION)
@@ -422,6 +468,7 @@ class Cryptography():
     def _show_messages_in_console(self) -> None:
         
         if self._encryption:
+
             for message in self._messages:
                 print("Your encrypted content: {}".format(message.content))
         else:
