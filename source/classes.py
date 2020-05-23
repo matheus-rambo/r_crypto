@@ -18,6 +18,7 @@ _WRITE_BINARY = 'wb'
 _READ_BINARY  = 'rb'
 
 class Keys():
+
     def __init__(self, user_key:str, secret_key:str = None, charset:str = 'utf-8'):
         self.user_key         = user_key
         self.charset          = charset
@@ -47,8 +48,12 @@ class Keys():
             secret_key_size -= 1
 
         return secret_key      
-        
 
+    def get_keys(self) -> str:
+        return {
+            'key': self.user_key, 
+            'secret_key': self.secret_key
+        }
 
 class InvalidKeyException(Exception):
     def __init__(self):
@@ -199,6 +204,7 @@ class Message():
             return path
 
 class File():
+
     def __init__(self, filename:str, charset: str = 'utf-8', chunk_size:int = None):
         self.filename   = filename
         self.chunk_size = chunk_size
@@ -360,13 +366,23 @@ class Cryptography():
             message.decompress(self._charset)
 
     def _save_messages(self) -> None:
-        for message in self._messages:
-            pass                
+        if self._encrypt:            
+            for message in self._messages:
+                filename = self._io.stdin("Insert the name for the encrypted file name for {filename}.", {"filename": message.filename})
+                file_object = File(filename, self._charset)
+                file_object.write()
+                del file_object
+        else:
+            for message in self._messages:
+                file_object = File(message.filename, self._charset)
+                file_object.write()
+                del file_object
 
     def _show_messages_in_console(self) -> None:
-        if self._encrypt:
-            for message in self._messages:
-                self._io.stdout("Your encrypted content: {msg}", {'msg':message.content})
+        base_message = "Your encrypted content: " if self._encrypt else "Your decrypted content: "
+        for message in self._messages:
+            self._io.stdout("{base_message}: {msg}", {'base_message': base_message, 'msg':message.content})
+
 
     def _encrypt_or_decrypt(self) -> None:
 
@@ -380,6 +396,7 @@ class Cryptography():
         del self._crypto
 
     def _save_or_show(self, messages:bool):
+
         if messages:
             if self._save_content:
                 self._save_messages()
@@ -387,9 +404,12 @@ class Cryptography():
                 self._show_messages_in_console()
         else:
             if self._save_keys:
-                pass
+                keys_file_name = self._io.stdin("Insert the keys file name")
+                file_object = File(keys_file_name, self._charset)
+                file_object.write()
+                del file_object
             else:
-                self._io.stdout("Your key: {key}\tYour secret key: {secret_key}", {'key': self._keys.user_key, 'secret_key': self._keys.secret_key})
+                self._io.stdout("Your key: {key}\tYour secret key: {secret_key}", self._keys)
 
 
     def init(self):
