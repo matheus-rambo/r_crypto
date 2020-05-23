@@ -1,12 +1,13 @@
 #!/usr/bin/python
 
-from source.content_type import ContentType
-from source.io_util import IOUtil
-from source.file import File
-from source.keys import Keys
-from source.message import Message
-from source.cryptor import Cryptor
+from source.content_type  import ContentType
+from source.io_util       import IOUtil
+from source.file          import File
+from source.keys          import Keys
+from source.message       import Message
+from source.cryptor       import Cryptor
 from source.app_constants import ENCRYPTED_EXTENSION, KEYS_EXTENSION
+from source.style         import Formatter
     
 class Main():
 
@@ -28,7 +29,6 @@ class Main():
         self._crypto   = None
         self._messages = None
 
-
     def _construct_keys(self, read_keys_file:bool, secret_key_computed:bool) -> Keys:
 
         # User passphrase
@@ -39,7 +39,8 @@ class Main():
 
         # The user wants to read the keys from a file
         if read_keys_file:
-            filename = self._io.stdin("Insert the name of yours keys file:\t")
+            formatted = Formatter.green_foreground("Insert the name of yours keys file:\t")
+            filename = self._io.stdin(formatted)
             file_object = File(filename, self._charset, self._chunk_size)   
             json_bytes = file_object.read_content_to_json()
             del file_object

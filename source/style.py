@@ -33,4 +33,23 @@ class Atributes(Enum):
 
     RESET     = '\033[0m'
     BOLD      = '\033[01m'
-    UNDERLINE = '\033[04m
+    UNDERLINE = '\033[04m'
+
+class Formatter():
+
+    def __init__(self):
+        pass
+
+    @staticmethod
+    def _format_foreground(foreground: Foreground, string:str) -> str:
+        return '{}{}{}'.format(foreground.value, string, Atributes.RESET.value)
+
+    @staticmethod
+    def green_foreground(string:str) -> str:
+        return Formatter._format_foreground(Foreground.GREEN, string)
+
+    @staticmethod
+    def red_foreground(string:str) -> str: 
+        return Formatter._format_foreground(Foreground.RED, string)
+
+
