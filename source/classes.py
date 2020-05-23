@@ -409,7 +409,7 @@ class Cryptography():
                 file_object.write()
                 del file_object
             else:
-                self._io.stdout("Your key: {key}\tYour secret key: {secret_key}", self._keys)
+                self._io.stdout("Your key: {key}\tYour secret key: {secret_key}", self._keys.get_keys())
 
 
     def init(self):
