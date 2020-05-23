@@ -11,7 +11,7 @@ from getpass                                   import getpass, getuser
 from enum                                      import Enum
 from json                                      import dumps, loads
 from datetime                                  import datetime
-from source.app_constants                      import READ_BINARY, WRITE_BINARY, NULL_BYTES, VERSION 
+from source.app_constants                      import READ_BINARY, WRITE_BINARY, NULL_BYTES, VERSION, ENCRYPTED_EXTENSION, KEYS_EXTENSION
 
 
 class Keys():
@@ -232,9 +232,18 @@ class File():
         from json import loads
         return loads(content.decode(self.charset))
     
-    def write(self, content:bytes):
-        with open(file = self.filename, mode = WRITE_BINARY ) as file:
+    def _replace_to_extension(self, extension:str) -> str:
+        last_dot_index = -1 if self.filename.find('.') < 0 else self.filename.rindex('.')
+        if last_dot_index >= 0:
+            return self.filename[:last_dot_index] + extension
+        else:
+            return self.filename + extension
+
+    def write(self, content:bytes, extension:str = None):
+        filename = self.filename if not extension else self._replace_to_extension(extension)
+        with open(file = filename, mode = WRITE_BINARY ) as file:
             file.write(content)
+
 
 
 class IOUtil():
@@ -271,6 +280,7 @@ class Cryptography():
         self._save_keys    = save_keys     
         self._chunk_size   = chunk_size
         self._charset      = charset
+        self._read_keys    = read_keys_file
 
         # Objects that are used internally
         self._io       = IOUtil(show_input)
@@ -379,15 +389,32 @@ class Cryptography():
         print("Encrypted with r_crypto version: {}".format(message.version))
 
     def _save_messages(self) -> None:
-        if self._encryption:            
+        if self._encryption:          
+
             for message in self._messages:
-                filename = self._io.stdin("Insert the name for the encrypted version of the file {filename}: ".format(filename=message.filename))
+                
+                filename = None
+                
+                if self._content_type == ContentType.TEXT:
+                    filename = self._io.stdin("Insert the name for the encrypted file of the text: ")
+                else:
+                    filename = self._io.stdin("Insert the name for the encrypted file of the file: {filename}", {"filename":message.filename})
+
                 file_object = File(filename, self._charset)
-                file_object.write(message.content)
+                file_object.write(message.content, ENCRYPTED_EXTENSION)
                 del file_object
+
         else:
+
             for message in self._messages:
-                file_object = File(message.filename, self._charset)
+                filename = None
+
+                if message.filename:
+                    filename = message.filename
+                else:
+                    filename = self._io.stdin("Insert the name for the decrypted file: ")
+
+                file_object = File(filename, self._charset)
                 file_object.write(message.content)
                 del file_object
                 self._show_metadata(message)
@@ -421,12 +448,12 @@ class Cryptography():
                 self._save_messages()
             else:
                 self._show_messages_in_console()
-        elif not self._read_file :
+        elif not self._read_keys:
             if self._save_keys:
                 keys_file_name = self._io.stdin("Insert the keys file name: ")
                 keys_content   = self._keys.get_keys_as_json().encode(self._charset)
                 file_object = File(keys_file_name, self._charset)
-                file_object.write(keys_content)
+                file_object.write(keys_content, KEYS_EXTENSION)
                 del file_object
             else:
                 self._io.stdout("Your key: {key}\tYour secret key: {secret_key}", self._keys.get_keys())
