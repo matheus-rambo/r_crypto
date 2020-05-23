@@ -1,3 +1,2 @@
 cryptography==2.8
 Pillow==7.0.0
-Stegano==0.9.7
