@@ -28,7 +28,7 @@ class Main():
         self._keys      = self._construct_keys(read_keys_file = read_keys_file, secret_key_computed = secret_key_computed)
         self._crypto    = None
         self._messages  = None
-        self._formatter = None
+        self._formatter = Formatter()
 
     def _construct_keys(self, read_keys_file:bool, secret_key_computed:bool) -> Keys:
 
