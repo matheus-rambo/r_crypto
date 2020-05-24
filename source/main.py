@@ -94,7 +94,7 @@ class Main():
             if insert_message_inside:
                 user_message = self._io.stdin(" Insert the message to store inside: ")
         else:
-            message = self._io.stdin_to_bytes('I nsert the encrypted message: \t', self._charset)
+            message = self._io.stdin_to_bytes(' Insert the encrypted message: \t', self._charset)
 
         return Message(content=message, user_message=user_message)
     
