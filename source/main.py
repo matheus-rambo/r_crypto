@@ -89,7 +89,7 @@ class Main():
 
         if self._encryption:
             message = self._io.stdin_to_bytes(' Insert the message: \t', self._charset)
-            str_ask = ' Do you want to store a message inside the encrypted file?' + self._formatter.purple_foreground('[Yes, No]:')
+            str_ask = ' Do you want to store a message inside the encrypted file?' + self._formatter.orange_foreground(' [Yes, No]:')
             insert_message_inside = self._io.read_ask_answear(str_ask)
             if insert_message_inside:
                 user_message = self._io.stdin(" Insert the message to store inside: ")
@@ -101,7 +101,7 @@ class Main():
     def _read_file(self) -> []:
 
         messages = []
-        self._io.stdout("For two or more files, type: file;file;file3")
+        self._io.stdout(" For two or more files, type: file;file;file3")
         files = self._io.stdin(" Files: \t ").split(";")
 
         for filename in files:
@@ -112,10 +112,10 @@ class Main():
         
         messages = []
 
-        self._io.stdout("For two or mode directories, type: directory;directory;directory")
+        self._io.stdout(" For two or mode directories, type: directory;directory;directory")
         directories = self._io.stdin("Directories: \t").split(";")
-
-        recursively = self._io.read_ask_answear("Do you want to access all files of directories recursively? [Yes, No]: ")
+        str_aux = " Do you want to access all files of directories recursively?" + self._formatter.orange_foreground(' [Yes, No]:')
+        recursively = self._io.read_ask_answear(str_aux)
 
         for directory in directories:
             files = self._get_directory_files(directory, recursively)
@@ -152,8 +152,8 @@ class Main():
         user_message = None
 
         if self._encryption:
-            
-            insert_message_inside = self._io.read_ask_answear('Do you want to store a message inside the {} encrypted file? [Yes, No]:'.format(filename))
+            str_aux = 'Do you want to store a message inside the {} encrypted file?'.format(filename) + self._formatter.orange_foreground(' [Yes, No]:')
+            insert_message_inside = self._io.read_ask_answear(str_aux)
           
             if insert_message_inside:
                 user_message = self._io.stdin("Insert the message to store inside: ")
@@ -224,11 +224,15 @@ class Main():
         if self._encryption:
 
             for message in self._messages:
-                self._io.stdout("Your encrypted content: {}".format(message.content))
+                str_aux = self._formatter.purple_foreground("\n Your encrypted content: ") + '{}'.format(message.content)
+                self._io.stdout(str_aux)
+                
         else:
             for message in self._messages:
                 self._show_metadata(message)
-                self._io.stdout("Your decrypted content: {}".format(message.content))
+                str_aux = self._formatter.purple_foreground("\n Your decrypted content: ") + '{}'.format(message.content)
+                self._io.stdout(str_aux)
+                
 
 
     def _encrypt_or_decrypt(self) -> None:
@@ -246,19 +250,29 @@ class Main():
 
         if messages:
             if self._save_content:
+                self._io.stdout(self._formatter.yellow_foreground("\n\tStage 3 saving content to file initiliazed ...\n"))
                 self._save_messages()
+                self._io.stdout(self._formatter.green_foreground("\n\tStage 3 saving content to file finished ...\n"))
             else:
+                self._io.stdout(self._formatter.yellow_foreground("\n\tStage 3 showing content in console initiliazed ...\n "))
                 self._show_messages_in_console()
+                self._io.stdout(self._formatter.green_foreground("\n\tStage 3 showing content in console finished ...\n"))
+
         elif not self._read_keys:
             
             if self._save_keys:
-                keys_file_name = self._io.stdin("Insert the keys file name: ")
+                self._io.stdout(self._formatter.yellow_foreground("\n\tStage 4 saving keys to file initiliazed ...\n"))
+                keys_file_name = self._io.stdin(" Insert the keys file name: ")
                 keys_content   = self._keys.get_keys_as_json().encode(self._charset)
                 file_object = File(keys_file_name, self._charset)
                 file_object.write(keys_content, KEYS_EXTENSION)
                 del file_object
+                self._io.stdout(self._formatter.green_foreground("\n\tStage 4 saving keys to file finished ...\n"))
             else:
-                self._io.stdout("Your key: {key}\tYour secret key: {secret_key}", self._keys.get_keys())
+                self._io.stdout(self._formatter.yellow_foreground("\n\tStage 4 showing keys in console initiliazed ...\n "))
+                str_aux =  self._formatter.purple_foreground("\n Your key: ") + '{key}\t' + self._formatter.purple_foreground(" Your secret key: ") + '{secret_key}'
+                self._io.stdout(str_aux, self._keys.get_keys())
+                self._io.stdout(self._formatter.green_foreground("\n\tStage 4 showing keys in console finished ...\n"))
 
 
     def init(self):

@@ -59,3 +59,6 @@ class Formatter():
 
     def purple_foreground(self, string:str) -> str: 
         return self._format_foreground(Foreground.PURPLE, string)
+
+    def orange_foreground(self, string:str) -> str: 
+        return self._format_foreground(Foreground.ORANGE, string)
