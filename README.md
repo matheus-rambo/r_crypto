@@ -1,9 +1,8 @@
-# A simple *Cryptography/Steganography* terminal tool.
+# A simple *Cryptography* terminal tool.
 
 ![eagle](https://user-images.githubusercontent.com/33197461/69020567-b03f4380-0993-11ea-8aca-92d965de279b.png)
 
 ***Note*** This project uses *symmetric cryptography*, and uses *SHA-256* to generate the Fernet key. [Fernet Documentation](https://cryptography.io/en/latest/fernet/)
-
 
 # Undestanding Cryptography
 
