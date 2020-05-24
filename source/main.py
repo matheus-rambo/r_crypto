@@ -224,11 +224,11 @@ class Main():
         if self._encryption:
 
             for message in self._messages:
-                print("Your encrypted content: {}".format(message.content))
+                self._io.stdout("Your encrypted content: {}".format(message.content))
         else:
             for message in self._messages:
                 self._show_metadata(message)
-                print("Your decrypted content: {}".format(message.content))
+                self._io.stdout("Your decrypted content: {}".format(message.content))
 
 
     def _encrypt_or_decrypt(self) -> None:
