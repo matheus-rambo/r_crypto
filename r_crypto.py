@@ -21,7 +21,7 @@ optional.add_argument('--secret-key-computed', type=int, choices=[1,0], default=
 optional.add_argument('--save-keys', type=int, choices=[1,0], default=0, help='If you want to save the keys at a file. Otherwise, the keys will be prompted.', dest='save_keys')
 optional.add_argument('--chunk-size', type=int, default=2048, help='Size of bytes to read at time.', dest='chunk_size')
 optional.add_argument('--read-keys-file', type=int, choices=[1, 0], default=0, help='If you have a keys file, you can read the keys from it.', dest='read_keys_file')
-optional.add_argument('--charset', type=str, choices=['utf-8', 'utf-16', 'ascii'], default='utf-8', help='Charset that you want to use.')
+optional.add_argument('--charset', type=str, choices=['utf-8', 'utf-16', 'ascii'], default='utf-8', help='Charset that you want to use.', dest='charset')
 
 
 # we get the command line arguments
@@ -56,7 +56,7 @@ read_keys_file = args.read_keys_file
 charset = args.charset
 
 def main():
-    
+
     main = Main(use, encryption, save_content, show_input, secret_key_computed, save_keys, chunk_size, read_keys_file, charset)
     main.init()
 
