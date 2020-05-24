@@ -16,6 +16,15 @@
 Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-Started).
 
 # Release notes
+
+- ***Version 4.0***
+   - Refactored to a more readable code. 
+   - The Steganography module was removed(It might will be back in future releases).
+   - The e-mail feature was removed(But it will be back in future releases).
+   - The file r_cryptography was renamed to r_crypto.
+   - The optional parameters were renamed, and some were deleted.
+   - The user can not choose the name of a encrypted file(will use *.enc* extension), and a keys file(will use *.keys* extension).
+
 - ***Version 3.2***
    - *Enhancement*: https://github.com/matheus-rambo/r_crypto/issues/5. Now, we can encrypt/decrypt directories.
 
@@ -118,6 +127,7 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
     - Save files encrypted and decrypted.
 
 # Releases 
+ - [*v4.0*](https://github.com/matheus-rambo/r_crypto/releases/tag/v4.0)
  - [*v3.2*](https://github.com/matheus-rambo/r_crypto/releases/tag/v3.2) **Stable Version**
  - [*v3.1.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v3.1.1)
  - [*v3.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v3.1)
@@ -140,6 +150,7 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
  - [*v1.0*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.0)
 
 # Docs
+ - ***Version 4.0***: [v4.0](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v4.0)
  - ***Version 3.2***: [v3.2](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v3.2)
  - ***Version 3.1***: [v3.1](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v3.1)
  - ***Version 3.0***: [v3.0](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v3.0)
