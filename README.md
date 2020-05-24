@@ -1,22 +1,16 @@
-# A simple *Cryptography/Steganography* terminal tool.
+# A simple *Cryptography* terminal tool.
 
 ![eagle](https://user-images.githubusercontent.com/33197461/69020567-b03f4380-0993-11ea-8aca-92d965de279b.png)
 
 ***Note*** This project uses *symmetric cryptography*, and uses *SHA-256* to generate the Fernet key. [Fernet Documentation](https://cryptography.io/en/latest/fernet/)
 
-
 # Undestanding Cryptography
 
  If you want to know more about Symmetric Cryptography, there is a good link of python implementation of **symmetric**: [Symmetric Cryptography](https://docs.python-guide.org/scenarios/crypto/), and this is a link for basic understanding of **symmetric** and **asymmetric** ***encryption/decryption***: [Symmetric vs Asymmetric](https://www.ssl2buy.com/wiki/symmetric-vs-asymmetric-encryption-what-are-differences)
  
-# Undestanding Steganography
-https://www.techopedia.com/definition/4131/steganography
-
 
 # Projects that helped and are helping me to build this:
 - Cryptography module: https://github.com/pyca/cryptography
-
-- Steganography module: https://github.com/cedricbonhomme/Stegano
 
 # Getting Starded
 Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-Started).
@@ -158,8 +152,12 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
  - ***Version 1.1***: [v1.1](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v1.1)
  - ***Version 1.0***: [v1.0](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v1.0)
 
-# Author
+# Authors
 
 - **Matheus Rambo**
   - [*GitHub*](https://github.com/matheus-rambo)
   - *e-mail* matheusrambo@protonmail.ch
+  
+- **Arthur Bottcher**
+  - [*GitHub*](https://github.com/ArthurBottcher)
+  - *e-mail* arthurbottcher@gmail.com
