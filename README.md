@@ -152,8 +152,12 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
  - ***Version 1.1***: [v1.1](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v1.1)
  - ***Version 1.0***: [v1.0](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v1.0)
 
-# Author
+# Authors
 
 - **Matheus Rambo**
   - [*GitHub*](https://github.com/matheus-rambo)
   - *e-mail* matheusrambo@protonmail.ch
+  
+- **Arthur Bottcher**
+  - [*GitHub*](https://github.com/ArthurBottcher)
+  - *e-mail* arthurbottcher@gmail.com
