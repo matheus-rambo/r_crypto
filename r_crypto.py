@@ -55,10 +55,6 @@ read_keys_file = args.read_keys_file
 # charset
 charset = args.charset
 
-# if the user want to send an e-mail
-send_mail = args.send_mail
-
-
 def main():
     
     main = Main(use, encryption, save_content, show_input, secret_key_computed, save_keys, chunk_size, read_keys_file, charset)
