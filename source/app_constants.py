@@ -4,3 +4,5 @@ WRITE_BINARY        = 'wb'
 READ_BINARY         = 'rb'
 ENCRYPTED_EXTENSION = '.enc'
 KEYS_EXTENSION      = '.keys'
+LINUX_OS            = "Linux"
+WINDOWS_OS          = "Windows"
