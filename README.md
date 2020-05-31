@@ -17,6 +17,9 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
 
 # Release notes
 
+- **Version 5.0**
+   - *Implemented*: https://github.com/matheus-rambo/r_crypto/issues/63
+
 - ***Version 4.1***
    - *Implemented*: https://github.com/matheus-rambo/r_crypto/issues/64
 
