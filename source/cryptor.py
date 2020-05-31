@@ -27,16 +27,16 @@ class Cryptor():
 
     
     def generate_fernet(self):
+        salt = self.keys.salt
         secret_key = self.keys.secret_key
-        key = self.keys.user_key
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,
-            salt=bytes(secret_key.encode(self.charset)),
+            salt=bytes(salt.encode(self.charset)),
             iterations=100000,
             backend=default_backend()
         )
-        fernet_key = base64.urlsafe_b64encode(kdf.derive(key.encode(self.charset)))        
+        fernet_key = base64.urlsafe_b64encode(kdf.derive(secret_key.encode(self.charset)))        
         return Fernet(fernet_key)    
                 
     def encrypt(self, content:bytes):  

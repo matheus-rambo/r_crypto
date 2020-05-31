@@ -11,7 +11,8 @@ from source.app_constants import ENCRYPTED_EXTENSION, KEYS_EXTENSION
 class Main():
 
     def __init__(self, use:str, encryption:bool, save_content:bool, show_input:bool, 
-            secret_key_computed:bool, save_keys:bool, chunk_size:int, read_keys_file:bool, charset:str):
+            save_keys:bool, chunk_size:int, 
+            read_keys_file:bool, charset:str, auto_generated_salt:bool):
 
         # Objects that will be used in the internally objects
         self._content_type = ContentType(use)
@@ -24,36 +25,37 @@ class Main():
 
         # Objects that are used internally
         self._io       = IOUtil(show_input)
-        self._keys     = self._construct_keys(read_keys_file = read_keys_file, secret_key_computed = secret_key_computed)
+        self._keys     = self._construct_keys(read_keys_file = read_keys_file, auto_generated_salt = auto_generated_salt)
         self._crypto   = None
         self._messages = None
 
 
-    def _construct_keys(self, read_keys_file:bool, secret_key_computed:bool) -> Keys:
+    def _construct_keys(self, read_keys_file:bool, auto_generated_salt:bool) -> Keys:
 
         # User passphrase
-        user_key   = None
-
-        # if the secret key remains none, a key will be generated
         secret_key = None
+
+        # The salt that will be used to generate the Fernet Key
+        salt       = None
 
         # The user wants to read the keys from a file
         if read_keys_file:
-            filename = self._io.stdin("Insert the name of yours keys file:\t")
+            filename = self._io.stdin("Insert the name of your keys file:\t")
             file_object = File(filename, self._charset, self._chunk_size)   
             json_bytes = file_object.read_content_to_json()
             del file_object
-            user_key   = json_bytes['key']
-            secret_key = json_bytes['secret_key']
+            secret_key   = json_bytes['secret_key']
+            salt = json_bytes['salt']
         else:
-            user_key = self._io.stdin("Insert your key:\t")
-            # The user already has a secret key or he is decrypting something
-            if secret_key_computed or not self._encryption:
-                secret_key = self._io.stdin("Insert your secret key:\t")
+            secret_key = self._io.stdin("Insert your secret key:\t")
+            if ( not self._encryption ) and auto_generated_salt:
+                salt = self._io.stdin("Insert the salt\t: ")
+            else:
+                salt = secret_key if not auto_generated_salt else None
 
 
-        ## Construc the keys object
-        return Keys(user_key=user_key, secret_key=secret_key)
+        ## Construct the keys object
+        return Keys(secret_key=secret_key, salt=salt)
 
     def _read(self) -> None:
 
@@ -78,7 +80,7 @@ class Main():
 
         if self._encryption:
             message = self._io.stdin_to_bytes('Insert the message: \t', self._charset)
-            insert_message_inside = self._io.read_ask_answear('Do you want to store a message inside the encrypted file? [Yes, No]:')
+            insert_message_inside = self._io.read_ask_answear('Do you want to store a message inside the encrypted content? [Yes, No]:')
             if insert_message_inside:
                 user_message = self._io.stdin("Insert the message to store inside: ")
         else:
@@ -141,7 +143,7 @@ class Main():
 
         if self._encryption:
             
-            insert_message_inside = self._io.read_ask_answear('Do you want to store a message inside the {} encrypted file? [Yes, No]:'.format(filename))
+            insert_message_inside = self._io.read_ask_answear('Do you want to store a message inside the {} encrypted content? [Yes, No]:'.format(filename))
           
             if insert_message_inside:
                 user_message = self._io.stdin("Insert the message to store inside: ")
@@ -246,7 +248,7 @@ class Main():
                 file_object.write(keys_content, KEYS_EXTENSION)
                 del file_object
             else:
-                self._io.stdout("Your key: {key}\tYour secret key: {secret_key}", self._keys.get_keys())
+                self._io.stdout("Your secret key: {secret_key}\tYour salt : {salt}", self._keys.get_keys())
 
 
     def init(self):
