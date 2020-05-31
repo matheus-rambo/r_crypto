@@ -1,4 +1,4 @@
-VERSION             = '3.2'
+VERSION             = '4.0.1'
 NULL_BYTES          = bytes('\0\0\0'.encode('ascii'))
 WRITE_BINARY        = 'wb'
 READ_BINARY         = 'rb'
