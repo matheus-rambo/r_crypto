@@ -19,13 +19,8 @@ optional.add_argument('--show-input', type=int, choices=[1, 0], default=0, help=
 optional.add_argument('--save-keys', type=int, choices=[1,0], default=0, help='If you want to save the keys at a file. Otherwise, the keys will be prompted.', dest='save_keys')
 optional.add_argument('--chunk-size', type=int, default=2048, help='Size of bytes to read at time.', dest='chunk_size')
 optional.add_argument('--read-keys-file', type=int, choices=[1, 0], default=0, help='If you have a keys file, you can read the keys from it.', dest='read_keys_file')
-<<<<<<< HEAD
 optional.add_argument('--charset', type=str, choices=['utf-8', 'utf-16', 'ascii'], default='utf-8', help='Charset that you want to use.')
 optional.add_argument('--auto-generated-salt', type=int, choices=[1,0], default=0, help="If you want to use bytes of a random string to generate the salt. Using this is far more secure. If the content was encrypted with a auto generated salt, when decrypting, you need to provide this salt!", dest='auto_generated_salt')
-=======
-optional.add_argument('--charset', type=str, choices=['utf-8', 'utf-16', 'ascii'], default='utf-8', help='Charset that you want to use.', dest='charset')
-
->>>>>>> a70159dccfe0a9910bf48028e5c74e3b7287e699
 
 # we get the command line arguments
 args = parser.parse_args() 
