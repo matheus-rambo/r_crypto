@@ -2,8 +2,7 @@ import argparse
 
 from source.main import Main
 
-parser = argparse.ArgumentParser(description='Encrypt/Decrypt text/files and files from directory.', epilog="If you ran with problems, or, think the r_crypto difficult, please, contact us!")
-
+parser = argparse.ArgumentParser(description='Encrypt/Decrypt text/files and files from directory.')
 parser._action_groups.pop()
 
 required = parser.add_argument_group('required arguments')
