@@ -23,7 +23,6 @@ optional.add_argument('--read-keys-file', type=int, choices=[1, 0], default=0, h
 optional.add_argument('--charset', type=str, choices=['utf-8', 'utf-16', 'ascii'], default='utf-8', help='Charset that you want to use.')
 optional.add_argument('--auto-generated-salt', type=int, choices=[1,0], default=0, help="If you want to use bytes of a random string to generate the salt. Using this is far more secure. If the content was encrypted with a auto generated salt, when decrypting, you need to provide this salt!", dest='auto_generated_salt')
 
-
 # we get the command line arguments
 args = parser.parse_args() 
 

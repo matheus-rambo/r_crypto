@@ -40,7 +40,7 @@ class Main():
 
         # The user wants to read the keys from a file
         if read_keys_file:
-            filename = self._io.stdin("Insert the name of yours keys file:\t")
+            filename = self._io.stdin("Insert the name of your keys file:\t")
             file_object = File(filename, self._charset, self._chunk_size)   
             json_bytes = file_object.read_content_to_json()
             del file_object
@@ -48,11 +48,11 @@ class Main():
             salt = json_bytes['salt']
         else:
             secret_key = self._io.stdin("Insert your secret key:\t")
+            if ( not self._encryption ) and auto_generated_salt:
+                salt = self._io.stdin("Insert the salt\t: ")
+            else:
+                salt = secret_key if not auto_generated_salt else None
 
-        if self._encrypt and auto_generated_salt:
-            salt = self._io.stdin("Insert the salt\t: ")
-        else:
-            salt = secret_key if not auto_generated_salt else None
 
         ## Construct the keys object
         return Keys(secret_key=secret_key, salt=salt)
@@ -80,7 +80,7 @@ class Main():
 
         if self._encryption:
             message = self._io.stdin_to_bytes('Insert the message: \t', self._charset)
-            insert_message_inside = self._io.read_ask_answear('Do you want to store a message inside the encrypted file? [Yes, No]:')
+            insert_message_inside = self._io.read_ask_answear('Do you want to store a message inside the encrypted content? [Yes, No]:')
             if insert_message_inside:
                 user_message = self._io.stdin("Insert the message to store inside: ")
         else:
@@ -143,7 +143,7 @@ class Main():
 
         if self._encryption:
             
-            insert_message_inside = self._io.read_ask_answear('Do you want to store a message inside the {} encrypted file? [Yes, No]:'.format(filename))
+            insert_message_inside = self._io.read_ask_answear('Do you want to store a message inside the {} encrypted content? [Yes, No]:'.format(filename))
           
             if insert_message_inside:
                 user_message = self._io.stdin("Insert the message to store inside: ")
