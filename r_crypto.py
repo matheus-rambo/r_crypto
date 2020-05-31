@@ -11,16 +11,16 @@ optional = parser.add_argument_group('optional arguments')
 
 # required arguments
 required.add_argument('-use', type=str, choices=['text', 'file', 'directory'], help='What you want to work with ?', required=True, dest='use')
-required.add_argument('-encryption', type=int, choices=[1,0], help='If you want to encrypt something.', required=True, dest='encryption')
-
 
 # optional arguments
-optional.add_argument('--save-content', type=int, choices=[1, 0], default=0,  help='If you want to save the encrypted/decrypt content, otherwise, the content will be show in the console.', dest='save_content')
-optional.add_argument('--show-input', type=int, choices=[1, 0], default=0, help='If you want to see what you are typing.', dest='show_input')
-optional.add_argument('--secret-key-computed', type=int, choices=[1,0], default=0, help='If you already have a secret key and want to use it.', dest='secret_key_computed' )
-optional.add_argument('--save-keys', type=int, choices=[1,0], default=0, help='If you want to save the keys at a file. Otherwise, the keys will be prompted.', dest='save_keys')
+optional.add_argument('--encryption',  help='If you want to encrypt something. Otherwise, we will decrypt.', action="store_true")
+optional.add_argument('--save-content',help='If you want to save the encrypted/decrypt content, otherwise, the content will be show in the console.', action="store_true")
+optional.add_argument('--show-input', help='If you want to see what you are typing. Otherwise, you can not see what you are typing.', action="store_true")
+optional.add_argument('--secret-key-computed',help='If you already have a secret key and want to use it. Otherwise, we will generate a new key', action="store_true" )
+optional.add_argument('--save-keys', help='If you want to save the keys at a file. Otherwise, the keys will be show in console.', action="store_true")
+optional.add_argument('--read-keys-file', help='If you have a keys file, you can read the keys from it. Otherwise, we will ask you the keys.', action="store_true")
+
 optional.add_argument('--chunk-size', type=int, default=2048, help='Size of bytes to read at time.', dest='chunk_size')
-optional.add_argument('--read-keys-file', type=int, choices=[1, 0], default=0, help='If you have a keys file, you can read the keys from it.', dest='read_keys_file')
 optional.add_argument('--charset', type=str, choices=['utf-8', 'utf-16', 'ascii'], default='utf-8', help='Charset that you want to use.')
 
 
