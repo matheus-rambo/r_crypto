@@ -18,7 +18,7 @@ optional.add_argument('--save-content',help='If you want to save the encrypted/d
 optional.add_argument('--show-input', help='If you want to see what you are typing. Otherwise, you can not see what you are typing.', action="store_true")
 optional.add_argument('--save-keys', help='If you want to save the keys at a file. Otherwise, the keys will be show in console.', action="store_true")
 optional.add_argument('--read-keys-file', help='If you have a keys file, you can read the keys from it. Otherwise, we will ask you the keys.', action="store_true")
-optional.add_argument('--auto-generated-salt', type=int, choices=[1,0], default=0, help="If you want to use bytes of a random string to generate the salt. Using this is far more secure. If the content was encrypted with a auto generated salt, when decrypting, you need to provide this salt!", dest='auto_generated_salt')
+optional.add_argument('--auto-generated-salt',help="If you want to use bytes of a random string to generate the salt. Using this is far more secure. If the content was encrypted with a auto generated salt, when decrypting, you need to provide this salt!",  action="store_true")
 
 optional.add_argument('--chunk-size', type=int, default=2048, help='Size of bytes to read at time.', dest='chunk_size')
 optional.add_argument('--charset', type=str, choices=['utf-8', 'utf-16', 'ascii'], default='utf-8', help='Charset that you want to use.')

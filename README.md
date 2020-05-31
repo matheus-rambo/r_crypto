@@ -18,7 +18,13 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
 # Release notes
 
 - **Version 5.0**
-   - *Implemented*: https://github.com/matheus-rambo/r_crypto/issues/63
+   - *Implemented*: https://github.com/matheus-rambo/r_crypto/issues/63.
+      
+      Incompatibility with previous version because, we renamed the attribute *user_key* to *secret_key* and *secret_key* to *salt*. 
+      So, you can not save a keys file in previous version(I.e v4.1) and use it in this version.
+      
+      The paramater: --secret-key-computed was removed and the parameter auto-generated-salt was added.
+
 
 - ***Version 4.1***
    - *Implemented*: https://github.com/matheus-rambo/r_crypto/issues/64
