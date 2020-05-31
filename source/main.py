@@ -271,7 +271,7 @@ class Main():
                 self._io.stdout(self._formatter.green_foreground("\n\tStage 4 saving keys to file finished ...\n"))
             else:
                 self._io.stdout(self._formatter.yellow_foreground("\n\tStage 4 showing keys in console initiliazed ...\n "))
-                str_aux =  self._formatter.purple_foreground("\n Your secret key: ") + '{key}\t' + self._formatter.purple_foreground(" Your salt: ") + '{secret_key}'
+                str_aux =  self._formatter.purple_foreground("\n Your secret key: ") + '{secret_key}\t' + self._formatter.purple_foreground(" Your salt: ") + '{salt}'
                 self._io.stdout(str_aux, self._keys.get_keys())
                 self._io.stdout(self._formatter.green_foreground("\n\tStage 4 showing keys in console finished ...\n"))
 
