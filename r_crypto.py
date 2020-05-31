@@ -2,7 +2,7 @@ import argparse
 
 from source.main import Main
 
-parser = argparse.ArgumentParser(description='Encrypt/Decrypt text/files and files from directory.')
+parser = argparse.ArgumentParser(description='Encrypt/Decrypt text/files and files from directory.', epilog="If you find some difficult, or problem, contact us!")
 
 parser._action_groups.pop()
 
