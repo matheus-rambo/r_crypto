@@ -32,11 +32,8 @@ class Main():
 
     def _construct_keys(self, read_keys_file:bool, secret_key_computed:bool) -> Keys:
 
-<<<<<<< HEAD
         self._io.stdout(self._formatter.yellow_foreground("\n\tStage 1 read user keys initiliazed ...\n"))
 
-=======
->>>>>>> a70159dccfe0a9910bf48028e5c74e3b7287e699
         # User passphrase
         user_key   = None
 
@@ -59,22 +56,16 @@ class Main():
                 secret_key = self._io.stdin(" Insert your secret key:\t")
 
 
-<<<<<<< HEAD
         self._io.stdout(self._formatter.green_foreground("\n\tStage 1 read user keys finished ..."))
 
 
-=======
->>>>>>> a70159dccfe0a9910bf48028e5c74e3b7287e699
         ## Construc the keys object
         return Keys(user_key=user_key, secret_key=secret_key)
 
     def _read(self) -> None:
 
-<<<<<<< HEAD
         self._io.stdout(self._formatter.yellow_foreground("\n\tStage 2 read user content initiliazed ...\n"))
 
-=======
->>>>>>> a70159dccfe0a9910bf48028e5c74e3b7287e699
         if self._content_type == ContentType.TEXT:
 
             self._messages = []
@@ -88,11 +79,8 @@ class Main():
 
             self._messages = self._read_directory()
 
-<<<<<<< HEAD
         self._io.stdout(self._formatter.green_foreground("\n\tStage 2 read user content finished ... "))
 
-=======
->>>>>>> a70159dccfe0a9910bf48028e5c74e3b7287e699
 
     def _read_text(self) -> Message:
 
