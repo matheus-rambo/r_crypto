@@ -17,6 +17,9 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
 
 # Release notes
 
+- ***Version 4.0.1 ( May 24, 2020 )***
+   - *Fixed*: https://github.com/matheus-rambo/r_crypto/issues/60
+   
 - ***Version 4.0***
    - Refactored to a more readable code. 
    - The Steganography module was removed(It might will be back in future releases).
