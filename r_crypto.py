@@ -2,7 +2,7 @@ import argparse
 
 from source.main import Main
 
-parser = argparse.ArgumentParser(description='Encrypt/Decrypt text/files and files from directory.')
+parser = argparse.ArgumentParser(description='Encrypt/Decrypt text/files and files from directory.', epilog="If you ran with problems, or, think the r_crypto difficult, please, contact us!")
 
 parser._action_groups.pop()
 
@@ -21,7 +21,8 @@ optional.add_argument('--save-keys', type=int, choices=[1,0], default=0, help='I
 optional.add_argument('--chunk-size', type=int, default=2048, help='Size of bytes to read at time.', dest='chunk_size')
 optional.add_argument('--read-keys-file', type=int, choices=[1, 0], default=0, help='If you have a keys file, you can read the keys from it.', dest='read_keys_file')
 optional.add_argument('--charset', type=str, choices=['utf-8', 'utf-16', 'ascii'], default='utf-8', help='Charset that you want to use.')
-optional.add_argument('--auto-generated-salt', type=int, choices=[1,0], default=0, help="If you want to use the bytes of your key to generate the salt. Using this is far more secure", dest='auto_generated_salt')
+optional.add_argument('--auto-generated-salt', type=int, choices=[1,0], default=0, help="If you want to use bytes of a random string to generate the salt. Using this is far more secure. If the content was encrypted with a auto generated salt, when decrypting, you need to provide this salt!", dest='auto_generated_salt')
+
 
 # we get the command line arguments
 args = parser.parse_args() 

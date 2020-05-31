@@ -33,7 +33,10 @@ class Main():
     def _construct_keys(self, read_keys_file:bool, auto_generated_salt:bool) -> Keys:
 
         # User passphrase
-        secret_key   = None
+        secret_key = None
+
+        # The salt that will be used to generate the Fernet Key
+        salt       = None
 
         # The user wants to read the keys from a file
         if read_keys_file:
@@ -46,8 +49,10 @@ class Main():
         else:
             secret_key = self._io.stdin("Insert your secret key:\t")
 
-        # The salt that will be used to generate the Fernet Key
-        salt = secret_key if not auto_generated_salt else None
+        if self._encrypt and auto_generated_salt:
+            salt = self._io.stdin("Insert the salt\t: ")
+        else:
+            salt = secret_key if not auto_generated_salt else None
 
         ## Construct the keys object
         return Keys(secret_key=secret_key, salt=salt)
