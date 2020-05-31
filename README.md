@@ -22,6 +22,7 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
 
 - ***Version 4.1***
    - *Implemented*: https://github.com/matheus-rambo/r_crypto/issues/64
+   - *Implemented*: https://github.com/matheus-rambo/r_crypto/issues/55
 
 - ***Version 4.0.1 ( May 24, 2020 )***
    - *Fixed*: https://github.com/matheus-rambo/r_crypto/issues/60
