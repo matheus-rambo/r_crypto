@@ -2,7 +2,7 @@ import argparse
 
 from source.main import Main
 
-parser = argparse.ArgumentParser(description='Encrypt/Decrypt text and text files with this script. With this tool, you can encrypt/decrypt files, and texts, then save them, load file of keys and creates keys file.')
+parser = argparse.ArgumentParser(description='Encrypt/Decrypt text/files and files from directory.')
 
 parser._action_groups.pop()
 
@@ -10,20 +10,18 @@ required = parser.add_argument_group('required arguments')
 optional = parser.add_argument_group('optional arguments')
 
 # required arguments
-required.add_argument('-use', type=str, choices=['text', 'file', 'directory'], help='With what the script will work', required=True, dest='use')
-required.add_argument('-encryption', type=int, choices=[1,0], help='If you want to work with encryption, otherwise we will decrypt', required=True, dest='encryption')
+required.add_argument('-use', type=str, choices=['text', 'file', 'directory'], help='What you want to work with ?', required=True, dest='use')
+required.add_argument('-encryption', type=int, choices=[1,0], help='If you want to encrypt something.', required=True, dest='encryption')
 
 
 # optional arguments
-optional.add_argument('--save-content', type=int, choices=[1, 0], default=0,  help='If you want to save the encrypted/decrypted content to a file, otherwise it will be prompted at console.', dest='save_content')
-optional.add_argument('--show-input', type=int, choices=[1, 0], default=0, help='Show the characters that you typed.', dest='show_input')
-optional.add_argument('--secret-key-computed', type=int, choices=[1,0], default=0, help='If you have an secret key that was generated with your key, you can use it here.', dest='secret_key_computed' )
+optional.add_argument('--save-content', type=int, choices=[1, 0], default=0,  help='If you want to save the encrypted/decrypt content, otherwise, the content will be show in the console.', dest='save_content')
+optional.add_argument('--show-input', type=int, choices=[1, 0], default=0, help='If you want to see what you are typing.', dest='show_input')
+optional.add_argument('--secret-key-computed', type=int, choices=[1,0], default=0, help='If you already have a secret key and want to use it.', dest='secret_key_computed' )
 optional.add_argument('--save-keys', type=int, choices=[1,0], default=0, help='If you want to save the keys at a file. Otherwise, the keys will be prompted.', dest='save_keys')
 optional.add_argument('--chunk-size', type=int, default=2048, help='Size of bytes to read at time.', dest='chunk_size')
-optional.add_argument('--read-keys-file', type=int, choices=[1, 0], default=0, help='If you have a keys file, you can read it.', dest='read_keys_file')
-optional.add_argument('--charset', type=str, choices=['utf-8', 'utf-16', 'ascii'], default='utf-8', help='Charset that you want to use.')
-optional.add_argument('--send-mail', type=int, choices=[1,0], default=0, help='If you want to send the content over e-mail', dest='send_mail')
-
+optional.add_argument('--read-keys-file', type=int, choices=[1, 0], default=0, help='If you have a keys file, you can read the keys from it.', dest='read_keys_file')
+optional.add_argument('--charset', type=str, choices=['utf-8', 'utf-16', 'ascii'], default='utf-8', help='Charset that you want to use.', dest='charset')
 
 
 # we get the command line arguments
@@ -57,12 +55,8 @@ read_keys_file = args.read_keys_file
 # charset
 charset = args.charset
 
-# if the user want to send an e-mail
-send_mail = args.send_mail
-
-
 def main():
-    
+
     main = Main(use, encryption, save_content, show_input, secret_key_computed, save_keys, chunk_size, read_keys_file, charset)
     main.init()
 

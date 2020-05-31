@@ -1,9 +1,8 @@
-# A simple *Cryptography/Steganography* terminal tool.
+# A simple *Cryptography* terminal tool.
 
 ![eagle](https://user-images.githubusercontent.com/33197461/69020567-b03f4380-0993-11ea-8aca-92d965de279b.png)
 
 ***Note*** This project uses *symmetric cryptography*, and uses *SHA-256* to generate the Fernet key. [Fernet Documentation](https://cryptography.io/en/latest/fernet/)
-
 
 # Undestanding Cryptography
 
@@ -17,6 +16,18 @@
 Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-Started).
 
 # Release notes
+
+- ***Version 4.0.1 ( May 24, 2020 )***
+   - *Fixed*: https://github.com/matheus-rambo/r_crypto/issues/60
+   
+- ***Version 4.0***
+   - Refactored to a more readable code. 
+   - The Steganography module was removed(It might will be back in future releases).
+   - The e-mail feature was removed(But it will be back in future releases).
+   - The file r_cryptography was renamed to r_crypto.
+   - The optional parameters were renamed, and some were deleted.
+   - The user can not choose the name of a encrypted file(will use *.enc* extension), and a keys file(will use *.keys* extension).
+
 - ***Version 3.2***
    - *Enhancement*: https://github.com/matheus-rambo/r_crypto/issues/5. Now, we can encrypt/decrypt directories.
 
@@ -119,6 +130,7 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
     - Save files encrypted and decrypted.
 
 # Releases 
+ - [*v4.0*](https://github.com/matheus-rambo/r_crypto/releases/tag/v4.0)
  - [*v3.2*](https://github.com/matheus-rambo/r_crypto/releases/tag/v3.2) **Stable Version**
  - [*v3.1.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v3.1.1)
  - [*v3.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v3.1)
@@ -141,6 +153,7 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
  - [*v1.0*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.0)
 
 # Docs
+ - ***Version 4.0***: [v4.0](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v4.0)
  - ***Version 3.2***: [v3.2](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v3.2)
  - ***Version 3.1***: [v3.1](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v3.1)
  - ***Version 3.0***: [v3.0](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v3.0)
@@ -153,8 +166,12 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
  - ***Version 1.1***: [v1.1](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v1.1)
  - ***Version 1.0***: [v1.0](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v1.0)
 
-# Author
+# Authors
 
 - **Matheus Rambo**
   - [*GitHub*](https://github.com/matheus-rambo)
   - *e-mail* matheusrambo@protonmail.ch
+  
+- **Arthur Bottcher**
+  - [*GitHub*](https://github.com/ArthurBottcher)
+  - *e-mail* arthurbottcher@gmail.com
