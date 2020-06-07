@@ -25,8 +25,7 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
       
       The paramater: --secret-key-computed was removed and the parameter auto-generated-salt was added.
 
-
-- ***Version 4.1***
+- ***Version 4.1 ( June 7, 2020 )***
    - *Implemented*: https://github.com/matheus-rambo/r_crypto/issues/64
    - *Implemented*: https://github.com/matheus-rambo/r_crypto/issues/55
 
