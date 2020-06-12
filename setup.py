@@ -28,9 +28,6 @@ def apply_variables(sisop: str) -> str :
         alias_command = "alias {variable}={command} \n".format(variable=variable, command=command) 
         with open(file=filename, mode='wt') as file:
             file.write(alias_command)
-
-    elif sisop == WINDOWS:
-        print("TODO WINDOWS")
     else:
         print("Not supported yet!")
 
