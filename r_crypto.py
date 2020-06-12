@@ -22,7 +22,7 @@ optional.add_argument('--read-keys-file', help='If you have a keys file, you can
 
 optional.add_argument('--chunk-size', type=int, default=2048, help='Size of bytes to read at time.', dest='chunk_size')
 optional.add_argument('--charset', type=str, choices=['utf-8', 'utf-16', 'ascii'], default='utf-8', help='Charset that you want to use.')
-optional.add_argument('--ignored-extensions', type=str, default=None,help="When encrypting/decrypting you can set files extensions to be ignored. Use: 'pyc,txt'", dest='ignored_extensions')
+optional.add_argument('--ignore-extensions', type=str, default=None,help="When encrypting/decrypting you can define files extensions that will be ignored. Use: pyc,txt", dest='ignored_extensions')
 
 # we get the command line arguments
 args = parser.parse_args() 
