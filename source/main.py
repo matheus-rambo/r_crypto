@@ -12,16 +12,19 @@ from source.style         import Formatter
 class Main():
 
     def __init__(self, use:str, encryption:bool, save_content:bool, show_input:bool, 
-            secret_key_computed:bool, save_keys:bool, chunk_size:int, read_keys_file:bool, charset:str):
+            secret_key_computed:bool, save_keys:bool, chunk_size:int, 
+            read_keys_file:bool, charset:str, ignored_extensions:str):
 
         # Objects that will be used in the internally objects
-        self._content_type = ContentType(use)
-        self._encryption   = encryption
-        self._save_content = save_content
-        self._save_keys    = save_keys     
-        self._chunk_size   = chunk_size
-        self._charset      = charset
-        self._read_keys    = read_keys_file
+        self._content_type       = ContentType(use)
+        self._encryption         = encryption
+        self._save_content       = save_content
+        self._save_keys          = save_keys     
+        self._chunk_size         = chunk_size
+        self._charset            = charset
+        self._read_keys          = read_keys_file
+        self._ignored_extensions = None if not ignored_extensions else ignored_extensions.split(",")
+        
 
         # Objects that are used internally
         self._io        = IOUtil(show_input)
@@ -149,7 +152,14 @@ class Main():
 
     def _read_file_content(self, filename:str) -> Message:
         
-        user_message = None
+        user_message    = None
+        file_object     = File(filename=filename, charset=self._charset, chunk_size=self._chunk_size)
+        file_extension  = file_object.get_file_extension() 
+        
+        if self._ignored_extensions is not None and file_extension is not None and file_extension in self._ignored_extensions:
+            # The user wants to ignore this type of files!
+            # So we will ignore the rest of the code.
+            return
 
         if self._encryption:
             str_aux = 'Do you want to store a message inside the {} encrypted file?'.format(filename) + self._formatter.orange_foreground(' [Yes, No]:')
@@ -158,7 +168,6 @@ class Main():
             if insert_message_inside:
                 user_message = self._io.stdin("Insert the message to store inside: ")
         
-        file_object = File(filename=filename, charset=self._charset, chunk_size=self._chunk_size)
         message = file_object.read()
         del file_object
 

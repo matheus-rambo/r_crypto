@@ -32,7 +32,10 @@ class File():
         else:
             return self.filename + extension
 
-    def write(self, content:bytes, extension:str = None):
+    def write(self, content:bytes, extension:str = None) -> None:
         filename = self.filename if not extension else self._replace_to_extension(extension)
         with open(file = filename, mode = WRITE_BINARY ) as file:
             file.write(content)
+
+    def get_file_extension(self) -> str:
+        return None if self.filename.find('.') < 0 else self.filename[self.filename.rindex('.') + 1:]
