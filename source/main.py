@@ -207,7 +207,13 @@ class Main():
                 if self._content_type == ContentType.TEXT:
                     filename = self._io.stdin("Insert the name for the encrypted file of the text: ")
                 else:
-                    filename = self._io.stdin("Insert the name for the encrypted file of the file {} :".format(message.filename))
+
+                    default_filename = None
+                    if '.' in message.filename:
+                        default_filename = message.filename[:message.filename.rindex('.')]
+
+                    filename = self._io.stdin("Insert the name for the encrypted file of the file {} [Leave empty to use the default name: {}]:".format(message.filename, default_filename))
+                    filename = filename if filename else default_filename
 
                 file_object = File(filename, self._charset)
                 file_object.write(message.content, ENCRYPTED_EXTENSION)
