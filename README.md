@@ -138,8 +138,10 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
     - Save files encrypted and decrypted.
 
 # Releases 
+ - [*v4.2*](https://github.com/matheus-rambo/r_crypto/releases/tag/v4.2) **Stable Version**
+ - [*v4.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v4.1)
  - [*v4.0*](https://github.com/matheus-rambo/r_crypto/releases/tag/v4.0)
- - [*v3.2*](https://github.com/matheus-rambo/r_crypto/releases/tag/v3.2) **Stable Version**
+ - [*v3.2*](https://github.com/matheus-rambo/r_crypto/releases/tag/v3.2)
  - [*v3.1.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v3.1.1)
  - [*v3.1*](https://github.com/matheus-rambo/r_crypto/releases/tag/v3.1)
  - [*v3.0.2*](https://github.com/matheus-rambo/r_crypto/releases/tag/v3.0.2)
@@ -161,6 +163,8 @@ Please, read this [wiki](https://github.com/matheus-rambo/r_crypto/wiki/Getting-
  - [*v1.0*](https://github.com/matheus-rambo/r_crypto/releases/tag/v1.0)
 
 # Docs
+ - ***Version 4.2***: [v4.2](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v4.2)
+ - ***Version 4.1***: [v4.1](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v4.1)
  - ***Version 4.0***: [v4.0](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v4.0)
  - ***Version 3.2***: [v3.2](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v3.2)
  - ***Version 3.1***: [v3.1](https://github.com/matheus-rambo/r_crypto/wiki/Documentation-r_crypto-release-v3.1)
